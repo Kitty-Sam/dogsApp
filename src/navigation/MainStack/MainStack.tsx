@@ -1,10 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {TabBottomStack} from './TabBottomStack';
-import {MainNavigationName} from '../enum/navigationEum';
-import {ErrorScreen} from '../screens/ErrorScreen';
+import {TabBottomStack} from '../TabBottonStack/TabBottomStack';
+import {MainNavigationName} from '../../enum/navigationEum';
+import {ErrorScreen} from '../../screens/ErrorScreen';
+import {MainStackParamList} from './MainStackType';
 
-const Main = createNativeStackNavigator();
+const Main = createNativeStackNavigator<MainStackParamList>();
 
 export const MainStack = () => {
   return (

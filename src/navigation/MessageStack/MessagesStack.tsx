@@ -1,10 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {MessagesNavigationName} from '../enum/navigationEum';
-import {MessagesScreen} from '../screens/MessagesScreen';
-import {ChatScreen} from '../screens/ChatScreen';
+import {MessagesNavigationName} from '../../enum/navigationEum';
+import {MessagesScreen} from '../../screens/MessagesScreen';
+import {ChatScreen} from '../../screens/ChatScreen';
+import {MessageStackParamList} from './MessageStackType';
 
-const Messages = createNativeStackNavigator();
+const Messages = createNativeStackNavigator<MessageStackParamList>();
 
 export const MessagesStack = () => {
   return (

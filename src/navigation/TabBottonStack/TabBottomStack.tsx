@@ -1,11 +1,12 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {TabTopStack} from './TabTopStack';
-import {TabBottomNavigationName} from '../enum/navigationEum';
-import {MessagesStack} from './MessagesStack';
+import {TabTopStack} from '../TabTopStack/TabTopStack';
+import {TabBottomNavigationName} from '../../enum/navigationEum';
+import {MessagesStack} from '../MessageStack/MessagesStack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {TabBottomStackParamList} from './TabBottomStackType';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabBottomStackParamList>();
 
 export const TabBottomStack = () => {
   return (
