@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {TabTopStack} from './TabTopStack';
-import {TabBottomNavigationName} from '../enum/enum';
+import {TabBottomNavigationName} from '../enum/navigationEum';
 import {MessagesStack} from './MessagesStack';
 import Icon from 'react-native-vector-icons/Ionicons';
 

@@ -1,9 +1,7 @@
 import React from 'react';
-import {FlatList, Text} from 'react-native';
+import {Text} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {CustomButton} from '../components/Button/CustomButton';
-import {styles} from '../components/Button/CustomButtonStyle';
-import {MessagesNavigationName} from '../enum/enum';
+import {MessagesNavigationName} from '../enum/navigationEum';
 import {ChatItem} from '../components/ChatItem/ChatItem';
 
 export const MessagesScreen = () => {

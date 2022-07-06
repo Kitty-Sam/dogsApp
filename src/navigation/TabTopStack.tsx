@@ -2,8 +2,8 @@ import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {ProfileScreen} from '../screens/ProfileScreen';
 import {ListItemsScreen} from '../screens/ListItemsScreen';
-import {UsefulInfoScreen} from '../screens/UsefulInfoScreen';
-import {TabTopNavigationName} from '../enum/enum';
+import {UsefulInfoScreen} from '../screens/UsefulInfoScreen/UsefulInfoScreen';
+import {TabTopNavigationName} from '../enum/navigationEum';
 
 const TabTop = createMaterialTopTabNavigator();
 
