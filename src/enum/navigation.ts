@@ -19,7 +19,7 @@ export const enum MessagesNavigationName {
 
 export const enum DrawerNavigationName {
   PROFILE = 'Profile',
-  MESSAGE_STACK = 'Message_Stack',
+  MESSAGE_STACK = 'Message',
   FRIENDS = 'Friends',
   USEFUL_STACK = 'Useful_Info',
 }

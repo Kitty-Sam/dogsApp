@@ -19,7 +19,7 @@ export const ClinicsScreen = () => {
   };
   return (
     <ScrollView>
-      <Text>Veterinary clinics</Text>
+      <Text>Clinics</Text>
       <View style={styles.chapterContainer}>
         <AddSection chapter={chaptersName.CLINIC} />
         <FlatList data={clinics} renderItem={renderItem} horizontal />

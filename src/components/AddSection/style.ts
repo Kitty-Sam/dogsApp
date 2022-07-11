@@ -6,10 +6,11 @@ export type AddSectionStyleType = {
 
 export const styles = StyleSheet.create<AddSectionStyleType>({
   modalContainer: {
-    borderColor: 'green',
+    borderColor: 'yellow',
     borderWidth: 2,
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 8,
+    margin: 16,
+    borderRadius: 20,
   },
 });

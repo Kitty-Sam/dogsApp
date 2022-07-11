@@ -8,15 +8,14 @@ import {MessagesStack} from '../MessageStack/MessagesStack';
 import {DrawerNavigationName} from '../../enum/navigation';
 import {DrawerStackParamList} from './type';
 import {iconsName} from '../../enum/iconsName';
+import {CustomDrawer} from './CustomDrawer';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
-
-// const avatar1 =
-//   'https://cdnstatic.rg.ru/uploads/images/222/22/41/photorep_imageid_513152_19_b6265e7a.jpg';
 
 export const DrawerStack = () => {
   return (
     <Drawer.Navigator
+      drawerContent={props => <CustomDrawer {...props} />}
       useLegacyImplementation
       screenOptions={{
         drawerType: 'front',

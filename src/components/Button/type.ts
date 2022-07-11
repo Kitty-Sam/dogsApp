@@ -1,4 +1,6 @@
-export type Type = {
-  title: string;
+export type AppButtonPropsType = {
+  backgroundColor?: string;
+  disabled?: boolean;
   onPress: () => void;
+  title: string;
 };

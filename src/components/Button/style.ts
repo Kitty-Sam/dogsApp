@@ -1,18 +1,22 @@
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 
-export type CustomSquareButtonStyleType = {
-  squareButtonContainer: ViewStyle;
+type AppButtonStyleType = {
+  appButtonContainer: ViewStyle;
+  appButtonText: TextStyle;
 };
 
-export const styles = StyleSheet.create<CustomSquareButtonStyleType>({
-  squareButtonContainer: {
-    width: 80,
-    height: 80,
-    borderColor: 'black',
-    borderWidth: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+export const styles = StyleSheet.create<AppButtonStyleType>({
+  appButtonContainer: {
+    elevation: 6,
     borderRadius: 10,
-    backgroundColor: 'yellow',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    marginVertical: 6,
+  },
+  appButtonText: {
+    fontSize: 16,
+    fontWeight: 'normal',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
 });

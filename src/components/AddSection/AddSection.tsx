@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {CustomSquareButton} from '../Button/CustomSquareButton';
+import {AppButton} from '../Button/CustomSquareButton';
 import {Modal, View} from 'react-native';
 import {ModalInside} from '../Modal/ModalInside';
 import {useDispatch} from 'react-redux';
@@ -50,8 +50,12 @@ export const AddSection = ({chapter}: Type) => {
 
   return (
     <>
-      <CustomSquareButton title={`+ ${chapter}`} onPress={addButtonPress} />
-      <Modal visible={isOpen}>
+      <AppButton title={buttonsName.PLUS} onPress={addButtonPress} />
+      <Modal
+        visible={isOpen}
+        style={{
+          justifyContent: 'space-around',
+        }}>
         <View style={styles.modalContainer}>
           <ModalInside
             placeholderInfo={'add info'}
@@ -61,7 +65,22 @@ export const AddSection = ({chapter}: Type) => {
             addInfo={addInfo}
             addTitle={addTitle}
           />
-          <CustomSquareButton title={buttonsName.ADD} onPress={addItemPress} />
+          <View
+            style={{
+              flexDirection: 'row',
+              width: 200,
+              justifyContent: 'space-around',
+            }}>
+            <AppButton
+              title={buttonsName.ADD}
+              onPress={addItemPress}
+              backgroundColor={'yellow'}
+            />
+            <AppButton
+              title={buttonsName.CANCEL}
+              onPress={() => setIsOpen(false)}
+            />
+          </View>
         </View>
       </Modal>
     </>
