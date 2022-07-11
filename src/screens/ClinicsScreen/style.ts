@@ -7,7 +7,7 @@ export type ClinicsScreenStyleType = {
 export const styles = StyleSheet.create<ClinicsScreenStyleType>({
   chapterContainer: {
     flexDirection: 'row',
-    marginHorizontal: 8,
+    margin: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },

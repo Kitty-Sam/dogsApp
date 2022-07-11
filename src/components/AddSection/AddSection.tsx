@@ -1,17 +1,18 @@
 import React, {useRef, useState} from 'react';
 import {AppButton} from '../Button/CustomSquareButton';
-import {Modal, View} from 'react-native';
+import {Image, Modal, TouchableOpacity, View, Text} from 'react-native';
 import {ModalInside} from '../Modal/ModalInside';
 import {useDispatch} from 'react-redux';
 import {styles} from './style';
-import {Type} from './type';
 import {chaptersName} from '../../enum/chapters';
 import {buttonsName} from '../../enum/buttonsName';
 import {addShopAC} from '../../store/actions/shopAC';
 import {addClinicAC} from '../../store/actions/clinicAC';
 import {addMasterAC} from '../../store/actions/masterAC';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {iconsName} from '../../enum/iconsName';
 
-export const AddSection = ({chapter}: Type) => {
+export const AddSection = ({chapter}: any) => {
   const [addTitle, setTitle] = useState('');
   const [addInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -48,15 +49,39 @@ export const AddSection = ({chapter}: Type) => {
     setTitle('');
   };
 
+  const img =
+    'https://img.freepik.com/free-photo/adorable-white-dog-isolated-yellow_23-2148985980.jpg?w=2000';
+
   return (
     <>
-      <AppButton title={buttonsName.PLUS} onPress={addButtonPress} />
-      <Modal
-        visible={isOpen}
-        style={{
-          justifyContent: 'space-around',
-        }}>
+      <Icon
+        name={iconsName.ADD_CIRCLE_OUTLINE}
+        size={36}
+        onPress={addButtonPress}
+      />
+      <Modal visible={isOpen}>
+        <Text
+          style={{
+            textAlign: 'left',
+            marginHorizontal: 18,
+            marginTop: 8,
+            fontSize: 24,
+            fontStyle: 'italic',
+            fontWeight: 'bold',
+            textTransform: 'capitalize',
+          }}>
+          {chapter}
+        </Text>
         <View style={styles.modalContainer}>
+          <Image
+            source={{uri: img}}
+            style={{width: 200, height: 100, borderRadius: 20}}
+          />
+          <TouchableOpacity
+            style={{position: 'absolute', right: 16, top: 8, zIndex: 10}}
+            onPress={() => setIsOpen(false)}>
+            <Icon name={iconsName.CLOSE_OUTLINE} size={24} />
+          </TouchableOpacity>
           <ModalInside
             placeholderInfo={'add info'}
             placeholderTitle={'add title'}
@@ -74,11 +99,12 @@ export const AddSection = ({chapter}: Type) => {
             <AppButton
               title={buttonsName.ADD}
               onPress={addItemPress}
-              backgroundColor={'yellow'}
+              backgroundColor={'orange'}
             />
             <AppButton
               title={buttonsName.CANCEL}
               onPress={() => setIsOpen(false)}
+              backgroundColor={'brown'}
             />
           </View>
         </View>

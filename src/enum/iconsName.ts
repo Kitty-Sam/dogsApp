@@ -13,4 +13,8 @@ export const enum iconsName {
   HOSPITAL_BOX_OUTLINE = 'hospital-box-outline',
   ACCOUNT_SUPERVISOR = 'account-supervisor',
   ACCOUNT_SUPERVISOR_OUTLINE = 'account-supervisor-outline',
+  ADD_CIRCLE_OUTLINE = 'add-circle-outline',
+  ALERT_OUTLINE = 'alert-outline',
+  CLOSE_OUTLINE = 'close-outline',
+  PENCIL_OUTLINE = 'pencil-outline',
 }

@@ -7,7 +7,7 @@ export type ShopsScreenStyleType = {
 export const styles = StyleSheet.create<ShopsScreenStyleType>({
   chapterContainer: {
     flexDirection: 'row',
-    marginHorizontal: 8,
+    margin: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },

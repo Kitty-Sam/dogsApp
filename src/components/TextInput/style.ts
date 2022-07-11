@@ -6,7 +6,7 @@ export type ModalInsideContainerStyleType = {
 
 export const styles = StyleSheet.create<ModalInsideContainerStyleType>({
   customTextInputContainer: {
-    borderColor: 'black',
+    borderColor: 'grey',
     margin: 8,
     borderWidth: 2,
     width: '80%',
