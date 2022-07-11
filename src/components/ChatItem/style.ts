@@ -16,8 +16,8 @@ export const styles = StyleSheet.create<ChatItemStyleType>({
     flexDirection: 'row',
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     borderRadius: 25,
     marginHorizontal: 8,
   },

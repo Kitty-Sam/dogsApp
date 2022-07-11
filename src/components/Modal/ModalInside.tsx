@@ -7,8 +7,8 @@ import {
   View,
 } from 'react-native';
 import {CustomTextInput} from '../TextInput/CustomTextInput';
-import {styles} from './ModalInsideStyle';
-import {ModalInsideInfoType} from './ModalInsideType';
+import {styles} from './style';
+import {ModalInsideInfoType} from './type';
 
 export const ModalInside = ({
   addTitle,

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
-import {styles} from './ItemContainerStyle';
+import {styles} from './style';
 import {useDispatch} from 'react-redux';
 import {removeShopAC} from '../../store/actions/shopAC';
-import {chaptersName} from '../../enum/chaptersEnum';
-import {ItemType} from './ItemContainerType';
+import {chaptersName} from '../../enum/chapters';
+import {ItemType} from './type';
 import {removeClinicAC} from '../../store/actions/clinicAC';
 import {removeMasterAC} from '../../store/actions/masterAC';
 

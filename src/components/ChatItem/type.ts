@@ -1,4 +1,4 @@
-export type ChatItemType = {
+export type Type = {
   name: string;
   message: string;
   avatar: string;

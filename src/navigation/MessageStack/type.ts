@@ -1,4 +1,4 @@
-import {MessagesNavigationName} from '../../enum/navigationEum';
+import {MessagesNavigationName} from '../../enum/navigation';
 
 export type MessageStackParamList = {
   [MessagesNavigationName.MESSAGES]: undefined;

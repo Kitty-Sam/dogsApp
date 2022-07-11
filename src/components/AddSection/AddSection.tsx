@@ -3,15 +3,15 @@ import {CustomSquareButton} from '../Button/CustomSquareButton';
 import {Modal, View} from 'react-native';
 import {ModalInside} from '../Modal/ModalInside';
 import {useDispatch} from 'react-redux';
-import {styles} from './AddSectionStyle';
-import {AddSectionType} from './AddSectionType';
-import {chaptersName} from '../../enum/chaptersEnum';
-import {buttonsName} from '../../enum/buttonsNameEnum';
+import {styles} from './style';
+import {Type} from './type';
+import {chaptersName} from '../../enum/chapters';
+import {buttonsName} from '../../enum/buttonsName';
 import {addShopAC} from '../../store/actions/shopAC';
 import {addClinicAC} from '../../store/actions/clinicAC';
 import {addMasterAC} from '../../store/actions/masterAC';
 
-export const AddSection = ({chapter}: AddSectionType) => {
+export const AddSection = ({chapter}: Type) => {
   const [addTitle, setTitle] = useState('');
   const [addInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);

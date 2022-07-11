@@ -1,4 +1,4 @@
-import {chaptersName} from '../../enum/chaptersEnum';
+import {chaptersName} from '../../enum/chapters';
 
 export type ItemType = {
   id: string;

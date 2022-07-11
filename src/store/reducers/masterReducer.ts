@@ -1,6 +1,6 @@
-import {ItemType} from '../../components/ItemContainer/ItemContainerType';
+import {ItemType} from '../../components/ItemContainer/type';
 import {addMasterAC, MasterActions, removeMasterAC} from '../actions/masterAC';
-import {chaptersName} from '../../enum/chaptersEnum';
+import {chaptersName} from '../../enum/chapters';
 
 const initialState: initialStateType = {
   masters: [

@@ -1,10 +1,10 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 
-export type UsefulInfoScreenStyleType = {
+export type ClinicsScreenStyleType = {
   chapterContainer: ViewStyle;
 };
 
-export const styles = StyleSheet.create<UsefulInfoScreenStyleType>({
+export const styles = StyleSheet.create<ClinicsScreenStyleType>({
   chapterContainer: {
     flexDirection: 'row',
     marginHorizontal: 8,

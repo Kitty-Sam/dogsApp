@@ -1,9 +1,9 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import {styles} from './ChatItemStyle';
-import {ChatItemType} from './ChatItemType';
+import {styles} from './style';
+import {Type} from './type';
 
-export const ChatItem = ({name, message, onPress, avatar}: ChatItemType) => {
+export const ChatItem = ({name, message, onPress, avatar}: Type) => {
   return (
     <TouchableOpacity style={styles.chatItemContainer} onPress={onPress}>
       <View>

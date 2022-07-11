@@ -1,12 +1,9 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import {styles} from './CustomSquareButtonStyle';
-import {CustomSquareButtonType} from './CustomSquareButtonType';
+import {styles} from './style';
+import {Type} from './type';
 
-export const CustomSquareButton = ({
-  title,
-  onPress,
-}: CustomSquareButtonType) => {
+export const CustomSquareButton = ({title, onPress}: Type) => {
   return (
     <TouchableOpacity
       onPress={onPress}
