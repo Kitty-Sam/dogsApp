@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {ProfileScreen} from '../../screens/ProfileScreen/ProfileScreen';
-import {ListItemsScreen} from '../../screens/FriendsScreen/ListItemsScreen';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
+import { ListItemsScreen } from '../../screens/FriendsScreen/ListItemsScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {UsefulBottomStack} from '../UsefulStack/UsefulStack';
-import {MessagesStack} from '../MessageStack/MessagesStack';
-import {DrawerNavigationName} from '../../enum/navigation';
-import {DrawerStackParamList} from './type';
-import {iconsName} from '../../enum/iconsName';
-import {CustomDrawer} from './CustomDrawer';
+import { UsefulBottomStack } from '../UsefulStack/UsefulStack';
+import { MessagesStack } from '../MessageStack/MessagesStack';
+import { DrawerNavigationName } from '../../enum/navigation';
+import { DrawerStackParamList } from './type';
+import { iconsName } from '../../enum/iconsName';
+import { CustomDrawer } from './CustomDrawer';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -19,7 +19,7 @@ export const DrawerStack = () => {
       useLegacyImplementation
       screenOptions={{
         drawerType: 'front',
-        drawerContentStyle: {marginTop: 150, width: 250},
+        drawerContentStyle: { marginTop: 150, width: 250 },
         drawerStyle: {
           borderBottomEndRadius: 20,
           borderTopEndRadius: 20,
@@ -33,7 +33,7 @@ export const DrawerStack = () => {
         name={DrawerNavigationName.PROFILE}
         component={ProfileScreen}
         options={{
-          drawerIcon: ({color, size, focused}) => (
+          drawerIcon: ({ color, size, focused }) => (
             <Icon
               name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE}
               color={color}
@@ -46,7 +46,7 @@ export const DrawerStack = () => {
         name={DrawerNavigationName.USEFUL_STACK}
         component={UsefulBottomStack}
         options={{
-          drawerIcon: ({color, size, focused}) => (
+          drawerIcon: ({ color, size, focused }) => (
             <Icon
               name={focused ? iconsName.HOME : iconsName.HOME_OUTLINE}
               color={color}
@@ -59,7 +59,7 @@ export const DrawerStack = () => {
         name={DrawerNavigationName.FRIENDS}
         component={ListItemsScreen}
         options={{
-          drawerIcon: ({color, size, focused}) => (
+          drawerIcon: ({ color, size, focused }) => (
             <Icon
               name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE}
               color={color}
@@ -72,7 +72,7 @@ export const DrawerStack = () => {
         name={DrawerNavigationName.MESSAGE_STACK}
         component={MessagesStack}
         options={{
-          drawerIcon: ({color, size, focused}) => (
+          drawerIcon: ({ color, size, focused }) => (
             <Icon
               name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE}
               color={color}

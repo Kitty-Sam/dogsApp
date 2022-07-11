@@ -6,9 +6,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {CustomTextInput} from '../TextInput/CustomTextInput';
-import {styles} from './style';
-import {ModalInsideInfoType} from './type';
+import { CustomTextInput } from '../TextInput/CustomTextInput';
+import { styles } from './style';
+import { ModalInsideInfoType } from './type';
 
 export const ModalInside = ({
   addTitle,

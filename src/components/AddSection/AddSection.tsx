@@ -112,3 +112,9 @@ export const AddSection = ({chapter}: any) => {
     </>
   );
 };
+
+//"husky": {
+//     "hooks": {
+//       "pre-commit": "lint-staged"
+//     }
+//   },

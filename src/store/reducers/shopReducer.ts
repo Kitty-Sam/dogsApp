@@ -1,6 +1,6 @@
-import {ItemType} from '../../components/ItemContainer/type';
-import {addShopAC, removeShopAC, ShopActions} from '../actions/shopAC';
-import {chaptersName} from '../../enum/chapters';
+import { ItemType } from '../../components/ItemContainer/type';
+import { addShopAC, removeShopAC, ShopActions } from '../actions/shopAC';
+import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
   shops: [
@@ -31,7 +31,7 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ShopActions.ADD_SHOP: {
       // @ts-ignore
-      const {id, title, info} = action.payload;
+      const { id, title, info } = action.payload;
       const hasShop = state.shops.find(shop => shop.id === id);
 
       if (!hasShop) {
@@ -48,8 +48,8 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
       }
     }
     case ShopActions.REMOVE_SHOP: {
-      const {id} = action.payload;
-      return {...state, shops: state.shops.filter(shop => shop.id !== id)};
+      const { id } = action.payload;
+      return { ...state, shops: state.shops.filter(shop => shop.id !== id) };
     }
     default:
       return state;

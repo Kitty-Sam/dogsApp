@@ -1,4 +1,4 @@
-import {chaptersName} from '../enum/chapters';
+import { chaptersName } from '../enum/chapters';
 
 export const createImg = (text: chaptersName) => {
   let img = '';
