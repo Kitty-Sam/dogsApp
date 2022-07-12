@@ -9,6 +9,7 @@ import { DrawerNavigationName } from '../../enum/navigation';
 import { DrawerStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
 import { CustomDrawer } from './CustomDrawer';
+import { ProfileScreenNew } from '../../screens/ProfileScreen/ProfileScreenNew';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -32,7 +33,8 @@ export const DrawerStack = () => {
     >
       <Drawer.Screen
         name={DrawerNavigationName.PROFILE}
-        component={ProfileScreen}
+        // component={ProfileScreen}
+        component={ProfileScreenNew}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE} color={color} size={size} />
