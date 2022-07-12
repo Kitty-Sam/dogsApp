@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { AppButton } from '../Button/CustomSquareButton';
-import { Image, Modal, TouchableOpacity, View, Text } from 'react-native';
+import { Image, Modal, TouchableOpacity, View, Text, Alert } from 'react-native';
 import { ModalInside } from '../Modal/ModalInside';
 import { useDispatch } from 'react-redux';
 import { styles } from './style';
@@ -35,6 +35,12 @@ export const AddSection = ({ chapter }: any) => {
       title: addTitle,
       info: addInfo,
     };
+    if (addInfo.trim() === '' || addTitle.trim() === '') {
+      Alert.alert('Please, add the all necessary information');
+      setInfo('');
+      setTitle('');
+      return;
+    }
     if (chapter === chaptersName.SHOP) {
       dispatch(addShopAC(payload));
     }
