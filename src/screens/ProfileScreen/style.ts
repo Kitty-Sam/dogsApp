@@ -13,6 +13,6 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
   imageBackgroundContainer: {
     flex: 1,
     alignItems: 'stretch',
-    padding: 8,
+    padding: 16,
   },
 });
