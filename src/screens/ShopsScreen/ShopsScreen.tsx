@@ -22,12 +22,12 @@ export const ShopsScreen = () => {
 
   if (!shops.length) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={stylesCommon.emptyContainer}>
         <View style={stylesCommon.addSectionContainer}>
           <AddSection chapter={chaptersName.SHOP} />
         </View>
-        <Image source={{ uri: img }} style={{ width: 300, height: 300, margin: 20, borderRadius: 20 }} />
-        <Text style={{ fontSize: 14 }}>You can be the first!</Text>
+        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
+        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
       </View>
     );
   }
