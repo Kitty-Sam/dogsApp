@@ -3,19 +3,26 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "lint": "eslint --debug src/",
-    "lint:write": "eslint --debug src/ --fix",
-    "prettier": "prettier --write src/**/*.js",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix",
+    "prettier": "prettier --write src/**/*.js",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.(js|jsx)": [
-      "npm run lint:write",
+    "src/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.7",

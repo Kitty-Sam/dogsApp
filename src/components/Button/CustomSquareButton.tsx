@@ -16,7 +16,8 @@ export const AppButton = (props: AppButtonPropsType): ReactElement => {
         {
           backgroundColor: disabled ? 'green' : backgroundColor,
         },
-      ]}>
+      ]}
+    >
       <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
   );

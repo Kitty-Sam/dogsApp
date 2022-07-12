@@ -1,9 +1,5 @@
 import { ItemType } from '../../components/ItemContainer/type';
-import {
-  addClinicAC,
-  ClinicActions,
-  removeClinicAC,
-} from '../actions/clinicAC';
+import { addClinicAC, ClinicActions, removeClinicAC } from '../actions/clinicAC';
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
@@ -21,9 +17,7 @@ type initialStateType = {
   clinics: ItemType[];
 };
 
-type ActionsType =
-  | ReturnType<typeof addClinicAC>
-  | ReturnType<typeof removeClinicAC>;
+type ActionsType = ReturnType<typeof addClinicAC> | ReturnType<typeof removeClinicAC>;
 
 export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -46,6 +40,7 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
       }
     }
 
+    // eslint-disable-next-line no-fallthrough
     case ClinicActions.REMOVE_CLINIC: {
       const { id } = action.payload;
       return {

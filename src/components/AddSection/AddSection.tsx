@@ -1,18 +1,18 @@
-import React, {useRef, useState} from 'react';
-import {AppButton} from '../Button/CustomSquareButton';
-import {Image, Modal, TouchableOpacity, View, Text} from 'react-native';
-import {ModalInside} from '../Modal/ModalInside';
-import {useDispatch} from 'react-redux';
-import {styles} from './style';
-import {chaptersName} from '../../enum/chapters';
-import {buttonsName} from '../../enum/buttonsName';
-import {addShopAC} from '../../store/actions/shopAC';
-import {addClinicAC} from '../../store/actions/clinicAC';
-import {addMasterAC} from '../../store/actions/masterAC';
+import React, { useRef, useState } from 'react';
+import { AppButton } from '../Button/CustomSquareButton';
+import { Image, Modal, TouchableOpacity, View, Text } from 'react-native';
+import { ModalInside } from '../Modal/ModalInside';
+import { useDispatch } from 'react-redux';
+import { styles } from './style';
+import { chaptersName } from '../../enum/chapters';
+import { buttonsName } from '../../enum/buttonsName';
+import { addShopAC } from '../../store/actions/shopAC';
+import { addClinicAC } from '../../store/actions/clinicAC';
+import { addMasterAC } from '../../store/actions/masterAC';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {iconsName} from '../../enum/iconsName';
+import { iconsName } from '../../enum/iconsName';
 
-export const AddSection = ({chapter}: any) => {
+export const AddSection = ({ chapter }: any) => {
   const [addTitle, setTitle] = useState('');
   const [addInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -49,16 +49,11 @@ export const AddSection = ({chapter}: any) => {
     setTitle('');
   };
 
-  const img =
-    'https://img.freepik.com/free-photo/adorable-white-dog-isolated-yellow_23-2148985980.jpg?w=2000';
+  const img = 'https://img.freepik.com/free-photo/adorable-white-dog-isolated-yellow_23-2148985980.jpg?w=2000';
 
   return (
     <>
-      <Icon
-        name={iconsName.ADD_CIRCLE_OUTLINE}
-        size={36}
-        onPress={addButtonPress}
-      />
+      <Icon name={iconsName.ADD_CIRCLE_OUTLINE} size={36} onPress={addButtonPress} />
       <Modal visible={isOpen}>
         <Text
           style={{
@@ -69,17 +64,16 @@ export const AddSection = ({chapter}: any) => {
             fontStyle: 'italic',
             fontWeight: 'bold',
             textTransform: 'capitalize',
-          }}>
+          }}
+        >
           {chapter}
         </Text>
         <View style={styles.modalContainer}>
-          <Image
-            source={{uri: img}}
-            style={{width: 200, height: 100, borderRadius: 20}}
-          />
+          <Image source={{ uri: img }} style={{ width: 200, height: 100, borderRadius: 20 }} />
           <TouchableOpacity
-            style={{position: 'absolute', right: 16, top: 8, zIndex: 10}}
-            onPress={() => setIsOpen(false)}>
+            style={{ position: 'absolute', right: 16, top: 8, zIndex: 10 }}
+            onPress={() => setIsOpen(false)}
+          >
             <Icon name={iconsName.CLOSE_OUTLINE} size={24} />
           </TouchableOpacity>
           <ModalInside
@@ -95,26 +89,13 @@ export const AddSection = ({chapter}: any) => {
               flexDirection: 'row',
               width: 200,
               justifyContent: 'space-around',
-            }}>
-            <AppButton
-              title={buttonsName.ADD}
-              onPress={addItemPress}
-              backgroundColor={'orange'}
-            />
-            <AppButton
-              title={buttonsName.CANCEL}
-              onPress={() => setIsOpen(false)}
-              backgroundColor={'brown'}
-            />
+            }}
+          >
+            <AppButton title={buttonsName.ADD} onPress={addItemPress} backgroundColor={'orange'} />
+            <AppButton title={buttonsName.CANCEL} onPress={() => setIsOpen(false)} backgroundColor={'brown'} />
           </View>
         </View>
       </Modal>
     </>
   );
 };
-
-//"husky": {
-//     "hooks": {
-//       "pre-commit": "lint-staged"
-//     }
-//   },

@@ -28,17 +28,14 @@ export const DrawerStack = () => {
         drawerContentContainerStyle: {
           width: 350,
         },
-      }}>
+      }}
+    >
       <Drawer.Screen
         name={DrawerNavigationName.PROFILE}
         component={ProfileScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE}
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -47,11 +44,7 @@ export const DrawerStack = () => {
         component={UsefulBottomStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.HOME : iconsName.HOME_OUTLINE}
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.HOME : iconsName.HOME_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -60,11 +53,7 @@ export const DrawerStack = () => {
         component={ListItemsScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE}
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -73,11 +62,7 @@ export const DrawerStack = () => {
         component={MessagesStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE}
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE} color={color} size={size} />
           ),
         }}
       />

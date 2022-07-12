@@ -24,15 +24,10 @@ export const ItemContainer = ({ title, info, id, chapter }: ItemType) => {
   };
 
   return (
-    <TouchableOpacity
-      style={styles.itemContainer}
-      onLongPress={removeItem(chapter)}>
+    <TouchableOpacity style={styles.itemContainer} onLongPress={removeItem(chapter)}>
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.text}>{info}</Text>
-      <Image
-        source={{ uri: createImg(chapter) }}
-        style={styles.imageContainer}
-      />
+      <Image source={{ uri: createImg(chapter) }} style={styles.imageContainer} />
     </TouchableOpacity>
   );
 };

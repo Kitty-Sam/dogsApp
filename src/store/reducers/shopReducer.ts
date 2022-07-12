@@ -23,9 +23,7 @@ type initialStateType = {
   shops: ItemType[];
 };
 
-type ActionsType =
-  | ReturnType<typeof addShopAC>
-  | ReturnType<typeof removeShopAC>;
+type ActionsType = ReturnType<typeof addShopAC> | ReturnType<typeof removeShopAC>;
 
 export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -47,6 +45,7 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
         };
       }
     }
+    // eslint-disable-next-line no-fallthrough
     case ShopActions.REMOVE_SHOP: {
       const { id } = action.payload;
       return { ...state, shops: state.shops.filter(shop => shop.id !== id) };

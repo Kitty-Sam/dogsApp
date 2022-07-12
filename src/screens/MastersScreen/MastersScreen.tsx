@@ -14,18 +14,14 @@ export const MastersScreen = () => {
   const masters = useSelector(getMasters);
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;
-    return (
-      <ItemContainer id={id} title={title} info={info} chapter={chapter} />
-    );
+    return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;
   };
   return (
     <ScrollView style={stylesCommon.rootContainer}>
       <Text style={stylesCommon.headerText}>Masters</Text>
       <View style={stylesCommon.textSectionContainer}>
         <Icon name={iconsName.ALERT_OUTLINE} size={36} />
-        <Text style={stylesCommon.text}>
-          Add here your favorite master with gold hands.
-        </Text>
+        <Text style={stylesCommon.text}>Add here your favorite master with gold hands.</Text>
       </View>
       <View style={stylesCommon.addSectionContainer}>
         <AddSection chapter={chaptersName.MASTER} />

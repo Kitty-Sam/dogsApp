@@ -1,9 +1,5 @@
 import { ItemType } from '../../components/ItemContainer/type';
-import {
-  addMasterAC,
-  MasterActions,
-  removeMasterAC,
-} from '../actions/masterAC';
+import { addMasterAC, MasterActions, removeMasterAC } from '../actions/masterAC';
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
@@ -21,9 +17,7 @@ type initialStateType = {
   masters: ItemType[];
 };
 
-type ActionsType =
-  | ReturnType<typeof addMasterAC>
-  | ReturnType<typeof removeMasterAC>;
+type ActionsType = ReturnType<typeof addMasterAC> | ReturnType<typeof removeMasterAC>;
 
 export const mastersReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -46,6 +40,7 @@ export const mastersReducer = (state = initialState, action: ActionsType) => {
       }
     }
 
+    // eslint-disable-next-line no-fallthrough
     case MasterActions.REMOVE_MASTER: {
       const { id } = action.payload;
       return {

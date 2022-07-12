@@ -19,11 +19,7 @@ export const UsefulBottomStack = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.SHOPPING : iconsName.SHOPPING_OUTLINE}
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.SHOPPING : iconsName.SHOPPING_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -33,15 +29,7 @@ export const UsefulBottomStack = () => {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <Icon
-              name={
-                focused
-                  ? iconsName.HOSPITAL_BOX
-                  : iconsName.HOSPITAL_BOX_OUTLINE
-              }
-              color={color}
-              size={size}
-            />
+            <Icon name={focused ? iconsName.HOSPITAL_BOX : iconsName.HOSPITAL_BOX_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -52,11 +40,7 @@ export const UsefulBottomStack = () => {
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size, focused }) => (
             <Icon
-              name={
-                focused
-                  ? iconsName.ACCOUNT_SUPERVISOR
-                  : iconsName.ACCOUNT_SUPERVISOR_OUTLINE
-              }
+              name={focused ? iconsName.ACCOUNT_SUPERVISOR : iconsName.ACCOUNT_SUPERVISOR_OUTLINE}
               color={color}
               size={size}
             />

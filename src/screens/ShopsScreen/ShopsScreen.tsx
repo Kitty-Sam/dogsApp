@@ -15,9 +15,7 @@ export const ShopsScreen = () => {
   const shops = useSelector(getShops);
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;
-    return (
-      <ItemContainer id={id} title={title} info={info} chapter={chapter} />
-    );
+    return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;
   };
   return (
     <ScrollView style={stylesCommon.rootContainer}>
