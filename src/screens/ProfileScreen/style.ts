@@ -1,18 +1,13 @@
-import { ImageStyle, StyleSheet, TextStyle } from 'react-native';
+import { StyleSheet, TextStyle } from 'react-native';
 
 export type ProfileScreenStyleType = {
-  headerText: TextStyle;
-  imageBackgroundContainer: ImageStyle;
+  container: TextStyle;
 };
 
 export const styles = StyleSheet.create<ProfileScreenStyleType>({
-  headerText: {
-    fontWeight: 'bold',
-    marginVertical: 8,
-  },
-  imageBackgroundContainer: {
-    flex: 1,
-    alignItems: 'stretch',
-    padding: 16,
+  container: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginVertical: 18,
   },
 });

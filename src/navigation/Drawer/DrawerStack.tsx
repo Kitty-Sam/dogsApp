@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
 import { ListItemsScreen } from '../../screens/FriendsScreen/ListItemsScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { UsefulBottomStack } from '../UsefulStack/UsefulStack';
@@ -9,7 +8,7 @@ import { DrawerNavigationName } from '../../enum/navigation';
 import { DrawerStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
 import { CustomDrawer } from './CustomDrawer';
-import { ProfileScreenNew } from '../../screens/ProfileScreen/ProfileScreenNew';
+import { Crop, ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -34,7 +33,7 @@ export const DrawerStack = () => {
       <Drawer.Screen
         name={DrawerNavigationName.PROFILE}
         // component={ProfileScreen}
-        component={ProfileScreenNew}
+        component={ProfileScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE} color={color} size={size} />

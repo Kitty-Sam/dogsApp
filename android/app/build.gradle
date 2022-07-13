@@ -139,6 +139,7 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "com.healthapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -261,9 +262,7 @@ android {
 }
 
 dependencies {
-    // image-picker
-    implementation project(':react-native-image-picker')
-    //icons
+      //icons
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
