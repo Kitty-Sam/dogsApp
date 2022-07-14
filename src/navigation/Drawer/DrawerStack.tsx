@@ -33,9 +33,7 @@ export const DrawerStack = () => {
     >
       <Drawer.Screen
         name={DrawerNavigationName.PROFILE}
-        // component={ProfileScreen}
-        // component={ProfileScreen}
-        component={LoginScreen}
+        component={ProfileScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE} color={color} size={size} />
