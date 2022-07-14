@@ -25,7 +25,11 @@
     }
   },
   "dependencies": {
+    "@firebase/auth": "^0.20.5",
     "@react-native-async-storage/async-storage": "^1.17.7",
+    "@react-native-firebase/app": "^15.1.1",
+    "@react-native-firebase/auth": "^15.1.1",
+    "@react-native-firebase/database": "^15.1.1",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/drawer": "^6.4.3",
     "@react-navigation/material-top-tabs": "^6.2.1",
@@ -35,6 +39,7 @@
     "react": "18.0.0",
     "react-native": "0.69.0",
     "react-native-gesture-handler": "^2.5.0",
+    "react-native-google-signin": "^2.1.1",
     "react-native-image-crop-picker": "^0.38.0",
     "react-native-pager-view": "^5.4.24",
     "react-native-reanimated": "^2.9.1",

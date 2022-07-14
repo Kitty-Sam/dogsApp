@@ -3,6 +3,7 @@ apply plugin: "com.android.application"
 
 
 
+
 import com.android.build.OutputFile
 
 /**
@@ -262,7 +263,13 @@ android {
 }
 
 dependencies {
-      //icons
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
+    //firebase
+    implementation 'com.google.firebase:firebase-analytics'
+    //add google services
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+//      implementation(project(":react-native-community_google-signin"))
+    //icons
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -326,3 +333,5 @@ def isNewArchitectureEnabled() {
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
+
+apply plugin: 'com.google.gms.google-services'
