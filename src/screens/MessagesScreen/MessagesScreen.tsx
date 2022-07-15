@@ -1,29 +1,22 @@
 import React from 'react';
-import {Text} from 'react-native';
-import {ParamListBase, RouteProp} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import { Text } from 'react-native';
+import { ParamListBase, RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
-import {MessagesNavigationName} from '../../enum/navigation';
-import {ChatItem} from '../../components/ChatItem/ChatItem';
-import {MessageStackParamList} from '../../navigation/MessageStack/type';
+import { MessagesNavigationName } from '../../enum/navigation';
+import { ChatItem } from '../../components/ChatItem/ChatItem';
+import { MessageStackParamList } from '../../navigation/MessageStack/type';
 
-export type StackScreenNavigationProps<
-  T extends keyof NavParamList,
-  NavParamList extends ParamListBase,
-> = {
+export type StackScreenNavigationProps<T extends keyof NavParamList, NavParamList extends ParamListBase> = {
   navigation: StackNavigationProp<NavParamList, T>;
   route: RouteProp<NavParamList, T>;
 };
 
 export const MessagesScreen = (
-  props: StackScreenNavigationProps<
-    MessagesNavigationName.MESSAGES,
-    MessageStackParamList
-  >,
+  props: StackScreenNavigationProps<MessagesNavigationName.MESSAGES, MessageStackParamList>,
 ) => {
-  const {navigation} = props;
-  const avatar1 =
-    'https://cdnstatic.rg.ru/uploads/images/222/22/41/photorep_imageid_513152_19_b6265e7a.jpg';
+  const { navigation } = props;
+  const avatar1 = 'https://cdnstatic.rg.ru/uploads/images/222/22/41/photorep_imageid_513152_19_b6265e7a.jpg';
 
   return (
     <>

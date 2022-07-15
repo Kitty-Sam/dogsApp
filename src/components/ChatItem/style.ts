@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, ViewStyle} from 'react-native';
+import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
 
 export type ChatItemStyleType = {
   chatItemContainer: ViewStyle;

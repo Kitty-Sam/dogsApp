@@ -7,10 +7,29 @@
     "ios": "react-native run-ios",
     "start": "react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint --debug src/",
+    "lint:write": "eslint --debug src/ --fix",
+    "prettier": "prettier --write src/**/*.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
+    "@firebase/auth": "^0.20.5",
     "@react-native-async-storage/async-storage": "^1.17.7",
+    "@react-native-firebase/app": "^15.1.1",
+    "@react-native-firebase/auth": "^15.1.1",
+    "@react-native-firebase/database": "^15.1.1",
     "@react-navigation/bottom-tabs": "^6.3.1",
     "@react-navigation/drawer": "^6.4.3",
     "@react-navigation/material-top-tabs": "^6.2.1",
@@ -20,6 +39,8 @@
     "react": "18.0.0",
     "react-native": "0.69.0",
     "react-native-gesture-handler": "^2.5.0",
+    "react-native-google-signin": "^2.1.1",
+    "react-native-image-crop-picker": "^0.38.0",
     "react-native-pager-view": "^5.4.24",
     "react-native-reanimated": "^2.9.1",
     "react-native-safe-area-context": "^4.3.1",
@@ -41,10 +62,22 @@
     "@types/react-test-renderer": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
+    "babel-eslint": "^8.2.3",
     "babel-jest": "^26.6.3",
     "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-jest-enzyme": "^6.0.2",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.18.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.9.1",
+    "husky": "^1.1.2",
     "jest": "^26.6.3",
+    "lint-staged": "^7.3.0",
     "metro-react-native-babel-preset": "^0.70.3",
+    "prettier": "2.7.1",
     "react-test-renderer": "18.0.0",
     "typescript": "^4.4.4"
   },

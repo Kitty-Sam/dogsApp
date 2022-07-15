@@ -1,10 +1,9 @@
-import {chaptersName} from '../enum/chapters';
+import { chaptersName } from '../enum/chapters';
 
 export const createImg = (text: chaptersName) => {
   let img = '';
   if (text === chaptersName.MASTER) {
-    img =
-      'https://img.freepik.com/premium-photo/dog-gets-hair-cut-pet-spa-grooming-salon_170532-240.jpg';
+    img = 'https://img.freepik.com/premium-photo/dog-gets-hair-cut-pet-spa-grooming-salon_170532-240.jpg';
     return img;
   }
   if (text === chaptersName.SHOP) {

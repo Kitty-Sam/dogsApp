@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import { ImageStyle, StyleSheet, TextStyle } from 'react-native';
 
 export type CustomDrawerStyleType = {
   avatarContainer: ImageStyle;

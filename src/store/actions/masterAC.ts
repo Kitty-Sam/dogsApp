@@ -1,4 +1,4 @@
-import {PayloadType, RemovePayloadType} from './shopAC';
+import { PayloadType, RemovePayloadType } from './shopAC';
 
 export enum MasterActions {
   ADD_MASTER = 'add_master',
