@@ -21,26 +21,27 @@ type ActionsType = ReturnType<typeof addClinicAC> | ReturnType<typeof removeClin
 
 export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
-    case ClinicActions.ADD_CLINIC: {
-      // @ts-ignore
-      const { id, title, info } = action.payload;
-      const hasClinic = state.clinics.find(clinic => clinic.id === id);
+    case ClinicActions.ADD_CLINIC:
+      {
+        // @ts-ignore
+        const { id, title, info } = action.payload;
+        const hasClinic = state.clinics.find(clinic => clinic.id === id);
 
-      if (!hasClinic) {
-        const newClinic: ItemType = {
-          id,
-          title,
-          info,
-          chapter: chaptersName.CLINIC,
-        };
-        return {
-          ...state,
-          clinics: [newClinic, ...state.clinics],
-        };
+        if (!hasClinic) {
+          const newClinic: ItemType = {
+            id,
+            title,
+            info,
+            chapter: chaptersName.CLINIC,
+          };
+          return {
+            ...state,
+            clinics: [newClinic, ...state.clinics],
+          };
+        }
       }
-    }
+      break;
 
-    // eslint-disable-next-line no-fallthrough
     case ClinicActions.REMOVE_CLINIC: {
       const { id } = action.payload;
       return {

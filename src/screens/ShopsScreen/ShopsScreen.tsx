@@ -15,6 +15,7 @@ const img = 'https://dogbizsuccess.com/wp-content/uploads/article-the-profession
 
 export const ShopsScreen = () => {
   const shops = useSelector(getShops);
+
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;
     return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;

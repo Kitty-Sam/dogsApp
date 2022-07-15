@@ -27,25 +27,26 @@ type ActionsType = ReturnType<typeof addShopAC> | ReturnType<typeof removeShopAC
 
 export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
-    case ShopActions.ADD_SHOP: {
-      // @ts-ignore
-      const { id, title, info } = action.payload;
-      const hasShop = state.shops.find(shop => shop.id === id);
+    case ShopActions.ADD_SHOP:
+      {
+        // @ts-ignore
+        const { id, title, info } = action.payload;
+        const hasShop = state.shops.find(shop => shop.id === id);
 
-      if (!hasShop) {
-        const newShop: ItemType = {
-          id,
-          title,
-          info,
-          chapter: chaptersName.SHOP,
-        };
-        return {
-          ...state,
-          shops: [newShop, ...state.shops],
-        };
+        if (!hasShop) {
+          const newShop: ItemType = {
+            id,
+            title,
+            info,
+            chapter: chaptersName.SHOP,
+          };
+          return {
+            ...state,
+            shops: [newShop, ...state.shops],
+          };
+        }
       }
-    }
-    // eslint-disable-next-line no-fallthrough
+      break;
     case ShopActions.REMOVE_SHOP: {
       const { id } = action.payload;
       return { ...state, shops: state.shops.filter(shop => shop.id !== id) };

@@ -15,6 +15,7 @@ const ReduxProvider = () => {
       webClientId: '231327631432-jbab5cet5cn5b1c4v2v7650cf1a9ojp3.apps.googleusercontent.com',
     });
   });
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

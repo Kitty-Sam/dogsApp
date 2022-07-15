@@ -17,11 +17,11 @@ export const AddSection = ({ chapter }: any) => {
   const [addInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  const shopAddedTitleRef = useRef<any>(null); //InputHandler
-  shopAddedTitleRef.current = addTitle;
+  const addedTitleRef = useRef<any>(null); //InputHandler
+  addedTitleRef.current = addTitle;
 
-  const shopAddedAddressRef = useRef<any>(null);
-  shopAddedAddressRef.current = addInfo;
+  const addedAddressRef = useRef<any>(null);
+  addedAddressRef.current = addInfo;
 
   const dispatch = useDispatch();
 
