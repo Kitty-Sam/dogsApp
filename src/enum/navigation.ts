@@ -23,3 +23,7 @@ export const enum DrawerNavigationName {
   FRIENDS = 'Friends',
   USEFUL_STACK = 'Useful_Info',
 }
+
+export const enum AuthNavigationName {
+  LOGIN = 'Login',
+}

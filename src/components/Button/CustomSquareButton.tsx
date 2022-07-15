@@ -1,10 +1,10 @@
-import React, {ReactElement} from 'react';
-import {Text, TouchableOpacity} from 'react-native';
-import {AppButtonPropsType} from './type';
-import {styles} from './style';
+import React, { ReactElement } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
+import { AppButtonPropsType } from './type';
+import { styles } from './style';
 
 export const AppButton = (props: AppButtonPropsType): ReactElement => {
-  const {onPress, title, disabled, backgroundColor = 'red'} = props;
+  const { onPress, title, disabled, backgroundColor = 'red' } = props;
 
   return (
     <TouchableOpacity
@@ -16,7 +16,8 @@ export const AppButton = (props: AppButtonPropsType): ReactElement => {
         {
           backgroundColor: disabled ? 'green' : backgroundColor,
         },
-      ]}>
+      ]}
+    >
       <Text style={styles.appButtonText}>{title}</Text>
     </TouchableOpacity>
   );

@@ -1,4 +1,4 @@
-import {DrawerNavigationName} from '../../enum/navigation';
+import { DrawerNavigationName } from '../../enum/navigation';
 
 export type DrawerStackParamList = {
   [DrawerNavigationName.MESSAGE_STACK]: undefined;

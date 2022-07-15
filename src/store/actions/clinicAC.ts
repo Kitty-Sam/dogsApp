@@ -1,4 +1,4 @@
-import {PayloadType, RemovePayloadType} from './shopAC';
+import { PayloadType, RemovePayloadType } from './shopAC';
 
 export enum ClinicActions {
   ADD_CLINIC = 'add_clinic',

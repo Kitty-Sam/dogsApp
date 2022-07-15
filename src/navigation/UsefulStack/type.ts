@@ -1,4 +1,4 @@
-import {TabBottomNavigationName} from '../../enum/navigation';
+import { TabBottomNavigationName } from '../../enum/navigation';
 
 export type UsefulStackParamList = {
   [TabBottomNavigationName.MASTERS]: undefined;
