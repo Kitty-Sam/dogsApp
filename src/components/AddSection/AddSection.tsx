@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { AppButton } from '../Button/CustomSquareButton';
-import { Image, Modal, TouchableOpacity, View, Text, Alert } from 'react-native';
-import { ModalInside } from '../Modal/ModalInside';
+import { Alert, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { ModalInput } from '../Modal/Modalnput';
 import { useDispatch } from 'react-redux';
 import { styles } from './style';
 import { chaptersName } from '../../enum/chapters';
@@ -61,44 +61,25 @@ export const AddSection = ({ chapter }: any) => {
     <>
       <Icon name={iconsName.ADD_CIRCLE_OUTLINE} size={36} onPress={addButtonPress} />
       <Modal visible={isOpen}>
-        <Text
-          style={{
-            textAlign: 'left',
-            marginHorizontal: 18,
-            marginTop: 8,
-            fontSize: 24,
-            fontStyle: 'italic',
-            fontWeight: 'bold',
-            textTransform: 'capitalize',
-          }}
-        >
-          {chapter}
-        </Text>
-        <View style={styles.modalContainer}>
-          <Image source={{ uri: img }} style={{ width: 200, height: 100, borderRadius: 20 }} />
-          <TouchableOpacity
-            style={{ position: 'absolute', right: 16, top: 8, zIndex: 10 }}
-            onPress={() => setIsOpen(false)}
-          >
-            <Icon name={iconsName.CLOSE_OUTLINE} size={24} />
-          </TouchableOpacity>
-          <ModalInside
-            placeholderInfo={'add info'}
-            placeholderTitle={'add title'}
-            setInfo={setInfo}
-            setTitle={setTitle}
-            addInfo={addInfo}
-            addTitle={addTitle}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              width: 200,
-              justifyContent: 'space-around',
-            }}
-          >
-            <AppButton title={buttonsName.ADD} onPress={addItemPress} backgroundColor={'orange'} />
-            <AppButton title={buttonsName.CANCEL} onPress={() => setIsOpen(false)} backgroundColor={'brown'} />
+        <View style={styles.modalCommonContainer}>
+          <Text style={styles.chapterText}>{chapter}</Text>
+          <View style={styles.modalContainer}>
+            <Image source={{ uri: img }} style={styles.imageContainer} />
+            <TouchableOpacity style={styles.closeIcon} onPress={() => setIsOpen(false)}>
+              <Icon name={iconsName.CLOSE_OUTLINE} size={24} />
+            </TouchableOpacity>
+            <ModalInput
+              placeholderInfo={'add info'}
+              placeholderTitle={'add title'}
+              setInfo={setInfo}
+              setTitle={setTitle}
+              addInfo={addInfo}
+              addTitle={addTitle}
+            />
+            <View style={styles.buttonsContainer}>
+              <AppButton title={buttonsName.ADD} onPress={addItemPress} backgroundColor={'orange'} />
+              <AppButton title={buttonsName.CANCEL} onPress={() => setIsOpen(false)} backgroundColor={'brown'} />
+            </View>
           </View>
         </View>
       </Modal>

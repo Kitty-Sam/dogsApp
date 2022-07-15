@@ -4,7 +4,7 @@ import { CustomTextInput } from '../TextInput/CustomTextInput';
 import { styles } from './style';
 import { ModalInsideInfoType } from './type';
 
-export const ModalInside = ({
+export const ModalInput = ({
   addTitle,
   setTitle,
   addInfo,
