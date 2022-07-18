@@ -1,0 +1,38 @@
+b<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>231327631432-4i30dcnhl931e6ob9bi6tctkiki9svau.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.231327631432-4i30dcnhl931e6ob9bi6tctkiki9svau</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>231327631432-mch5k5pcvk21bg3m7hb5idkd240f61m2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCY69Yy6AwVyPxW07XE7XEf5NBsaEq-1f4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>231327631432</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.healthApp</string>
+	<key>PROJECT_ID</key>
+	<string>dogs-8cdd1</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dogs-8cdd1.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:231327631432:ios:248d39050b1a9f45d9b07d</string>
+	<key>DATABASE_URL</key>
+	<string>https://dogs-8cdd1-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
