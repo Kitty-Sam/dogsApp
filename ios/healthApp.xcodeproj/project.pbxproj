@@ -45,6 +45,8 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = healthApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-healthApp-healthAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-healthApp-healthAppTests.release.xcconfig"; path = "Target Support Files/Pods-healthApp-healthAppTests/Pods-healthApp-healthAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		DBC6225C28855A2D003AC962 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "healthApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DBEBFFFD2885CF68006C68BF /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		DBEBFFFE2885CFD2006C68BF /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -88,6 +90,7 @@
 		13B07FAE1A68108700A75B9A /* healthApp */ = {
 			isa = PBXGroup;
 			children = (
+				DBEBFFFC2885CE00006C68BF /* Fonts */,
 				DBC6225C28855A2D003AC962 /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -149,6 +152,15 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-healthApp-healthAppTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		DBEBFFFC2885CE00006C68BF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DBEBFFFE2885CFD2006C68BF /* MaterialCommunityIcons.ttf */,
+				DBEBFFFD2885CF68006C68BF /* Ionicons.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
