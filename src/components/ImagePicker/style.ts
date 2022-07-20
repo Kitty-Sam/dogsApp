@@ -9,8 +9,8 @@ export type ImagePickerStyleType = {
 export const styles = StyleSheet.create<ImagePickerStyleType>({
   container: {
     elevation: 2,
-    height: 300,
-    width: 300,
+    height: 200,
+    width: 200,
     backgroundColor: '#efefef',
     borderRadius: 150,
     overflow: 'hidden',
@@ -19,13 +19,13 @@ export const styles = StyleSheet.create<ImagePickerStyleType>({
     flexDirection: 'row',
     opacity: 0.7,
     position: 'absolute',
-    left: 150,
+    left: 30,
     backgroundColor: 'lightgrey',
     width: '100%',
     height: '15%',
   },
   uploadBtn: {
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: 'relative',
+    left: 40,
   },
 });

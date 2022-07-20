@@ -4,8 +4,9 @@ import { SafeAreaView, View } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 import auth from '@react-native-firebase/auth';
 
-import { toggleIsLoggedAC } from '../../store/actions/loginAC';
+import { saveCurrentUserAC, toggleIsLoggedAC } from '../../store/actions/loginAC';
 import { useDispatch } from 'react-redux';
+import { database } from '../../utils/getDataBaseURL';
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,16 @@ export const LoginScreen = () => {
       const credential = auth.GoogleAuthProvider.credential(idToken);
       const { user }: any = await auth().signInWithCredential(credential);
       dispatch(toggleIsLoggedAC({ isLogged: true }));
-      console.log('userCred', user);
+      const { displayName, uid, email, photoURL } = user;
+
+      dispatch(
+        saveCurrentUserAC({ user: { currentUserId: uid, currentUserName: displayName, currentUserPhoto: photoURL } }),
+      );
+
+      await database
+        .ref('/users/')
+        .child(`${uid}`)
+        .set({ userName: displayName, userEmail: email, userId: uid, photo: photoURL });
     } catch (error) {
       console.log(error);
     }
