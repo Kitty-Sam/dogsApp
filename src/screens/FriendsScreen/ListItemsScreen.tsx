@@ -1,6 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 export const ListItemsScreen = () => {
-  return <Text>List items</Text>;
+  return (
+    <View>
+      <Text>List items</Text>
+      <Text>List items</Text>
+      <Text>List items</Text>
+    </View>
+  );
 };

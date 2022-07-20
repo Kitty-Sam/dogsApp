@@ -3,15 +3,18 @@ import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './style';
+import { useSelector } from 'react-redux';
+import { getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 
 export const ImagePickerCrop = () => {
-  const [image, setImage] = useState('');
+  const photo = useSelector(getCurrentUserPhoto);
+  const [image, setImage] = useState(String(photo));
 
   const takePhoto = () => {
     try {
       openCamera({
-        compressImageMaxWidth: 300,
-        compressImageMaxHeight: 300,
+        compressImageMaxWidth: 200,
+        compressImageMaxHeight: 200,
         compressImageQuality: 0.7,
         cropping: true,
       })
@@ -28,8 +31,8 @@ export const ImagePickerCrop = () => {
   const downLoadFromLibrary = () => {
     try {
       openPicker({
-        compressImageMaxWidth: 300,
-        compressImageMaxHeight: 300,
+        compressImageMaxWidth: 200,
+        compressImageMaxHeight: 200,
         compressImageQuality: 0.7,
         cropping: true,
       })
@@ -46,7 +49,7 @@ export const ImagePickerCrop = () => {
 
   return (
     <View style={styles.container}>
-      {image && <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />}
+      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
       <View style={styles.uploadBtnContainer}>
         <TouchableOpacity onPress={downLoadFromLibrary} style={styles.uploadBtn}>
           {/*<Text>{image ? 'Edit' : 'Upload'} Image</Text>*/}
