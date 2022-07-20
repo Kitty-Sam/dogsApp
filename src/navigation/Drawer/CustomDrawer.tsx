@@ -4,15 +4,16 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationName } from '../../enum/navigation';
 import { styles } from './style';
-
-const avatar1 = 'https://cdnstatic.rg.ru/uploads/images/222/22/41/photorep_imageid_513152_19_b6265e7a.jpg';
+import { useSelector } from 'react-redux';
+import { getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 
 export const CustomDrawer = (props: any) => {
+  const photo = useSelector(getCurrentUserPhoto);
   const navigation = useNavigation<any>();
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <Image source={{ uri: avatar1 }} style={styles.avatarContainer} />
+        <Image source={{ uri: String(photo) }} style={styles.avatarContainer} />
         <TouchableOpacity style={styles.userNameText} onPress={() => navigation.navigate(DrawerNavigationName.PROFILE)}>
           <Text>Katerina Samuta</Text>
         </TouchableOpacity>
