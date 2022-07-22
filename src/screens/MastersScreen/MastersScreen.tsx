@@ -9,11 +9,17 @@ import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles, stylesCommon } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
+import { getCurrentUserId, getCurrentUserName } from '../../store/selectors/loginSelector';
 
 const img =
   'https://st.depositphotos.com/1146092/1257/i/950/depositphotos_12573001-stock-photo-business-dog-typewriter.jpg';
 
 export const MastersScreen = () => {
+  const currentUserId = useSelector(getCurrentUserId);
+  const currentUserName = useSelector(getCurrentUserName);
+  console.log('currentUserId', currentUserId);
+  console.log('currentUserName', currentUserName);
+
   const masters = useSelector(getMasters);
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;
