@@ -5,22 +5,22 @@ export enum ClinicActions {
   REMOVE_CLINIC = 'remove_clinic',
 }
 
-export const addClinicAC = (payload: PayloadType) => ({
+export const addClinicAC: AddClinicActionType = (payload: PayloadType) => ({
   type: ClinicActions.ADD_CLINIC,
   payload,
 });
 
-export type AddClinicActionType = () => {
+export type AddClinicActionType = (payload: PayloadType) => {
   payload: PayloadType;
   type: ClinicActions.ADD_CLINIC;
 };
 
-export const removeClinicAC = (payload: RemovePayloadType) => ({
+export const removeClinicAC: RemoveClinicActionType = (payload: RemovePayloadType) => ({
   type: ClinicActions.REMOVE_CLINIC,
   payload,
 });
 
-export type RemoveClinicActionType = () => {
+export type RemoveClinicActionType = (payload: RemovePayloadType) => {
   payload: RemovePayloadType;
   type: ClinicActions.REMOVE_CLINIC;
 };

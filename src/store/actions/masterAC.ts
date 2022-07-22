@@ -5,22 +5,22 @@ export enum MasterActions {
   REMOVE_MASTER = 'remove_master',
 }
 
-export const addMasterAC = (payload: PayloadType) => ({
+export const addMasterAC: AddShopActionType = (payload: PayloadType) => ({
   type: MasterActions.ADD_MASTER,
   payload,
 });
 
-export type AddShopActionType = () => {
+export type AddShopActionType = (payload: PayloadType) => {
   payload: PayloadType;
   type: MasterActions.ADD_MASTER;
 };
 
-export const removeMasterAC = (payload: RemovePayloadType) => ({
+export const removeMasterAC: removeMasterActionType = (payload: RemovePayloadType) => ({
   type: MasterActions.REMOVE_MASTER,
   payload,
 });
 
-export type removeMasterActionType = () => {
+export type removeMasterActionType = (payload: RemovePayloadType) => {
   payload: RemovePayloadType;
   type: MasterActions.REMOVE_MASTER;
 };

@@ -11,22 +11,22 @@ export enum ShopActions {
   REMOVE_SHOP = 'remove_shop',
 }
 
-export const addShopAC = (payload: PayloadType) => ({
+export const addShopAC: AddShopActionType = (payload: PayloadType) => ({
   type: ShopActions.ADD_SHOP,
   payload,
 });
 
-export type AddShopActionType = () => {
+export type AddShopActionType = (payload: PayloadType) => {
   payload: PayloadType;
   type: ShopActions.ADD_SHOP;
 };
 
-export const removeShopAC = (payload: RemovePayloadType) => ({
+export const removeShopAC: RemoveShopActionType = (payload: RemovePayloadType) => ({
   type: ShopActions.REMOVE_SHOP,
   payload,
 });
 
-export type RemoveShopActionType = () => {
+export type RemoveShopActionType = (payload: RemovePayloadType) => {
   payload: RemovePayloadType;
   type: ShopActions.REMOVE_SHOP;
 };
