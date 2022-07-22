@@ -2,15 +2,14 @@ import React, { useRef, useState } from 'react';
 import { AppButton } from '../Button/CustomSquareButton';
 import { Alert, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ModalInput } from '../Modal/Modalnput';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { styles } from './style';
 import { chaptersName } from '../../enum/chapters';
 import { buttonsName } from '../../enum/buttonsName';
-import { addShopAC } from '../../store/actions/shopAC';
-import { addClinicAC } from '../../store/actions/clinicAC';
-import { addMasterAC } from '../../store/actions/masterAC';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
+import { database } from '../../utils/getDataBaseURL';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
 
 export const AddSection = ({ chapter }: any) => {
   const [addTitle, setTitle] = useState('');
@@ -23,13 +22,13 @@ export const AddSection = ({ chapter }: any) => {
   const addedAddressRef = useRef<any>(null);
   addedAddressRef.current = addInfo;
 
-  const dispatch = useDispatch();
-
   const addButtonPress = () => {
     setIsOpen(true);
   };
 
-  const addItemPress = () => {
+  const currentUserId = useSelector(getCurrentUserId);
+
+  const addItemPress = async () => {
     const payload = {
       id: addTitle,
       title: addTitle,
@@ -41,14 +40,24 @@ export const AddSection = ({ chapter }: any) => {
       setTitle('');
       return;
     }
+
     if (chapter === chaptersName.SHOP) {
-      dispatch(addShopAC(payload));
+      database
+        .ref(`/users/${currentUserId}/shops`)
+        .child(`${payload.title}`)
+        .set({ ...payload, chapter: chaptersName.SHOP });
     }
     if (chapter === chaptersName.CLINIC) {
-      dispatch(addClinicAC(payload));
+      database
+        .ref(`/users/${currentUserId}/clinics`)
+        .child(`${payload.title}`)
+        .set({ ...payload, chapter: chaptersName.CLINIC });
     }
     if (chapter === chaptersName.MASTER) {
-      dispatch(addMasterAC(payload));
+      database
+        .ref(`/users/${currentUserId}/masters`)
+        .child(`${payload.title}`)
+        .set({ ...payload, chapter: chaptersName.MASTER });
     }
     setIsOpen(false);
     setInfo('');
