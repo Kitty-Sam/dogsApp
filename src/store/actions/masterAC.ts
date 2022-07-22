@@ -1,8 +1,10 @@
 import { PayloadType, RemovePayloadType } from './shopAC';
+import { ClinicActions } from './clinicAC';
 
 export enum MasterActions {
   ADD_MASTER = 'add_master',
   REMOVE_MASTER = 'remove_master',
+  FETCH_MASTERS = 'fetch_masters',
 }
 
 export const addMasterAC: AddShopActionType = (payload: PayloadType) => ({
@@ -23,4 +25,14 @@ export const removeMasterAC: removeMasterActionType = (payload: RemovePayloadTyp
 export type removeMasterActionType = (payload: RemovePayloadType) => {
   payload: RemovePayloadType;
   type: MasterActions.REMOVE_MASTER;
+};
+
+export const fetchMastersAC: FetchMastersActionType = (payload: PayloadType[]) => ({
+  type: MasterActions.FETCH_MASTERS,
+  payload,
+});
+
+export type FetchMastersActionType = (payload: PayloadType[]) => {
+  payload: PayloadType[];
+  type: MasterActions.FETCH_MASTERS;
 };
