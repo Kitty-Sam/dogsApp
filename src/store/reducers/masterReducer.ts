@@ -1,6 +1,7 @@
 import { ItemType } from '../../components/ItemContainer/type';
-import { addMasterAC, MasterActions, removeMasterAC } from '../actions/masterAC';
+import { addMasterAC, fetchMastersAC, MasterActions, removeMasterAC } from '../actions/masterAC';
 import { chaptersName } from '../../enum/chapters';
+import { ClinicActions } from '../actions/clinicAC';
 
 const initialState: initialStateType = {
   masters: [],
@@ -10,7 +11,10 @@ type initialStateType = {
   masters: ItemType[];
 };
 
-type ActionsType = ReturnType<typeof addMasterAC> | ReturnType<typeof removeMasterAC>;
+type ActionsType =
+  | ReturnType<typeof addMasterAC>
+  | ReturnType<typeof removeMasterAC>
+  | ReturnType<typeof fetchMastersAC>;
 
 export const mastersReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -39,6 +43,13 @@ export const mastersReducer = (state = initialState, action: ActionsType) => {
       return {
         ...state,
         masters: state.masters.filter(master => master.id !== id),
+      };
+    }
+
+    case MasterActions.FETCH_MASTERS: {
+      return {
+        ...state,
+        masters: action.payload,
       };
     }
 

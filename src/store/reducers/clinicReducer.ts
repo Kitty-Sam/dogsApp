@@ -1,5 +1,5 @@
 import { ItemType } from '../../components/ItemContainer/type';
-import { addClinicAC, ClinicActions, removeClinicAC } from '../actions/clinicAC';
+import { addClinicAC, ClinicActions, fetchClinicsAC, removeClinicAC } from '../actions/clinicAC';
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
@@ -10,7 +10,10 @@ type initialStateType = {
   clinics: ItemType[];
 };
 
-type ActionsType = ReturnType<typeof addClinicAC> | ReturnType<typeof removeClinicAC>;
+type ActionsType =
+  | ReturnType<typeof addClinicAC>
+  | ReturnType<typeof removeClinicAC>
+  | ReturnType<typeof fetchClinicsAC>;
 
 export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -42,6 +45,12 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
       };
     }
 
+    case ClinicActions.FETCH_CLINICS: {
+      return {
+        ...state,
+        clinics: action.payload,
+      };
+    }
     default:
       return state;
   }
