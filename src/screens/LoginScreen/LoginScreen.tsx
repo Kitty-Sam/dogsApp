@@ -16,7 +16,7 @@ export const LoginScreen = () => {
       const { idToken } = await GoogleSignin.signIn();
       const credential = auth.GoogleAuthProvider.credential(idToken);
       const { user }: any = await auth().signInWithCredential(credential);
-      dispatch(toggleIsLoggedAC({ isLogged: true }));
+
       const { displayName, uid, email, photoURL } = user;
 
       dispatch(
@@ -30,6 +30,7 @@ export const LoginScreen = () => {
     } catch (error) {
       console.log(error);
     }
+    dispatch(toggleIsLoggedAC({ isLogged: true }));
   };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>

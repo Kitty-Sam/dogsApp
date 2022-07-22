@@ -18,6 +18,6 @@ export const styles = StyleSheet.create<CustomDrawerStyleType>({
     marginBottom: 60,
   },
   logOutText: {
-    margin: 16,
+    margin: 24,
   },
 });
