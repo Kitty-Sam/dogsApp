@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, Image, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getClinics } from '../../store/selectors/clinicSelector';
 import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
 import { stylesCommon } from '../MastersScreen/style';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { database } from '../../utils/getDataBaseURL';
+import { fetchClinicsAC } from '../../store/actions/clinicAC';
 
 const img =
   'https://media.istockphoto.com/photos/office-worker-boss-dog-picture-id1150752409?k=20&m=1150752409&s=612x612&w=0&h=XGjpxvih3cxFDCgeHU86sw8Fkc07_YImun4IfKCbf0Y=';
 
 export const ClinicsScreen = () => {
   const clinics = useSelector(getClinics);
+
+  const currentUserId = useSelector(getCurrentUserId);
+
+  const dispatch = useDispatch();
+
+  const getUsefulInfo = async () => {
+    const referenceClinics: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/clinics`);
+    const snapshotClinics: FirebaseDatabaseTypes.DataSnapshot = await referenceClinics.once('value');
+
+    if (snapshotClinics.val()) {
+      const values = snapshotClinics.val();
+      const clinics: any = Object.values(values);
+      dispatch(fetchClinicsAC(clinics));
+    } else {
+      const emptyArray: any[] = [];
+      dispatch(fetchClinicsAC(emptyArray));
+    }
+  };
+
+  useEffect(() => {
+    getUsefulInfo();
+  }, [clinics]);
+
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;
     return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;

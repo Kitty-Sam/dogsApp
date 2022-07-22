@@ -7,6 +7,8 @@ import auth from '@react-native-firebase/auth';
 import { saveCurrentUserAC, toggleIsLoggedAC } from '../../store/actions/loginAC';
 import { useDispatch } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { ItemType } from '../../components/ItemContainer/type';
 
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -23,10 +25,20 @@ export const LoginScreen = () => {
         saveCurrentUserAC({ user: { currentUserId: uid, currentUserName: displayName, currentUserPhoto: photoURL } }),
       );
 
-      await database
-        .ref('/users/')
-        .child(`${uid}`)
-        .set({ userName: displayName, userEmail: email, userId: uid, photo: photoURL });
+      const reference: FirebaseDatabaseTypes.Reference = await database.ref(`/users/`);
+      const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
+      if (snapshot.val()) {
+        const values = snapshot.val();
+        const users: any[] = Object.values(values);
+        const currentUserInFb = users.find(el => el.userId === uid);
+
+        if (!currentUserInFb) {
+          await database
+            .ref('/users/')
+            .child(`${uid}`)
+            .set({ userName: displayName, userEmail: email, userId: uid, photo: photoURL });
+        }
+      }
     } catch (error) {
       console.log(error);
     }

@@ -1,29 +1,24 @@
 import { ItemType } from '../../components/ItemContainer/type';
-import { addClinicAC, ClinicActions, removeClinicAC } from '../actions/clinicAC';
+import { addClinicAC, ClinicActions, fetchClinicsAC, removeClinicAC } from '../actions/clinicAC';
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
-  clinics: [
-    {
-      info: 'Vostochnaya',
-      title: 'VetMed',
-      id: 'VeyMed',
-      chapter: chaptersName.CLINIC,
-    },
-  ],
+  clinics: [],
 };
 
 type initialStateType = {
   clinics: ItemType[];
 };
 
-type ActionsType = ReturnType<typeof addClinicAC> | ReturnType<typeof removeClinicAC>;
+type ActionsType =
+  | ReturnType<typeof addClinicAC>
+  | ReturnType<typeof removeClinicAC>
+  | ReturnType<typeof fetchClinicsAC>;
 
 export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ClinicActions.ADD_CLINIC:
       {
-        // @ts-ignore
         const { id, title, info } = action.payload;
         const hasClinic = state.clinics.find(clinic => clinic.id === id);
 
@@ -50,6 +45,12 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
       };
     }
 
+    case ClinicActions.FETCH_CLINICS: {
+      return {
+        ...state,
+        clinics: action.payload,
+      };
+    }
     default:
       return state;
   }
