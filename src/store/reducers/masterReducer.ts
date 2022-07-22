@@ -23,7 +23,6 @@ export const mastersReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case MasterActions.ADD_MASTER:
       {
-        // @ts-ignore
         const { id, title, info } = action.payload;
         const hasMaster = state.masters.find(master => master.id === id);
 

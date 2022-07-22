@@ -29,7 +29,6 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ShopActions.ADD_SHOP:
       {
-        // @ts-ignore
         const { id, title, info } = action.payload;
         const hasShop = state.shops.find(shop => shop.id === id);
 

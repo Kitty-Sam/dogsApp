@@ -23,7 +23,6 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ClinicActions.ADD_CLINIC:
       {
-        // @ts-ignore
         const { id, title, info } = action.payload;
         const hasClinic = state.clinics.find(clinic => clinic.id === id);
 
