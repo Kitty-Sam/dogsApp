@@ -3,20 +3,7 @@ import { addShopAC, removeShopAC, ShopActions } from '../actions/shopAC';
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
-  shops: [
-    {
-      id: 'Zoobar',
-      title: 'Zoobar',
-      info: 'ul.Filimonova, 53',
-      chapter: chaptersName.SHOP,
-    },
-    {
-      id: 'Zoobazar',
-      title: 'Zoobazar',
-      info: 'ul.Dzerhinskogo, 12',
-      chapter: chaptersName.SHOP,
-    },
-  ],
+  shops: [],
 };
 
 type initialStateType = {

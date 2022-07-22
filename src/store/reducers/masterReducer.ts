@@ -3,14 +3,7 @@ import { addMasterAC, MasterActions, removeMasterAC } from '../actions/masterAC'
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
-  masters: [
-    {
-      id: 'Kitty Sam',
-      title: 'Kitty Sam',
-      info: 'hairdresser',
-      chapter: chaptersName.MASTER,
-    },
-  ],
+  masters: [],
 };
 
 type initialStateType = {
