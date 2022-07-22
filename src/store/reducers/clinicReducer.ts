@@ -3,14 +3,7 @@ import { addClinicAC, ClinicActions, removeClinicAC } from '../actions/clinicAC'
 import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
-  clinics: [
-    {
-      info: 'Vostochnaya',
-      title: 'VetMed',
-      id: 'VeyMed',
-      chapter: chaptersName.CLINIC,
-    },
-  ],
+  clinics: [],
 };
 
 type initialStateType = {
