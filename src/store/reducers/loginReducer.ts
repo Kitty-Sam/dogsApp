@@ -1,24 +1,39 @@
-import { ItemType } from '../../components/ItemContainer/type';
-import { addClinicAC, ClinicActions, removeClinicAC } from '../actions/clinicAC';
-import { chaptersName } from '../../enum/chapters';
-import { LoginActions, toggleIsLoggedAC } from '../actions/loginAC';
+import { LoginActions, saveCurrentUserAC, toggleIsLoggedAC } from '../actions/loginAC';
 
 const initialState: initialStateType = {
   isLogged: false,
+  user: {
+    currentUserId: '',
+    currentUserName: 'stranger',
+    currentUserPhoto: '',
+  },
 };
 
 type initialStateType = {
   isLogged: boolean;
+  user: {
+    currentUserId: string;
+    currentUserName: string;
+    currentUserPhoto: string;
+  };
 };
 
-type ActionsType = ReturnType<typeof toggleIsLoggedAC>;
+type ActionsType = ReturnType<typeof saveCurrentUserAC> | ReturnType<typeof toggleIsLoggedAC>;
 
 export const loginReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case LoginActions.TOGGLE_IS_LOGGED: {
+      const { isLogged } = action.payload;
       return {
         ...state,
-        isLogged: action.payload.isLogged,
+        isLogged,
+      };
+    }
+
+    case LoginActions.SAVE_CURRENT_USER: {
+      return {
+        ...state,
+        user: action.payload.user,
       };
     }
 

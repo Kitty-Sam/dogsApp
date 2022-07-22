@@ -2,21 +2,18 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
 import { styles } from './style';
-import { AppButton } from '../../components/Button/CustomSquareButton';
-import { database } from '../../utils/getDataBaseURL';
+import { useSelector } from 'react-redux';
+import { getCurrentUserName, getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 
 export const ProfileScreen = () => {
+  const photo = useSelector(getCurrentUserPhoto);
+  const currentUserName = useSelector(getCurrentUserName);
+  const photoString = String(photo);
+
   return (
     <View style={styles.container}>
-      <ImagePickerCrop />
-      <Text style={{ marginVertical: 20, fontSize: 16 }}>Welcome, Katerina Samuta</Text>
-      {/* <AppButton
-        onPress={async () => {
-          console.log('WORK');
-          await database.ref('/users/').child('string').set({ title: 'login' });
-        }}
-        title={'work with firebase'}
-      />*/}
+      <ImagePickerCrop photoString={photoString} />
+      {currentUserName && <Text style={{ marginVertical: 20, fontSize: 16 }}> Welcome, {currentUserName}</Text>}
     </View>
   );
 };

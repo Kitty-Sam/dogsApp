@@ -15,13 +15,7 @@ export const MessagesStack = () => {
         component={MessagesScreen}
         options={{ headerShown: false }}
       />
-      <Messages.Screen
-        name={MessagesNavigationName.CHAT}
-        component={ChatScreen}
-        // options={({route}) => ({
-        //   title: route.params.userName,
-        // })}
-      />
+      <Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreen} options={{ headerShown: false }} />
     </Messages.Navigator>
   );
 };
