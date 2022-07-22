@@ -9,7 +9,6 @@ import { DrawerStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
 import { CustomDrawer } from './CustomDrawer';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
-import { LoginScreen } from '../../screens/LoginScreen/LoginScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -24,7 +23,7 @@ export const DrawerStack = () => {
         drawerStyle: {
           borderBottomEndRadius: 20,
           borderTopEndRadius: 20,
-          backgroundColor: '#e8faf4',
+          // backgroundColor: '#e8faf4',
         },
         drawerContentContainerStyle: {
           width: 350,

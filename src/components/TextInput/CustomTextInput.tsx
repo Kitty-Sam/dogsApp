@@ -1,9 +1,9 @@
 import React from 'react';
 import { TextInput } from 'react-native';
-import { Type } from './type';
+import { CustomInputType } from './type';
 import { styles } from './style';
 
-export const CustomTextInput = ({ placeholder, value, setValue }: Type) => {
+export const CustomTextInput = ({ placeholder, value, setValue }: CustomInputType) => {
   return (
     <TextInput
       value={value}

@@ -3,12 +3,13 @@ import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './style';
-import { useSelector } from 'react-redux';
-import { getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 
-export const ImagePickerCrop = () => {
-  const photo = useSelector(getCurrentUserPhoto);
-  const [image, setImage] = useState(String(photo));
+export type ImagePickerType = {
+  photoString: string;
+};
+
+export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
+  const [image, setImage] = useState(photoString);
 
   const takePhoto = () => {
     try {
