@@ -16,6 +16,8 @@ export const AddSection = ({ chapter }: any) => {
   const [addInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
+  const currentUserId = useSelector(getCurrentUserId);
+
   const addedTitleRef = useRef<any>(null); //InputHandler
   addedTitleRef.current = addTitle;
 
@@ -23,10 +25,9 @@ export const AddSection = ({ chapter }: any) => {
   addedAddressRef.current = addInfo;
 
   const addButtonPress = () => {
+    console.log('ADD PRESS');
     setIsOpen(true);
   };
-
-  const currentUserId = useSelector(getCurrentUserId);
 
   const addItemPress = async () => {
     const payload = {
