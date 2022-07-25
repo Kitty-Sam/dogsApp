@@ -16,5 +16,4 @@ export const enum iconsName {
   ADD_CIRCLE_OUTLINE = 'add-circle-outline',
   ALERT_OUTLINE = 'alert-outline',
   CLOSE_OUTLINE = 'close-outline',
-  PENCIL_OUTLINE = 'pencil-outline',
 }
