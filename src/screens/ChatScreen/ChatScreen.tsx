@@ -76,6 +76,8 @@ export const ChatScreen = () => {
       onSend={messages => onSend(messages)}
       user={{
         _id: auth?.currentUser?.email,
+        name: 'stranger',
+        avatar: imgAvatar,
       }}
     />
   );
