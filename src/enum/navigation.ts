@@ -26,4 +26,5 @@ export const enum DrawerNavigationName {
 
 export const enum AuthNavigationName {
   LOGIN = 'Login',
+  REGISTER = 'Register',
 }
