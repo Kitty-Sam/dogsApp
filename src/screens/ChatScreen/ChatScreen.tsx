@@ -72,6 +72,7 @@ export const ChatScreen = () => {
   return (
     <GiftedChat
       messages={messages}
+      showUserAvatar={true}
       showAvatarForEveryMessage={true}
       onSend={messages => onSend(messages)}
       user={{
