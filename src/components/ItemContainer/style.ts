@@ -4,6 +4,7 @@ export type ItemContainerStyleType = {
   itemContainer: ViewStyle;
   text: TextStyle;
   imageContainer: ImageStyle;
+  closeText: TextStyle;
 };
 
 export const styles = StyleSheet.create<ItemContainerStyleType>({
@@ -30,5 +31,11 @@ export const styles = StyleSheet.create<ItemContainerStyleType>({
     position: 'absolute',
     bottom: 16,
     right: 16,
+  },
+  closeText: {
+    position: 'absolute',
+    right: 18,
+    top: 18,
+    zIndex: 100,
   },
 });

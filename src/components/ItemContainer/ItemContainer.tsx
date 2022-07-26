@@ -32,7 +32,7 @@ export const ItemContainer = ({ title, info, id, chapter }: ItemType) => {
 
   return (
     <TouchableOpacity style={styles.itemContainer}>
-      <TouchableOpacity style={{ position: 'absolute', right: 18, top: 18, zIndex: 100 }} onPress={removeItem(chapter)}>
+      <TouchableOpacity style={styles.closeText} onPress={removeItem(chapter)}>
         <Text>X</Text>
       </TouchableOpacity>
       <Text style={styles.text}>{title}</Text>
