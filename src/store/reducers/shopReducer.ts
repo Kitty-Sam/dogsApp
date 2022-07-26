@@ -1,7 +1,6 @@
 import { ItemType } from '../../components/ItemContainer/type';
 import { addShopAC, fetchShopsAC, removeShopAC, ShopActions } from '../actions/shopAC';
 import { chaptersName } from '../../enum/chapters';
-import { MasterActions } from '../actions/masterAC';
 
 const initialState: initialStateType = {
   shops: [],
@@ -17,7 +16,7 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ShopActions.ADD_SHOP:
       {
-        const { id, title, info } = action.payload;
+        const { id, title, info, chapter } = action.payload;
         const hasShop = state.shops.find(shop => shop.id === id);
 
         if (!hasShop) {
@@ -25,7 +24,7 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
             id,
             title,
             info,
-            chapter: chaptersName.SHOP,
+            chapter,
           };
           return {
             ...state,

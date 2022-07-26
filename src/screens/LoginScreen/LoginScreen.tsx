@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Alert, SafeAreaView, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, SafeAreaView, TextInput, View } from 'react-native';
 import { saveCurrentUserAC, toggleIsLoggedAC } from '../../store/actions/loginAC';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { signInWithEmailAndPassword } from '@firebase/auth';
@@ -12,16 +12,22 @@ import { AppButton } from '../../components/Button/CustomSquareButton';
 import { styles } from './style';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
+import { toggleAppStatus } from '../../store/actions/appAC';
+import { requestStatus } from '../../store/reducers/appReducer';
+import { getAppStatus } from '../../store/selectors/appSelector';
 
 const imgForRedux = 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000';
 
 export const LoginScreen = () => {
-  const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const statusApp = useSelector(getAppStatus);
 
   const signIn = async () => {
+    dispatch(toggleAppStatus(requestStatus.LOADING));
     try {
       const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
       const { uid, email } = userCredential.user;
@@ -49,10 +55,12 @@ export const LoginScreen = () => {
       }
       // setUserEmail('');
       // setPassword('');
+      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
       dispatch(toggleIsLoggedAC({ isLogged: true }));
     } catch (error: any) {
       const errorMessage = error.message;
       Alert.alert('register at first', errorMessage);
+      dispatch(toggleAppStatus(requestStatus.FAILED));
       navigation.navigate(AuthNavigationName.REGISTER);
     }
   };
@@ -63,23 +71,29 @@ export const LoginScreen = () => {
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <TextInput
-        style={styles.input}
-        placeholder={inputsPlaceholdersName.EMAIL}
-        value={userEmail}
-        onChangeText={text => setUserEmail(text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={inputsPlaceholdersName.PASSWORD}
-        value={password}
-        onChangeText={text => setPassword(text)}
-        // secureTextEntry
-      />
-      <View style={styles.buttonsContainer}>
-        <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'yellow'} />
-        <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} />
-      </View>
+      {statusApp === requestStatus.LOADING ? (
+        <ActivityIndicator />
+      ) : (
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder={inputsPlaceholdersName.EMAIL}
+            value={userEmail}
+            onChangeText={text => setUserEmail(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder={inputsPlaceholdersName.PASSWORD}
+            value={password}
+            onChangeText={text => setPassword(text)}
+            // secureTextEntry
+          />
+          <View style={styles.buttonsContainer}>
+            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'yellow'} />
+            <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} />
+          </View>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
