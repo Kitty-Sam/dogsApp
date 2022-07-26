@@ -1,12 +1,13 @@
-import { MasterActions } from './masterAC';
+import { chaptersName } from '../../enum/chapters';
 
 export type PayloadType = {
   id: string;
   title: string;
   info: string;
+  chapter: chaptersName;
 };
 
-export type RemovePayloadType = Omit<PayloadType, 'title' | 'info'>;
+export type RemovePayloadType = Omit<PayloadType, 'title' | 'info' | 'chapter'>;
 
 export enum ShopActions {
   ADD_SHOP = 'add_shop',
