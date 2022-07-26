@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AppButton } from '../Button/CustomSquareButton';
 import { Alert, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ModalInput } from '../Modal/Modalnput';
