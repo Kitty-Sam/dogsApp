@@ -40,7 +40,7 @@ export const ShopsScreen = () => {
   useEffect(() => {
     getUsefulInfo();
     console.log('Render');
-  }, []);
+  }, [shops]);
 
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;

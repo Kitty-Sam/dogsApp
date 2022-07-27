@@ -60,7 +60,6 @@ export const CalendarScreen = () => {
           <View style={{ justifyContent: 'center', alignItems: 'center', width: 300 }}>
             <Text>Create new note</Text>
             <CustomTextInput placeholder={'enter title'} value={title} setValue={setTitle} />
-            <CustomTextInput placeholder={'enter info'} value={info} setValue={setInfo} />
           </View>
           <View style={{ flexDirection: 'row', width: 200, justifyContent: 'space-between' }}>
             <AppButton title={'save'} onPress={savePress} backgroundColor={'yellow'} />
