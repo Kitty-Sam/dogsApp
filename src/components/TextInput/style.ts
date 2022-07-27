@@ -13,7 +13,6 @@ export const styles = StyleSheet.create<ModalInsideContainerStyleType>({
     borderWidth: 2,
     width: '80%',
     borderRadius: 10,
-    paddingHorizontal: 8,
-    padding: ios ? 10 : '',
+    padding: ios ? 10 : 8,
   },
 });
