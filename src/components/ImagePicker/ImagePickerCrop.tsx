@@ -8,6 +8,8 @@ export type ImagePickerType = {
   photoString: string;
 };
 
+// const img = 'https://cdn-icons-png.flaticon.com/512/194/194938.png';
+
 export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
   const [image, setImage] = useState(photoString);
 
@@ -53,11 +55,9 @@ export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
       <View style={styles.uploadBtnContainer}>
         <TouchableOpacity onPress={downLoadFromLibrary} style={styles.uploadBtn}>
-          {/*<Text>{image ? 'Edit' : 'Upload'} Image</Text>*/}
           <Icon name="pencil" size={20} color="black" style={{ marginHorizontal: 4 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={takePhoto} style={styles.uploadBtn}>
-          {/*<Text>{image ? 'Edit' : 'Take'} Image</Text>*/}
           <Icon name="camera" size={20} color="black" style={{ marginHorizontal: 4 }} />
         </TouchableOpacity>
       </View>

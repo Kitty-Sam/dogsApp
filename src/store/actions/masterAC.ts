@@ -1,5 +1,4 @@
 import { PayloadType, RemovePayloadType } from './shopAC';
-import { ClinicActions } from './clinicAC';
 
 export enum MasterActions {
   ADD_MASTER = 'add_master',

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, Text } from 'react-native';
 import { database } from '../../utils/getDataBaseURL';
 import { UserItem } from '../../components/UserItem/UserItem';
-import { getCurrentUserName } from '../../store/selectors/loginSelector';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { useSelector } from 'react-redux';
 import { UserTypeFromFb } from './type';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
@@ -10,7 +10,7 @@ import { styles } from './style';
 
 export const ListItemsScreen = () => {
   const [users, setUsers] = useState<UserTypeFromFb[]>([]);
-  const currentUser = useSelector(getCurrentUserName);
+  const currentUserId = useSelector(getCurrentUserId);
 
   const getUsers = async () => {
     const snapshot: FirebaseDatabaseTypes.DataSnapshot = await database.ref('/users/').once('value');
@@ -34,7 +34,7 @@ export const ListItemsScreen = () => {
         <Text>:( You dont have any friends...</Text>
       ) : (
         <FlatList
-          data={users.filter(el => el.userName !== currentUser)}
+          data={users.filter(el => el.userId !== currentUserId)}
           renderItem={renderItem}
           keyExtractor={item => item.userId}
         />

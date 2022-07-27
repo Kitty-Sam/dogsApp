@@ -30,7 +30,7 @@ export const ShopsScreen = () => {
     if (snapshotShops.val()) {
       const values = snapshotShops.val();
       const shops: ItemType[] = Object.values(values);
-      console.log('shopsFromFb', shops);
+      // console.log('shopsFromFb', shops);
       dispatch(fetchShopsAC(shops));
     } else {
       const emptyArray: any[] = [];
@@ -39,7 +39,8 @@ export const ShopsScreen = () => {
   };
   useEffect(() => {
     getUsefulInfo();
-  }, [shops]);
+    console.log('Render');
+  }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
     const { id, info, title, chapter } = item;

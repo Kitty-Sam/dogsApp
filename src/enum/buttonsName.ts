@@ -1,5 +1,6 @@
 export const enum buttonsName {
   ADD = 'add',
-  PLUS = '+',
   CANCEL = 'cancel',
+  SIGN_IN = 'sign in',
+  REGISTER = 'register',
 }

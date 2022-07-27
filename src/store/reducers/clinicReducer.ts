@@ -1,6 +1,5 @@
 import { ItemType } from '../../components/ItemContainer/type';
 import { addClinicAC, ClinicActions, fetchClinicsAC, removeClinicAC } from '../actions/clinicAC';
-import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
   clinics: [],
@@ -19,7 +18,7 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ClinicActions.ADD_CLINIC:
       {
-        const { id, title, info } = action.payload;
+        const { id, title, info, chapter } = action.payload;
         const hasClinic = state.clinics.find(clinic => clinic.id === id);
 
         if (!hasClinic) {
@@ -27,7 +26,7 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
             id,
             title,
             info,
-            chapter: chaptersName.CLINIC,
+            chapter,
           };
           return {
             ...state,
