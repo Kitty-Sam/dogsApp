@@ -39,7 +39,7 @@ export const ShopsScreen = () => {
   };
   useEffect(() => {
     getUsefulInfo();
-    console.log('Render');
+    console.log('Render again');
   }, [shops]);
 
   const renderItem = ({ item }: { item: ItemType }) => {

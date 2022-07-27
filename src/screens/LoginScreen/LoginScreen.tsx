@@ -73,8 +73,8 @@ export const LoginScreen = (props: any) => {
           );
         }
       }
-      // setUserEmail('');
-      // setPassword('');
+      setUserEmail('');
+      setPassword('');
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
       dispatch(toggleIsLoggedAC({ isLogged: true }));
     } catch (error: any) {
