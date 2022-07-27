@@ -1,7 +1,6 @@
 import { ItemType } from '../../components/ItemContainer/type';
 import { addMasterAC, fetchMastersAC, MasterActions, removeMasterAC } from '../actions/masterAC';
 import { chaptersName } from '../../enum/chapters';
-import { ClinicActions } from '../actions/clinicAC';
 
 const initialState: initialStateType = {
   masters: [],
@@ -20,7 +19,7 @@ export const mastersReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case MasterActions.ADD_MASTER:
       {
-        const { id, title, info } = action.payload;
+        const { id, title, info, chapter } = action.payload;
         const hasMaster = state.masters.find(master => master.id === id);
 
         if (!hasMaster) {
@@ -28,7 +27,7 @@ export const mastersReducer = (state = initialState, action: ActionsType) => {
             id,
             title,
             info,
-            chapter: chaptersName.MASTER,
+            chapter,
           };
           return {
             ...state,

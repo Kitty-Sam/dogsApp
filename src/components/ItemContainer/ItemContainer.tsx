@@ -18,19 +18,25 @@ export const ItemContainer = ({ title, info, id, chapter }: ItemType) => {
     if (text === chaptersName.SHOP) {
       await database.ref(`/users/${currentUserId}/shops`).child(`${id}`).remove();
       dispatch(removeShopAC({ id }));
+      await database.ref(`/users/${currentUserId}/shops`).child(`${id}`).remove();
     }
     if (text === chaptersName.CLINIC) {
       await database.ref(`/users/${currentUserId}/clinics`).child(`${id}`).remove();
       dispatch(removeClinicAC({ id }));
+      await database.ref(`/users/${currentUserId}/clinics`).child(`${id}`).remove();
     }
     if (text === chaptersName.MASTER) {
       await database.ref(`/users/${currentUserId}/masters`).child(`${id}`).remove();
       dispatch(removeMasterAC({ id }));
+      await database.ref(`/users/${currentUserId}/masters`).child(`${id}`).remove();
     }
   };
 
   return (
-    <TouchableOpacity style={styles.itemContainer} onLongPress={removeItem(chapter)}>
+    <TouchableOpacity style={styles.itemContainer}>
+      <TouchableOpacity style={styles.closeText} onPress={removeItem(chapter)}>
+        <Text>X</Text>
+      </TouchableOpacity>
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.text}>{info}</Text>
       <Image source={{ uri: createImg(chapter) }} style={styles.imageContainer} />

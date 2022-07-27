@@ -9,6 +9,7 @@ import { DrawerStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
 import { CustomDrawer } from './CustomDrawer';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
+import { CalendarScreen } from '../../screens/Calendar/CalendarScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -63,6 +64,15 @@ export const DrawerStack = () => {
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE} color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name={DrawerNavigationName.CALENDAR}
+        component={CalendarScreen}
+        options={{
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.CALENDAR : iconsName.CALENDAR_OUTLINE} color={color} size={size} />
           ),
         }}
       />

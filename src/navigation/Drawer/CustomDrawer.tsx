@@ -1,14 +1,14 @@
 import React from 'react';
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import { TouchableOpacity, View, Text, Image } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationName } from '../../enum/navigation';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserName, getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 import { toggleIsLoggedAC } from '../../store/actions/loginAC';
-import { GoogleSignin } from 'react-native-google-signin';
-import auth from '@react-native-firebase/auth';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase';
 
 export const CustomDrawer = (props: any) => {
   const photo = useSelector(getCurrentUserPhoto);
@@ -16,9 +16,7 @@ export const CustomDrawer = (props: any) => {
   const dispatch = useDispatch();
 
   const onLogOut = async () => {
-    await GoogleSignin.signOut();
-    await auth().signOut();
-
+    await signOut(auth);
     dispatch(toggleIsLoggedAC({ isLogged: false }));
   };
 
@@ -26,7 +24,7 @@ export const CustomDrawer = (props: any) => {
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
-        <Image source={{ uri: String(photo) }} style={styles.avatarContainer} />
+        <Image source={{ uri: photo }} style={styles.avatarContainer} />
         <TouchableOpacity style={styles.userNameText} onPress={() => navigation.navigate(DrawerNavigationName.PROFILE)}>
           <Text>{currentUserName}</Text>
         </TouchableOpacity>
