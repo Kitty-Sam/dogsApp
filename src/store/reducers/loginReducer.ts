@@ -4,8 +4,9 @@ const initialState: initialStateType = {
   isLogged: false,
   user: {
     currentUserId: '',
-    currentUserName: 'stranger',
+    currentUserName: '',
     currentUserPhoto: '',
+    currentUserEmail: '',
   },
 };
 
@@ -15,6 +16,7 @@ type initialStateType = {
     currentUserId: string;
     currentUserName: string;
     currentUserPhoto: string;
+    currentUserEmail: string;
   };
 };
 
