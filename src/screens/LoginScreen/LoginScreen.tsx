@@ -18,7 +18,9 @@ import { getAppStatus } from '../../store/selectors/appSelector';
 
 const imgForRedux = 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000';
 
-export const LoginScreen = () => {
+export const LoginScreen = (props: any) => {
+  const { route } = props;
+
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
@@ -32,12 +34,6 @@ export const LoginScreen = () => {
       const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
       const { uid, email } = userCredential.user;
 
-      dispatch(
-        saveCurrentUserAC({
-          user: { currentUserId: uid, currentUserName: 'stranger', currentUserPhoto: imgForRedux },
-        }),
-      );
-
       const reference: FirebaseDatabaseTypes.Reference = await database.ref(`/users/`);
       const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
 
@@ -46,15 +42,39 @@ export const LoginScreen = () => {
         const users: any[] = Object.values(values);
         const currentUserInFb = users.find(el => el.userId === uid);
 
+        if (currentUserInFb) {
+          dispatch(
+            saveCurrentUserAC({
+              user: {
+                currentUserId: uid,
+                currentUserName: currentUserInFb.userName,
+                currentUserPhoto: imgForRedux,
+                currentUserEmail: email!,
+              },
+            }),
+          );
+        }
+
         if (!currentUserInFb) {
           await database
             .ref('/users/')
             .child(`${uid}`)
-            .set({ userName: 'stranger', userEmail: email, userId: uid, photo: imgForRedux });
+            .set({ userName: route.params.name, userEmail: email, userId: uid, photo: imgForRedux });
+
+          dispatch(
+            saveCurrentUserAC({
+              user: {
+                currentUserId: uid,
+                currentUserName: route.params.name,
+                currentUserPhoto: imgForRedux,
+                currentUserEmail: email!,
+              },
+            }),
+          );
         }
       }
-      // setUserEmail('');
-      // setPassword('');
+      setUserEmail('');
+      setPassword('');
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
       dispatch(toggleIsLoggedAC({ isLogged: true }));
     } catch (error: any) {

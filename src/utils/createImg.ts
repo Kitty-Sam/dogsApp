@@ -12,28 +12,38 @@ const picture5 = 'https://t3.ftcdn.net/jpg/04/23/07/18/360_F_423071856_JIf4hUWaB
 const picture6 = 'https://t4.ftcdn.net/jpg/03/28/88/41/360_F_328884184_zcbmGh4NlFLhrRWj83fTDQsQLYY6bbvQ.jpg';
 const picture7 =
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThK2ynmVJMGAUFsBSGiO-kPsJ6vp4fiGdsI0Q51_zq2J10xqvUz9Yff7U35vKNnzAAvOA&usqp=CAU';
+const picture8 = 'https://img.freepik.com/premium-photo/dog-gets-hair-cut-pet-spa-grooming-salon_170532-240.jpg';
+const picture9 =
+  'https://st2.depositphotos.com/1146092/6986/i/600/depositphotos_69864811-stock-photo-dog-with-shopping-cart.jpg';
+const picture10 =
+  'https://img.freepik.com/free-photo/puppy-dog-border-collie-paws-stethoscope-isolated-yellow-background-little-dog-reception-veterinary-doctor-vet-clinic-pet-health-care-animals-concept_80942-719.jpg';
 
-const arrayImgs: string[] = [picture, picture2, picture3, picture4, picture5, picture6, picture7];
+const arrayImgs: string[] = [
+  picture,
+  picture2,
+  picture3,
+  picture4,
+  picture5,
+  picture6,
+  picture7,
+  picture8,
+  picture9,
+  picture10,
+];
 
 export const createImg = (text: chaptersName) => {
   let img = '';
-  // const i = Math.floor(Math.random() * arrayImgs.length);
-  // console.log('number', i);
+  const i = Math.floor(Math.random() * arrayImgs.length);
   if (text === chaptersName.MASTER) {
-    img = 'https://img.freepik.com/premium-photo/dog-gets-hair-cut-pet-spa-grooming-salon_170532-240.jpg';
-    // img = arrayImgs[i];
+    img = arrayImgs[i];
     return img;
   }
   if (text === chaptersName.SHOP) {
-    img =
-      'https://st2.depositphotos.com/1146092/6986/i/600/depositphotos_69864811-stock-photo-dog-with-shopping-cart.jpg';
-    // img = arrayImgs[i];
+    img = arrayImgs[i];
     return img;
   }
   if (text === chaptersName.CLINIC) {
-    img =
-      'https://img.freepik.com/free-photo/puppy-dog-border-collie-paws-stethoscope-isolated-yellow-background-little-dog-reception-veterinary-doctor-vet-clinic-pet-health-care-animals-concept_80942-719.jpg';
-    // img = arrayImgs[i];
+    img = arrayImgs[i];
     return img;
   }
 };

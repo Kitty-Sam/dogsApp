@@ -35,7 +35,7 @@ export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
     fontSize: 24,
   },
   rootContainer: {
-    flex: 1,
+    // flex: 1,
     margin: 16,
   },
   emptyContainer: {
