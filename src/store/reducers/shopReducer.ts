@@ -1,6 +1,5 @@
 import { ItemType } from '../../components/ItemContainer/type';
 import { addShopAC, fetchShopsAC, removeShopAC, ShopActions } from '../actions/shopAC';
-import { chaptersName } from '../../enum/chapters';
 
 const initialState: initialStateType = {
   shops: [],

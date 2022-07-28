@@ -4,7 +4,7 @@ import { Avatar } from '@rneui/themed';
 
 import { signOut } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { Composer, ComposerProps, GiftedChat, IMessage, SendProps } from 'react-native-gifted-chat';
 import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../../../firebase';
 import { AuthNavigationName } from '../../enum/navigation';
@@ -69,6 +69,29 @@ export const ChatScreen = () => {
     addDoc(collection(db, 'chats'), { _id, createdAt, text, user });
   }, []);
 
+  const ChatComposer = (
+    props: ComposerProps & {
+      onSend: SendProps<IMessage>['onSend'];
+      text: SendProps<IMessage>['text'];
+    },
+  ) => {
+    return (
+      <Composer
+        {...props}
+        textInputProps={{
+          ...props.textInputProps,
+          blurOnSubmit: false,
+          multiline: false,
+          onSubmitEditing: () => {
+            if (props.text && props.onSend) {
+              props.onSend({ text: props.text.trim() }, true);
+            }
+          },
+        }}
+      />
+    );
+  };
+
   return (
     <GiftedChat
       messages={messages}
@@ -80,6 +103,7 @@ export const ChatScreen = () => {
         name: 'stranger',
         avatar: imgAvatar,
       }}
+      renderComposer={ChatComposer}
     />
   );
 };
