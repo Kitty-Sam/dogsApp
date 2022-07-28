@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppButton } from '../Button/CustomSquareButton';
 import { Alert, Image, Modal, Text, TouchableOpacity, View } from 'react-native';
 import { ModalInput } from '../Modal/Modalnput';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { styles } from './style';
 import { chaptersName } from '../../enum/chapters';
 import { buttonsName } from '../../enum/buttonsName';
@@ -10,6 +10,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
 import { database } from '../../utils/getDataBaseURL';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
+import { addShopAC, fetchShopsAC } from '../../store/actions/shopAC';
+import { addClinicAC } from '../../store/actions/clinicAC';
+import { addMasterAC } from '../../store/actions/masterAC';
 
 export const AddSection = ({ chapter }: any) => {
   const [addTitle, setTitle] = useState('');
@@ -29,6 +32,8 @@ export const AddSection = ({ chapter }: any) => {
     setIsOpen(true);
   };
 
+  const dispatch = useDispatch();
+
   const addItemPress = async () => {
     const payload = {
       id: addTitle,
@@ -47,18 +52,21 @@ export const AddSection = ({ chapter }: any) => {
         .ref(`/users/${currentUserId}/shops`)
         .child(`${payload.title}`)
         .set({ ...payload, chapter: chaptersName.SHOP });
+      dispatch(addShopAC({ ...payload, chapter: chaptersName.SHOP }));
     }
     if (chapter === chaptersName.CLINIC) {
       database
         .ref(`/users/${currentUserId}/clinics`)
         .child(`${payload.title}`)
         .set({ ...payload, chapter: chaptersName.CLINIC });
+      dispatch(addClinicAC({ ...payload, chapter: chaptersName.CLINIC }));
     }
     if (chapter === chaptersName.MASTER) {
       database
         .ref(`/users/${currentUserId}/masters`)
         .child(`${payload.title}`)
         .set({ ...payload, chapter: chaptersName.MASTER });
+      dispatch(addMasterAC({ ...payload, chapter: chaptersName.MASTER }));
     }
     setIsOpen(false);
     setInfo('');
