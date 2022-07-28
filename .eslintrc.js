@@ -39,6 +39,7 @@ module.exports = {
     'import/namespace': 0,
     'import/default': 0,
     'import/export': 2,
+    'react/display-name': 'off',
   },
   settings: {
     'import/resolver': {
