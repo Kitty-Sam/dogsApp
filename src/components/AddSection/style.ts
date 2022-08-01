@@ -7,6 +7,7 @@ export type AddSectionStyleType = {
   imageContainer: ImageStyle;
   chapterText: TextStyle;
   modalCommonContainer: ViewStyle;
+  modalInputBlock: ViewStyle;
 };
 
 export const styles = StyleSheet.create<AddSectionStyleType>({
@@ -48,5 +49,12 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
+  },
+  modalInputBlock: {
+    width: 300,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
 });

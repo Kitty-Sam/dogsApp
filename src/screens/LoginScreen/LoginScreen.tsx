@@ -109,8 +109,8 @@ export const LoginScreen = (props: any) => {
             // secureTextEntry
           />
           <View style={styles.buttonsContainer}>
-            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'yellow'} />
-            <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} />
+            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'orange'} />
+            <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} backgroundColor={'brown'} />
           </View>
         </View>
       )}

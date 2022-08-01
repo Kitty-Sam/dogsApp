@@ -46,7 +46,7 @@ export const RegisterScreen = () => {
             activeOpacity={0.4}
             style={styles.loginText}
           >
-            <Text>Try sign in</Text>
+            <Text style={{ color: 'grey' }}>Try sign in</Text>
           </TouchableOpacity>
           <TextInput
             placeholder={inputsPlaceholdersName.NICK_NAME}
@@ -67,7 +67,7 @@ export const RegisterScreen = () => {
             style={styles.input}
             // secureTextEntry
           />
-          <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={'yellow'} />
+          <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={'brown'} />
         </View>
       )}
     </SafeAreaView>
