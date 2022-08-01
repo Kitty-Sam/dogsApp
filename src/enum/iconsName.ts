@@ -18,4 +18,6 @@ export const enum iconsName {
   CLOSE_OUTLINE = 'close-outline',
   CALENDAR_OUTLINE = 'calendar-outline',
   CALENDAR = 'calendar',
+  CREATE_OUTLINE = 'create-outline',
+  CLIPBOARD_OUTLINE = 'clipboard-outline',
 }
