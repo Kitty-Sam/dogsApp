@@ -9,7 +9,7 @@ import { DrawerStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
 import { CustomDrawer } from './CustomDrawer';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
-import { CalendarScreen } from '../../screens/Calendar/CalendarScreen';
+import { CalendarScreen } from '../../screens/CalendarScreen/CalendarScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 

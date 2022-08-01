@@ -8,6 +8,7 @@ export type CommonScreenStyleType = {
   addSectionContainer: ViewStyle;
   textSectionContainer: ViewStyle;
   text: TextStyle;
+  textArticle: TextStyle;
   headerText: TextStyle;
   rootContainer: ViewStyle;
   emptyContainer: ViewStyle;
@@ -29,6 +30,10 @@ export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
     width: 200,
     textAlign: 'justify',
   },
+  textArticle: {
+    textAlign: 'justify',
+  },
+
   headerText: {
     margin: 16,
     fontWeight: 'bold',
