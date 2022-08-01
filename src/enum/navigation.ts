@@ -21,7 +21,7 @@ export const enum DrawerNavigationName {
   PROFILE = 'Profile',
   MESSAGE_STACK = 'Message',
   FRIENDS = 'Friends',
-  USEFUL_STACK = 'Useful_Info',
+  USEFUL_STACK = 'Helpful advice',
   CALENDAR = 'Calendar',
 }
 

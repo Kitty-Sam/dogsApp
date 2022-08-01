@@ -3,4 +3,5 @@ export const enum buttonsName {
   CANCEL = 'cancel',
   SIGN_IN = 'sign in',
   REGISTER = 'register',
+  SAVE = 'save',
 }
