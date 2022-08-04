@@ -1,4 +1,5 @@
 import { ImageStyle, StyleSheet, TextStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type CustomDrawerStyleType = {
   avatarContainer: ImageStyle;
@@ -18,6 +19,7 @@ export const styles = StyleSheet.create<CustomDrawerStyleType>({
     marginBottom: 60,
   },
   logOutText: {
+    flexDirection: 'row',
     margin: 24,
   },
 });
