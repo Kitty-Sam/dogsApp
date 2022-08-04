@@ -30,6 +30,7 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     right: 16,
     top: 8,
     zIndex: 10,
+    color: 'black',
   },
   imageContainer: {
     width: 200,
@@ -56,5 +57,6 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    color: 'black',
   },
 });

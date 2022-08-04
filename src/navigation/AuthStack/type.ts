@@ -1,6 +1,7 @@
 import { AuthNavigationName } from '../../enum/navigation';
 
 export type AuthStackParamList = {
-  [AuthNavigationName.LOGIN]: undefined;
+  [AuthNavigationName.WELCOME]: undefined;
+  [AuthNavigationName.LOGIN]?: { name: string };
   [AuthNavigationName.REGISTER]: undefined;
 };

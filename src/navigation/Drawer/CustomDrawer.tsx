@@ -9,6 +9,8 @@ import { getCurrentUserName, getCurrentUserPhoto } from '../../store/selectors/l
 import { toggleIsLoggedAC } from '../../store/actions/loginAC';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase';
+import { COLORS } from '../../colors/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export const CustomDrawer = (props: any) => {
   const photo = useSelector(getCurrentUserPhoto);
@@ -25,14 +27,27 @@ export const CustomDrawer = (props: any) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <Image source={{ uri: photo }} style={styles.avatarContainer} />
+
         <TouchableOpacity style={styles.userNameText} onPress={() => navigation.navigate(DrawerNavigationName.PROFILE)}>
-          <Text>{currentUserName}</Text>
+          <Text style={{ color: COLORS.text.dark_blue }}>{currentUserName}</Text>
         </TouchableOpacity>
+
         <DrawerItemList {...props} />
       </DrawerContentScrollView>
-      <TouchableOpacity style={styles.logOutText} onPress={onLogOut}>
-        <Text>Log out</Text>
-      </TouchableOpacity>
+      <View
+        style={{
+          height: 100,
+          borderTopWidth: 1,
+          borderTopColor: COLORS.buttons.peach,
+          borderTopEndRadius: 50,
+          backgroundColor: COLORS.buttons.peach,
+        }}
+      >
+        <TouchableOpacity style={styles.logOutText} onPress={onLogOut}>
+          <Icon name={'log-out-outline'} size={24} color={COLORS.text.dark_blue} />
+          <Text style={{ color: COLORS.text.dark_blue, margin: 4 }}>Log out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

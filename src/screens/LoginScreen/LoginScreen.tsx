@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, TextInput, View } from 'react-native';
+import { ActivityIndicator, Alert, ImageBackground, TextInput, View } from 'react-native';
 import { saveCurrentUserAC, toggleIsLoggedAC } from '../../store/actions/loginAC';
 import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationName } from '../../enum/navigation';
 import { auth } from '../../../firebase';
 import { AppButton } from '../../components/Button/CustomSquareButton';
@@ -15,15 +14,19 @@ import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
+import { LoginScreenProps, User } from './type';
+import { images } from '../../consts/consts';
 
-const imgForRedux = 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_dog_fat.jpeg');
 
-export const LoginScreen = (props: any) => {
-  const { route } = props;
+export const LoginScreen = (props: LoginScreenProps) => {
+  const { route, navigation } = props;
 
   const [userEmail, setUserEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+
   const dispatch = useDispatch();
 
   const statusApp = useSelector(getAppStatus);
@@ -39,7 +42,7 @@ export const LoginScreen = (props: any) => {
 
       if (snapshot.val()) {
         const values = snapshot.val();
-        const users: any[] = Object.values(values);
+        const users: User[] = Object.values(values);
         const currentUserInFb = users.find(el => el.userId === uid);
 
         if (currentUserInFb) {
@@ -48,7 +51,7 @@ export const LoginScreen = (props: any) => {
               user: {
                 currentUserId: uid,
                 currentUserName: currentUserInFb.userName,
-                currentUserPhoto: imgForRedux,
+                currentUserPhoto: images.avatar,
                 currentUserEmail: email!,
               },
             }),
@@ -59,14 +62,14 @@ export const LoginScreen = (props: any) => {
           await database
             .ref('/users/')
             .child(`${uid}`)
-            .set({ userName: route.params.name, userEmail: email, userId: uid, photo: imgForRedux });
+            .set({ userName: route.params!.name, userEmail: email, userId: uid, photo: images.avatar });
 
           dispatch(
             saveCurrentUserAC({
               user: {
                 currentUserId: uid,
-                currentUserName: route.params.name,
-                currentUserPhoto: imgForRedux,
+                currentUserName: route.params!.name!,
+                currentUserPhoto: images.avatar,
                 currentUserEmail: email!,
               },
             }),
@@ -90,30 +93,36 @@ export const LoginScreen = (props: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <ImageBackground source={img} style={styles.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
+        <ActivityIndicator style={{ zIndex: 10 }} />
       ) : (
-        <View>
+        <View style={styles.inputsContainer}>
           <TextInput
             style={styles.input}
+            placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.EMAIL}
             value={userEmail}
             onChangeText={text => setUserEmail(text)}
           />
           <TextInput
             style={styles.input}
+            placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.PASSWORD}
             value={password}
             onChangeText={text => setPassword(text)}
             // secureTextEntry
           />
           <View style={styles.buttonsContainer}>
-            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'orange'} />
-            <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} backgroundColor={'brown'} />
+            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />
+            <AppButton
+              onPress={openRegisterScreen}
+              title={buttonsName.REGISTER}
+              backgroundColor={COLORS.buttons.brown}
+            />
           </View>
         </View>
       )}
-    </SafeAreaView>
+    </ImageBackground>
   );
 };
