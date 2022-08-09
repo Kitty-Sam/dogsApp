@@ -1,4 +1,5 @@
 import { StyleSheet, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type ImagePickerStyleType = {
   container: ViewStyle;
@@ -9,23 +10,19 @@ export type ImagePickerStyleType = {
 export const styles = StyleSheet.create<ImagePickerStyleType>({
   container: {
     elevation: 2,
-    height: 200,
-    width: 200,
-    backgroundColor: '#efefef',
-    borderRadius: 150,
+    borderRadius: 30,
     overflow: 'hidden',
   },
   uploadBtnContainer: {
     flexDirection: 'row',
     opacity: 0.7,
     position: 'absolute',
-    left: 30,
     backgroundColor: 'lightgrey',
-    width: '100%',
-    height: '15%',
+    width: 55,
+    height: 40,
   },
   uploadBtn: {
     position: 'relative',
-    left: 40,
+    top: 10,
   },
 });

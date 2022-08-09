@@ -12,5 +12,6 @@ export const dataForWelcomeScreen = {
 };
 
 export const images = {
-  avatar: 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
+  avatar: 'https://www.un.org/sites/un2.un.org/files/user.png',
+  img: 'https://images.ctfassets.net/4f3rgqwzdznj/7lbiSXmU2JKKbdeYaxava7/2a59e164b1367e79e3ad32c5bfc72144/GettyImages-1286481312.jpg',
 };

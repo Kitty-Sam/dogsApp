@@ -1,4 +1,5 @@
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type AddSectionStyleType = {
   modalContainer: ViewStyle;
@@ -12,8 +13,8 @@ export type AddSectionStyleType = {
 
 export const styles = StyleSheet.create<AddSectionStyleType>({
   modalContainer: {
-    borderColor: 'grey',
-    borderWidth: 2,
+    borderColor: COLORS.text.dark_blue,
+    borderWidth: 1,
     marginHorizontal: 20,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -30,7 +31,7 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     right: 16,
     top: 8,
     zIndex: 10,
-    color: 'black',
+    color: COLORS.text.dark_blue,
   },
   imageContainer: {
     width: 200,
@@ -38,12 +39,11 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     borderRadius: 20,
   },
   chapterText: {
+    color: COLORS.text.dark_blue,
     textAlign: 'left',
-    marginHorizontal: 18,
+    margin: 18,
     marginTop: 8,
-    fontSize: 24,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+    fontSize: 18,
     textTransform: 'capitalize',
   },
   modalCommonContainer: {
@@ -57,6 +57,6 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    color: 'black',
+    color: COLORS.text.dark_blue,
   },
 });

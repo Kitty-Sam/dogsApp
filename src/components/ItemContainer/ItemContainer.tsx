@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeShopAC } from '../../store/actions/shopAC';
@@ -7,7 +7,6 @@ import { chaptersName } from '../../enum/chapters';
 import { ItemType } from './type';
 import { removeClinicAC } from '../../store/actions/clinicAC';
 import { removeMasterAC } from '../../store/actions/masterAC';
-import { createImg } from '../../utils/createImg';
 import { database } from '../../utils/getDataBaseURL';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 
@@ -30,13 +29,10 @@ export const ItemContainer = ({ title, info, id, chapter }: ItemType) => {
   };
 
   return (
-    <TouchableOpacity style={styles.itemContainer}>
-      <TouchableOpacity style={styles.closeText} onPress={removeItem(chapter)}>
-        <Text>X</Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.itemContainer} onLongPress={removeItem(chapter)}>
       <Text style={styles.text}>{title}</Text>
       <Text style={styles.text}>{info}</Text>
-      <Image source={{ uri: createImg(chapter) }} style={styles.imageContainer} />
+      {/*<Image source={{ uri: createImg(chapter) }} style={styles.imageContainer} />*/}
     </TouchableOpacity>
   );
 };

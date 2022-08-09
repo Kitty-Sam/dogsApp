@@ -102,19 +102,6 @@ export const CalendarScreen = () => {
     await database.ref(`/users/${currentUserId}/notes`).child(`${pinnedDay}`).child(`${id}`).remove();
   };
 
-  if (isOpen) {
-    return (
-      <ModalAddNewNote
-        isOpen={isOpen}
-        setTitle={setTitle}
-        setIsOpen={setIsOpen}
-        title={title}
-        pinnedDay={pinnedDay}
-        savePress={savePress}
-      />
-    );
-  }
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Calendar
@@ -175,6 +162,14 @@ export const CalendarScreen = () => {
         pinnedDay={pinnedDay}
         setIsOpen={setIsOpen}
         getData={getData}
+      />
+      <ModalAddNewNote
+        isOpen={isOpen}
+        setTitle={setTitle}
+        setIsOpen={setIsOpen}
+        title={title}
+        pinnedDay={pinnedDay}
+        savePress={savePress}
       />
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +7,6 @@ import { getShops } from '../../store/selectors/shopSelector';
 import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
 import { stylesCommon } from '../MastersScreen/style';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
@@ -17,8 +15,10 @@ import { fetchShopsAC } from '../../store/actions/shopAC';
 import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
 
-const img = 'https://dogbizsuccess.com/wp-content/uploads/article-the-professional-bio-300x300.jpg';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_cat_fat.jpeg');
 
 export const ShopsScreen = memo(() => {
   const shops = useSelector(getShops);
@@ -45,7 +45,6 @@ export const ShopsScreen = memo(() => {
   };
   useEffect(() => {
     getUsefulInfo();
-    console.log('Render');
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
@@ -55,13 +54,10 @@ export const ShopsScreen = memo(() => {
 
   if (!shops.length) {
     return (
-      <View style={stylesCommon.emptyContainer}>
-        <View style={stylesCommon.addSectionContainer}>
-          <AddSection chapter={chaptersName.SHOP} />
-        </View>
-        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
-        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
-      </View>
+      <ImageBackground source={img} style={stylesCommon.emptyContainer}>
+        <Text style={{ color: COLORS.text.dark_blue }}>Add shop</Text>
+        <AddSection chapter={chaptersName.SHOP} />
+      </ImageBackground>
     );
   }
   return (
@@ -73,12 +69,6 @@ export const ShopsScreen = memo(() => {
       ) : (
         <>
           <Text style={stylesCommon.headerText}>Shops</Text>
-          <View style={stylesCommon.textSectionContainer}>
-            <Icon name={iconsName.ALERT_OUTLINE} size={36} />
-            <Text style={stylesCommon.textSectionContainer}>
-              Add here your favorite shop with a big amount of discounts.
-            </Text>
-          </View>
           <View style={stylesCommon.addSectionContainer}>
             <AddSection chapter={chaptersName.SHOP} />
           </View>

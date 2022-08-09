@@ -6,4 +6,7 @@ export type DrawerStackParamList = {
   [DrawerNavigationName.PROFILE]: undefined;
   [DrawerNavigationName.FRIENDS]: undefined;
   [DrawerNavigationName.CALENDAR]: undefined;
+  [DrawerNavigationName.ADOPTION_STACK]: undefined;
+  [DrawerNavigationName.ADD_PET]: undefined;
+  [DrawerNavigationName.DONATION]: undefined;
 };

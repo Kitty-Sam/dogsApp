@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,9 +15,10 @@ import { fetchClinicsAC } from '../../store/actions/clinicAC';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
+import { COLORS } from '../../colors/colors';
 
-const img =
-  'https://media.istockphoto.com/photos/office-worker-boss-dog-picture-id1150752409?k=20&m=1150752409&s=612x612&w=0&h=XGjpxvih3cxFDCgeHU86sw8Fkc07_YImun4IfKCbf0Y=';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_buldog.jpeg');
 
 export const ClinicsScreen = memo(() => {
   const clinics = useSelector(getClinics);
@@ -56,13 +57,10 @@ export const ClinicsScreen = memo(() => {
 
   if (!clinics.length) {
     return (
-      <View style={stylesCommon.emptyContainer}>
-        <View style={stylesCommon.addSectionContainer}>
-          <AddSection chapter={chaptersName.CLINIC} />
-        </View>
-        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
-        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
-      </View>
+      <ImageBackground source={img} style={stylesCommon.emptyContainer}>
+        <Text style={{ color: COLORS.text.dark_blue }}>Add clinic</Text>
+        <AddSection chapter={chaptersName.CLINIC} />
+      </ImageBackground>
     );
   }
   return (

@@ -3,23 +3,24 @@ import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './style';
+import { iconsName } from '../../enum/iconsName';
 
 export type ImagePickerType = {
-  photoString: string;
+  photoString: string | null;
+  sizeH: number;
+  sizeW: number;
 };
 
-// const img = 'https://cdn-icons-png.flaticon.com/512/194/194938.png';
-
-export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
-  const [image, setImage] = useState(photoString);
+export const ImagePickerCrop = ({ photoString, sizeH, sizeW }: ImagePickerType) => {
+  const [image, setImage] = useState<string | null>(photoString);
 
   const takePhoto = () => {
     try {
       openCamera({
-        compressImageMaxWidth: 200,
-        compressImageMaxHeight: 200,
-        compressImageQuality: 0.7,
-        cropping: true,
+        compressImageMaxWidth: sizeW,
+        compressImageMaxHeight: sizeH,
+        // compressImageQuality: 0.7,
+        // cropping: true,
       })
         .then(image => {
           setImage(image.path);
@@ -34,10 +35,10 @@ export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
   const downLoadFromLibrary = () => {
     try {
       openPicker({
-        compressImageMaxWidth: 200,
-        compressImageMaxHeight: 200,
-        compressImageQuality: 0.7,
-        cropping: true,
+        compressImageMaxWidth: sizeW,
+        compressImageMaxHeight: sizeH,
+        // compressImageQuality: 0.8,
+        // cropping: true,
       })
         .then(image => {
           setImage(image.path);
@@ -51,14 +52,14 @@ export const ImagePickerCrop = ({ photoString }: ImagePickerType) => {
   };
 
   return (
-    <View style={styles.container}>
-      {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+    <View style={[styles.container, { height: sizeH, width: sizeW }]}>
+      {image && <Image source={{ uri: image }} style={{ width: sizeW, height: sizeH }} />}
       <View style={styles.uploadBtnContainer}>
         <TouchableOpacity onPress={downLoadFromLibrary} style={styles.uploadBtn}>
-          <Icon name="pencil" size={20} color="black" style={{ marginHorizontal: 4 }} />
+          <Icon name={iconsName.PENCIL} size={20} color="black" style={{ marginHorizontal: 4 }} />
         </TouchableOpacity>
         <TouchableOpacity onPress={takePhoto} style={styles.uploadBtn}>
-          <Icon name="camera" size={20} color="black" style={{ marginHorizontal: 4 }} />
+          <Icon name={iconsName.CAMERA} size={20} color="black" style={{ marginHorizontal: 4 }} />
         </TouchableOpacity>
       </View>
     </View>

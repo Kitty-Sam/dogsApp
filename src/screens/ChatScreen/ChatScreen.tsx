@@ -14,34 +14,13 @@ const imgAvatar = 'https://cdn-icons-png.flaticon.com/512/194/194938.png';
 export const ChatScreen = () => {
   const navigation = useNavigation();
   const [messages, setMessages] = useState([]);
-  const signOutNow = async () => {
-    try {
-      await signOut(auth);
-      navigation.navigate(AuthNavigationName.LOGIN);
-    } catch (error) {
-      Alert.alert(error);
-    }
-  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
         <View style={{ marginLeft: 16 }}>
           <Avatar size={46} rounded source={{ uri: imgAvatar }} />
         </View>
-      ),
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            marginRight: 10,
-            borderColor: 'grey',
-            borderWidth: 2,
-            padding: 4,
-            borderRadius: 5,
-          }}
-          onPress={signOutNow}
-        >
-          <Text>log Out</Text>
-        </TouchableOpacity>
       ),
     });
 

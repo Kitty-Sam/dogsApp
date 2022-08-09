@@ -10,12 +10,12 @@ const Messages = createNativeStackNavigator<MessageStackParamList>();
 export const MessagesStack = () => {
   return (
     <Messages.Navigator>
-      <Messages.Screen
-        name={MessagesNavigationName.MESSAGES}
-        component={MessagesScreen}
-        options={{ headerShown: false }}
-      />
-      <Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreen} options={{ headerShown: false }} />
+      {/*<Messages.Screen*/}
+      {/*  name={MessagesNavigationName.MESSAGES}*/}
+      {/*  component={MessagesScreen}*/}
+      {/*  options={{ headerShown: false }}*/}
+      {/*/>*/}
+      <Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreen} />
     </Messages.Navigator>
   );
 };

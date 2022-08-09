@@ -4,6 +4,7 @@ import { clinicsReducer } from './reducers/clinicReducer';
 import { mastersReducer } from './reducers/masterReducer';
 import { loginReducer } from './reducers/loginReducer';
 import { appReducer } from './reducers/appReducer';
+import { userReducer } from './reducers/userReducer';
 
 export const rootReducer = combineReducers({
   shops: shopsReducer,
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers({
   masters: mastersReducer,
   login: loginReducer,
   app: appReducer,
+  user: userReducer,
 });
 
 export type AppStoreType = ReturnType<typeof rootReducer>;

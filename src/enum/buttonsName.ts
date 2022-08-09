@@ -5,4 +5,7 @@ export const enum buttonsName {
   REGISTER = 'register',
   SAVE = 'save',
   START = 'go ahead',
+  DONATE = 'donate',
+  ADOPT = 'adopt',
+  ADD_PET = 'add pet',
 }
