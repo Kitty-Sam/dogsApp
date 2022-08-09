@@ -10,6 +10,7 @@ import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { addShopAC } from '../../store/actions/shopAC';
 import { addClinicAC } from '../../store/actions/clinicAC';
 import { addMasterAC } from '../../store/actions/masterAC';
+import { COLORS } from '../../colors/colors';
 
 export const AddSection = ({ chapter }: any) => {
   const [addedTitle, setTitle] = useState('');
@@ -71,7 +72,7 @@ export const AddSection = ({ chapter }: any) => {
 
   return (
     <>
-      <Icon name={iconsName.ADD_CIRCLE_OUTLINE} size={36} onPress={addButtonPress} />
+      <Icon name={iconsName.ADD_OUTLINE} size={36} onPress={addButtonPress} color={COLORS.text.dark_blue} />
       <ModalAddItem
         addItemPress={addItemPress}
         addedInfo={addedInfo}

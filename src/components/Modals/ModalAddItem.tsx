@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Image,
+  ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
@@ -19,6 +20,8 @@ import { CustomTextInput } from '../TextInput/CustomTextInput';
 import { AppButton } from '../Button/CustomSquareButton';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
+import { images, screenWidth } from '../../consts/consts';
+import { COLORS } from '../../colors/colors';
 
 export type ModalAddItemType = {
   isOpen: boolean;
@@ -30,6 +33,9 @@ export type ModalAddItemType = {
   setInfo: (info: string) => void;
   addItemPress: any;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/homster.jpeg');
 
 export const ModalAddItem = ({
   isOpen,
@@ -46,9 +52,8 @@ export const ModalAddItem = ({
       <View style={styles.modalCommonContainer}>
         <Text style={styles.chapterText}>{chapter}</Text>
         <View style={styles.modalContainer}>
-          <Image source={{ uri: createImg(chaptersName.MASTER) }} style={styles.imageContainer} />
           <TouchableOpacity style={styles.closeIcon} onPress={() => setIsOpen(false)}>
-            <Icon name={iconsName.CLOSE_OUTLINE} size={24} />
+            <Icon name={iconsName.CLOSE_OUTLINE} size={24} color={COLORS.text.dark_blue} />
           </TouchableOpacity>
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -63,8 +68,12 @@ export const ModalAddItem = ({
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
           <View style={styles.buttonsContainer}>
-            <AppButton title={buttonsName.ADD} onPress={addItemPress} backgroundColor={'orange'} />
-            <AppButton title={buttonsName.CANCEL} onPress={() => setIsOpen(false)} backgroundColor={'brown'} />
+            <AppButton title={buttonsName.ADD} onPress={addItemPress} backgroundColor={COLORS.buttons.peach} />
+            <AppButton
+              title={buttonsName.CANCEL}
+              onPress={() => setIsOpen(false)}
+              backgroundColor={COLORS.buttons.brown}
+            />
           </View>
         </View>
       </View>

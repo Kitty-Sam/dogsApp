@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,9 +16,10 @@ import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
 
-const img =
-  'https://st.depositphotos.com/1146092/1257/i/950/depositphotos_12573001-stock-photo-business-dog-typewriter.jpg';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_dog_thin.jpeg');
 
 export const MastersScreen = memo(() => {
   const masters = useSelector(getMasters);
@@ -54,13 +55,10 @@ export const MastersScreen = memo(() => {
 
   if (!masters.length) {
     return (
-      <View style={stylesCommon.emptyContainer}>
-        <View style={stylesCommon.addSectionContainer}>
-          <AddSection chapter={chaptersName.MASTER} />
-        </View>
-        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
-        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
-      </View>
+      <ImageBackground source={img} style={stylesCommon.emptyContainer}>
+        <Text style={{ color: COLORS.text.dark_blue }}>Add master</Text>
+        <AddSection chapter={chaptersName.MASTER} />
+      </ImageBackground>
     );
   }
   return (
