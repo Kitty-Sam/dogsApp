@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
 import { screenWidth } from '../../consts/consts';
 
@@ -6,7 +6,7 @@ export type AdoptionScreenStyleType = {
   filterContainer: ViewStyle;
   listContainer: ViewStyle;
   iconContainer: ViewStyle;
-  itemPetText: TextStyle;
+  iconWithLabelContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<AdoptionScreenStyleType>({
   filterContainer: {
@@ -22,10 +22,6 @@ export const styles = StyleSheet.create<AdoptionScreenStyleType>({
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
-  itemPetText: {
-    color: COLORS.text.dark_blue,
-  },
-
   iconContainer: {
     width: 60,
     height: 60,
@@ -36,5 +32,9 @@ export const styles = StyleSheet.create<AdoptionScreenStyleType>({
     marginHorizontal: 10,
     borderRadius: 20,
     backgroundColor: COLORS.buttons.peach,
+  },
+  iconWithLabelContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

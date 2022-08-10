@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,39 +7,36 @@ import { getMasters } from '../../store/selectors/masterSelector';
 import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles, stylesCommon } from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { database } from '../../utils/getDataBaseURL';
 import { fetchMastersAC } from '../../store/actions/masterAC';
-import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
 
 export const MastersScreen = memo(() => {
   const masters = useSelector(getMasters);
-  const currentUserId = useSelector(getCurrentUserId);
   const statusApp = useSelector(getAppStatus);
 
   const dispatch = useDispatch();
 
   const getUsefulInfo = async () => {
     dispatch(toggleAppStatus(requestStatus.LOADING));
-    const referenceMasters: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/masters`);
+    const referenceMasters: FirebaseDatabaseTypes.Reference = await database.ref(`/masters/`);
     const snapshotMasters: FirebaseDatabaseTypes.DataSnapshot = await referenceMasters.once('value');
 
     if (snapshotMasters.val()) {
       const values = snapshotMasters.val();
-      const masters: any = Object.values(values);
+      const masters: ItemType[] = Object.values(values);
       dispatch(fetchMastersAC(masters));
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     } else {
-      const emptyArray: any[] = [];
+      const emptyArray: ItemType[] = [];
       dispatch(fetchMastersAC(emptyArray));
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     }
@@ -62,25 +59,18 @@ export const MastersScreen = memo(() => {
     );
   }
   return (
-    <ScrollView style={stylesCommon.rootContainer}>
+    <SafeAreaView style={stylesCommon.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
         <>
-          <Text style={stylesCommon.headerText}>Masters</Text>
-          <View style={stylesCommon.textSectionContainer}>
-            <Icon name={iconsName.ALERT_OUTLINE} size={36} />
-            <Text style={stylesCommon.text}>Add here your favorite master with gold hands.</Text>
-          </View>
+          <HeaderTextItem>Masters</HeaderTextItem>
           <View style={stylesCommon.addSectionContainer}>
             <AddSection chapter={chaptersName.MASTER} />
           </View>
-
-          <View style={styles.chapterContainer}>
-            <FlatList data={masters} renderItem={renderItem} horizontal />
-          </View>
+          <FlatList data={masters} renderItem={renderItem} horizontal contentContainerStyle={styles.chapterContainer} />
         </>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 });

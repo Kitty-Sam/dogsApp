@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { database } from '../../utils/getDataBaseURL';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,14 @@ import { AdoptionScreenProps } from './type';
 import { styles } from './style';
 import { iconsName } from '../../enum/iconsName';
 import { PetItem } from '../../components/PetItem/PetItem';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
+
+export enum filterName {
+  DOG = 'Dog',
+  CAT = 'Cat',
+  UNKNOWN = '',
+}
 
 export const AdoptionScreen = (props: AdoptionScreenProps) => {
   const { navigation } = props;
@@ -36,53 +44,60 @@ export const AdoptionScreen = (props: AdoptionScreenProps) => {
 
   return (
     <SafeAreaView>
-      <Text style={[styles.itemPetText, { marginHorizontal: 8, marginTop: 8, fontSize: 24, fontWeight: 'bold' }]}>
-        Adopt a
-      </Text>
-      <Text style={[styles.itemPetText, { marginHorizontal: 8, textTransform: 'capitalize' }]}>friend</Text>
+      <TextItemBold style={{ marginHorizontal: 8, marginTop: 8, fontSize: 24 }}>Adopt a</TextItemBold>
+      <TextItemBold style={{ marginHorizontal: 8, textTransform: 'capitalize' }}>friend</TextItemBold>
+
       <View style={styles.filterContainer}>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.iconWithLabelContainer}>
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter('Dog');
+              setFilter(filterName.DOG);
             }}
           >
             <Icon
               name={iconsName.DOG}
               size={36}
-              color={filter === 'Dog' ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === filterName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
           </TouchableOpacity>
-          <Text style={styles.itemPetText}>Dog</Text>
+          <TextItemThin>Dog</TextItemThin>
         </View>
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.iconWithLabelContainer}>
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter('Cat');
+              setFilter(filterName.CAT);
             }}
           >
             <Icon
               name={iconsName.CAT}
               size={36}
-              color={filter === 'Cat' ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === filterName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
           </TouchableOpacity>
-          <Text style={styles.itemPetText}>Cat</Text>
+          <TextItemThin>Cat</TextItemThin>
         </View>
 
-        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.iconWithLabelContainer}>
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter('');
+              setFilter(filterName.UNKNOWN);
             }}
           >
-            <Icon name={iconsName.DOG} size={16} color={filter === '' ? COLORS.buttons.brown : COLORS.text.dark_blue} />
-            <Icon name={iconsName.CAT} size={16} color={filter === '' ? COLORS.buttons.brown : COLORS.text.dark_blue} />
+            <Icon
+              name={iconsName.DOG}
+              size={16}
+              color={filter === filterName.UNKNOWN ? COLORS.buttons.brown : COLORS.text.dark_blue}
+            />
+            <Icon
+              name={iconsName.CAT}
+              size={16}
+              color={filter === filterName.UNKNOWN ? COLORS.buttons.brown : COLORS.text.dark_blue}
+            />
           </TouchableOpacity>
-          <Text style={styles.itemPetText}>All together</Text>
+          <TextItemThin>All together</TextItemThin>
         </View>
       </View>
       <ScrollView contentContainerStyle={styles.listContainer}>

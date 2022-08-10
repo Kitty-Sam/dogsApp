@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { ListItemsScreen } from '../../screens/FriendsScreen/ListItemsScreen';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { UsefulBottomStack } from '../UsefulStack/UsefulStack';
 import { MessagesStack } from '../MessageStack/MessagesStack';
@@ -82,15 +81,15 @@ export const DrawerStack = () => {
           ),
         }}
       />
-      <Drawer.Screen
-        name={DrawerNavigationName.FRIENDS}
-        component={ListItemsScreen}
-        options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
+      {/*<Drawer.Screen*/}
+      {/*  name={DrawerNavigationName.FRIENDS}*/}
+      {/*  component={ListItemsScreen}*/}
+      {/*  options={{*/}
+      {/*    drawerIcon: ({ color, size, focused }) => (*/}
+      {/*      <Icon name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE} color={color} size={size} />*/}
+      {/*    ),*/}
+      {/*  }}*/}
+      {/*/>*/}
       <Drawer.Screen
         name={DrawerNavigationName.MESSAGE_STACK}
         component={MessagesStack}

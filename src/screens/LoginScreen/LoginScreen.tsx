@@ -7,7 +7,7 @@ import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { AuthNavigationName } from '../../enum/navigation';
 import { auth } from '../../../firebase';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { AppButton } from '../../components/Button/AppButton';
 import { styles } from './style';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';

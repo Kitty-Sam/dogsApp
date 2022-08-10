@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
 import { buttonsName } from '../../enum/buttonsName';
 import { database } from '../../utils/getDataBaseURL';
@@ -10,6 +10,13 @@ import { addPetAC } from '../../store/actions/userAC';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { AddPetScreenProps } from './type';
 import { styles } from './style';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+
+export enum animalsName {
+  CAT = 'Cat',
+  DOG = 'Dog',
+  UNKNOWN = 'Unknown',
+}
 
 export const AddPetScreen = (props: AddPetScreenProps) => {
   const { navigation } = props;
@@ -33,39 +40,39 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
       <View style={styles.filterContainer}>
         <TouchableOpacity
           onPress={() => {
-            setAnimal('Dog');
+            setAnimal(animalsName.DOG);
           }}
           style={[
             styles.filterItemContainer,
-            { borderColor: animal === 'Dog' ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            { borderColor: animal === animalsName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <Text style={styles.filterText}>Dog</Text>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Dog</TextItemThin>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            setAnimal('Cat');
+            setAnimal(animalsName.CAT);
           }}
           style={[
             styles.filterItemContainer,
-            { borderColor: animal === 'Cat' ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            { borderColor: animal === animalsName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <Text style={styles.filterText}>Cat</Text>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Cat</TextItemThin>
         </TouchableOpacity>
       </View>
 
       <View style={styles.filterContainer}>
         <TouchableOpacity
           onPress={() => {
-            setMale('Unknown');
+            setMale(animalsName.UNKNOWN);
           }}
           style={[
             styles.filterItemContainer,
-            { borderColor: [male].includes('Unknown') ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            { borderColor: [male].includes(animalsName.UNKNOWN) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <Text style={styles.filterText}>Unknown</Text>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Unknown</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -77,7 +84,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes('Girl') ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <Text style={styles.filterText}>Girl</Text>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Girl</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -89,7 +96,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes('Boy') ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <Text style={styles.filterText}>Boy</Text>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Boy</TextItemThin>
         </TouchableOpacity>
       </View>
       <TextInput
@@ -130,7 +137,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
                 description: description,
                 nickName: nickName,
                 id: id,
-                photo: animal === 'Cat' ? catDefaultImg : dogDefaultImg,
+                photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
               });
             dispatch(
               addPetAC({
@@ -140,7 +147,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
                 age,
                 description,
                 id,
-                photo: animal === 'Cat' ? catDefaultImg : dogDefaultImg,
+                photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
               }),
             );
             navigation.navigate(DrawerNavigationName.ADOPTION_STACK);

@@ -3,26 +3,20 @@ import { screenWidth } from '../../consts/consts';
 import { COLORS } from '../../colors/colors';
 
 export type ProfileScreenStyleType = {
-  container: TextStyle;
-  headerText: TextStyle;
-  mainHeaderText: TextStyle;
-  userNameText: TextStyle;
+  mainContainer: TextStyle;
   text: TextStyle;
   buttonsContainer: ViewStyle;
   textBlock: ViewStyle;
+  rootContainer: ViewStyle;
+  buttonContainer: ViewStyle;
+  avatarContainer: ViewStyle;
 };
 
 export const styles = StyleSheet.create<ProfileScreenStyleType>({
-  container: {
+  mainContainer: {
     height: '100%',
     width: screenWidth,
     position: 'relative',
-  },
-  headerText: {
-    color: COLORS.text.dark_blue,
-    fontSize: 18,
-    fontWeight: 'bold',
-    margin: 4,
   },
   buttonsContainer: {
     flexDirection: 'row',
@@ -32,17 +26,22 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
   text: {
     color: COLORS.text.dark_blue,
     fontSize: 16,
-    fontStyle: 'italic',
+    borderBottomColor: COLORS.text.grey,
+    borderBottomWidth: 1,
   },
   textBlock: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  mainHeaderText: {
-    color: COLORS.text.dark_blue,
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 20,
+  rootContainer: {
+    margin: 24,
   },
-  userNameText: { color: COLORS.text.dark_blue, fontSize: 16, marginTop: 50 },
+  buttonContainer: {
+    width: '40%',
+  },
+  avatarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 10,
+  },
 });

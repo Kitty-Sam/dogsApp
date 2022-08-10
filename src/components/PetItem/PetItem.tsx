@@ -1,14 +1,15 @@
 import React from 'react';
 import { AdoptionNavigationName } from '../../enum/navigation';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 import { PetType } from '../../store/reducers/userReducer';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AdoptionStackParamList } from '../../screens/AdoptionScreen/type';
 import { styles } from './style';
-import { screenWidth } from '../../consts/consts';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../colors/colors';
 import { iconsName } from '../../enum/iconsName';
+import { TextItemBold } from '../Text/TextItemBold/TextItemBold';
+import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
 
 export type PetItemType = {
   pet: PetType;
@@ -16,28 +17,23 @@ export type PetItemType = {
 };
 
 export const PetItem = ({ pet, navigation }: PetItemType) => {
+  const petUnitNavigate = () => {
+    navigation.navigate(AdoptionNavigationName.PET_UNITE, {
+      nickName: pet.nickName,
+      description: pet.description,
+      photo: pet.photo,
+      age: pet.age,
+      male: pet.male,
+    });
+  };
   return (
-    <TouchableOpacity
-      style={styles.itemPetContainer}
-      onPress={() =>
-        navigation.navigate(AdoptionNavigationName.PET_UNITE, {
-          nickName: pet.nickName,
-          description: pet.description,
-          photo: pet.photo,
-          age: pet.age,
-          male: pet.male,
-        })
-      }
-    >
-      <View style={{ justifyContent: 'center', alignItems: 'center', marginVertical: 10 }}>
-        <Image
-          source={{ uri: pet.photo }}
-          style={{ width: screenWidth * 0.4, height: screenWidth * 0.35, borderRadius: 30 }}
-        />
+    <TouchableOpacity style={styles.itemPetContainer} onPress={petUnitNavigate}>
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: pet.photo }} style={styles.image} />
       </View>
-      <View style={{ justifyContent: 'flex-start', marginHorizontal: 24 }}>
-        <Text style={[styles.itemPetText, { fontSize: 18, fontWeight: 'bold' }]}>{pet.nickName}</Text>
-        <Text style={styles.itemPetText}>{pet.age}</Text>
+      <View style={styles.textContainer}>
+        <TextItemBold>{pet.nickName}</TextItemBold>
+        <TextItemThin>{pet.age}</TextItemThin>
       </View>
       <Icon
         name={
@@ -49,7 +45,7 @@ export const PetItem = ({ pet, navigation }: PetItemType) => {
         }
         size={26}
         color={COLORS.text.dark_blue}
-        style={{ position: 'absolute', right: 18, bottom: 40 }}
+        style={styles.icon}
       />
     </TouchableOpacity>
   );
