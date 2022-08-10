@@ -1,10 +1,14 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { screenWidth } from '../../consts/consts';
 import { COLORS } from '../../colors/colors';
 
 export type PetItemStyleType = {
   itemPetContainer: ViewStyle;
   itemPetText: TextStyle;
+  image: ImageStyle;
+  icon: TextStyle;
+  textContainer: TextStyle;
+  imageContainer: ViewStyle;
 };
 
 export const styles = StyleSheet.create<PetItemStyleType>({
@@ -18,5 +22,25 @@ export const styles = StyleSheet.create<PetItemStyleType>({
   },
   itemPetText: {
     color: COLORS.text.dark_blue,
+  },
+  image: {
+    width: screenWidth * 0.4,
+    height: screenWidth * 0.35,
+    borderRadius: 30,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+
+  icon: {
+    position: 'absolute',
+    right: 18,
+    bottom: 40,
+  },
+  textContainer: {
+    justifyContent: 'flex-start',
+    marginHorizontal: 24,
   },
 });

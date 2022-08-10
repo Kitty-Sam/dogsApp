@@ -1,13 +1,10 @@
 import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { Avatar } from '@rneui/themed';
-
-import { signOut } from 'firebase/auth';
 import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { Composer, ComposerProps, GiftedChat, IMessage, SendProps } from 'react-native-gifted-chat';
 import { useNavigation } from '@react-navigation/native';
 import { auth, db } from '../../../firebase';
-import { AuthNavigationName } from '../../enum/navigation';
 
 const imgAvatar = 'https://cdn-icons-png.flaticon.com/512/194/194938.png';
 

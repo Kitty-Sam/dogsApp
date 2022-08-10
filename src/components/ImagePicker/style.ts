@@ -1,5 +1,4 @@
 import { StyleSheet, ViewStyle } from 'react-native';
-import { COLORS } from '../../colors/colors';
 
 export type ImagePickerStyleType = {
   container: ViewStyle;

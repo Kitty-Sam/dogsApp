@@ -6,7 +6,6 @@ export type AddPetScreenStyleType = {
   filterContainer: ViewStyle;
   filterItemContainer: ViewStyle;
   input: TextStyle;
-  filterText: TextStyle;
   buttonsContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<AddPetScreenStyleType>({
@@ -23,10 +22,6 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     borderWidth: 2,
     borderRadius: 10,
     margin: 4,
-  },
-  filterText: {
-    textAlign: 'center',
-    paddingVertical: 8,
   },
   buttonsContainer: {
     flexDirection: 'row',

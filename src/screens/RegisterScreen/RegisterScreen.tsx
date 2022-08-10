@@ -3,7 +3,7 @@ import { ActivityIndicator, Alert, ImageBackground, Text, TextInput, TouchableOp
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../firebase';
 import { AuthNavigationName } from '../../enum/navigation';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { AppButton } from '../../components/Button/AppButton';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { buttonsName } from '../../enum/buttonsName';
 import { styles } from './style';
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
 import { RegisterScreenProps } from './type';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -74,7 +75,7 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
           <View style={styles.buttonsContainer}>
             <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />
             <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
-              <Text style={styles.loginText}>Try sign in</Text>
+              <TextItemThin>Try sign in</TextItemThin>
             </TouchableOpacity>
           </View>
         </View>

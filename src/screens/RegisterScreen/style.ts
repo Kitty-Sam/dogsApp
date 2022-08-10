@@ -6,7 +6,6 @@ export type RegisterScreenStyleType = {
   rootContainer: ViewStyle;
   input: TextStyle;
   loginTextContainer: TextStyle;
-  loginText: TextStyle;
   inputsContainer: ViewStyle;
   buttonsContainer: ViewStyle;
 };
@@ -30,7 +29,6 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
     fontSize: 16,
     margin: 15,
   },
-  loginText: { color: COLORS.text.dark_blue },
   inputsContainer: {
     position: 'absolute',
     top: 200,

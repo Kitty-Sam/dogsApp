@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, SafeAreaView, TextInput, View } from 'react-native';
 import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,8 +12,11 @@ import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { getPersonalInfo } from '../../store/selectors/userSelector';
 import { fetchPersonalInfoAC } from '../../store/actions/userAC';
 import { COLORS } from '../../colors/colors';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { AppButton } from '../../components/Button/AppButton';
 import { buttonsName } from '../../enum/buttonsName';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -24,9 +27,16 @@ export type PersonalInfoType = {
   petHobbies: string;
 };
 
+const initialPersonalInfo: PersonalInfoType = {
+  petName: 'pet name',
+  petAge: 'pet age',
+  petHobbies: 'pet hobbies',
+};
+
 export const ProfileScreen = (props: ProfileScreenProps) => {
   const currentUserId = useSelector(getCurrentUserId);
   const personalInfoRedux = useSelector(getPersonalInfo);
+  console.log('personalInfoRedux', personalInfoRedux);
 
   const dispatch = useDispatch();
 
@@ -42,24 +52,16 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     }
 
     if (!snapshot.val()) {
-      await database.ref(`/users/${currentUserId}`).child('personalInfo').set({
-        petName: 'pet name',
-        petAge: 'pet age',
-        petHobbies: 'pet hobbies',
-      });
-      dispatch(
-        fetchPersonalInfoAC({
-          petName: 'pet name',
-          petAge: 'pet age',
-          petHobbies: 'pet hobbies',
-        }),
-      );
+      await database.ref(`/users/${currentUserId}`).child('personalInfo').set(initialPersonalInfo);
+      dispatch(fetchPersonalInfoAC(initialPersonalInfo));
     }
   };
 
   useLayoutEffect(() => {
     fetchPersonalInfo();
   }, []);
+
+  // const { petName, petAge, petHobbies } = personalInfoRedux;
 
   const NAME: string = personalInfoRedux.petName;
   const AGE = personalInfoRedux.petAge;
@@ -86,11 +88,11 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
   };
 
   return (
-    <ImageBackground style={styles.container} source={img}>
-      <View style={{ margin: 24 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <ImagePickerCrop photoString={photoString} sizeH={170} sizeW={170} />
-          {currentUserName && <Text style={styles.userNameText}>{currentUserName}</Text>}
+    <ImageBackground style={styles.mainContainer} source={img}>
+      <SafeAreaView style={styles.rootContainer}>
+        <View style={styles.avatarContainer}>
+          <ImagePickerCrop photoString={photoString} sizeH={150} sizeW={150} />
+          {currentUserName && <TextItemThin style={{ marginTop: 50 }}>{currentUserName}</TextItemThin>}
           <Icon
             name={iconsName.CREATE_OUTLINE}
             size={24}
@@ -100,9 +102,9 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
           />
         </View>
         <View>
-          <Text style={styles.mainHeaderText}>Home pet</Text>
-          <TouchableOpacity style={styles.textBlock}>
-            <Text style={styles.headerText}>pet name:</Text>
+          <HeaderTextItem>Home pet</HeaderTextItem>
+          <View style={styles.textBlock}>
+            <TextItemBold>pet name:</TextItemBold>
             {isEdit ? (
               <TextInput
                 value={petName}
@@ -110,14 +112,14 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
                 autoFocus={true}
                 maxLength={19}
                 onSubmitEditing={onSaveChangedNamePress}
-                style={[styles.text, { borderBottomColor: COLORS.text.grey, borderBottomWidth: 1 }]}
+                style={styles.text}
               />
             ) : (
-              <Text style={styles.text}>{petName}</Text>
+              <TextItemThin>{petName}</TextItemThin>
             )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.textBlock}>
-            <Text style={styles.headerText}>age </Text>
+          </View>
+          <View style={styles.textBlock}>
+            <TextItemBold>age:</TextItemBold>
             {isEdit ? (
               <TextInput
                 value={petAge}
@@ -125,30 +127,29 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
                 autoFocus={true}
                 maxLength={19}
                 onSubmitEditing={onSaveChangedNamePress}
-                style={[styles.text, { borderBottomColor: COLORS.text.grey, borderBottomWidth: 1 }]}
+                style={styles.text}
               />
             ) : (
-              <Text style={styles.text}>{petAge}</Text>
+              <TextItemThin>{petAge}</TextItemThin>
             )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.textBlock}>
-            <Text style={styles.headerText}>hobbies: </Text>
+          </View>
+          <View style={styles.textBlock}>
+            <TextItemBold>hobbies: </TextItemBold>
             {isEdit ? (
               <TextInput
                 value={petHobbies}
                 onChangeText={text => setPetHobbies(text)}
                 autoFocus={true}
-                numberOfLines={2}
                 onSubmitEditing={onSaveChangedNamePress}
-                style={[styles.text, { borderBottomColor: COLORS.text.grey, borderBottomWidth: 1, width: 100 }]}
+                style={styles.text}
               />
             ) : (
-              <Text style={styles.text}>{petHobbies}</Text>
+              <TextItemThin>{petHobbies}</TextItemThin>
             )}
-          </TouchableOpacity>
+          </View>
         </View>
         {isEdit ? (
-          <View style={{ width: '40%' }}>
+          <View style={styles.buttonContainer}>
             <AppButton
               onPress={() => {
                 onSaveChangedNamePress();
@@ -158,7 +159,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
             />
           </View>
         ) : null}
-      </View>
+      </SafeAreaView>
     </ImageBackground>
   );
 };

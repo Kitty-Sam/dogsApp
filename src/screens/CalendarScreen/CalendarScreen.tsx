@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { Calendar } from 'react-native-calendars';
+import { Agenda, Calendar } from 'react-native-calendars';
 import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { database } from '../../utils/getDataBaseURL';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,16 @@ import { styles } from './style';
 import { ModalAddNewNote } from '../../components/Modals/ModalAddNewNote';
 import { ModalDialog } from '../../components/Modals/ModalDialog';
 import { cutDate } from '../../utils/cutDate';
+import { COLORS } from '../../colors/colors';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 
 const date = new Date().toISOString().split('T')[0];
+
+export type DayItemType = {
+  name: string;
+  date: string;
+  id: string;
+};
 
 export const CalendarScreen = () => {
   const dispatch = useDispatch();
@@ -23,7 +31,7 @@ export const CalendarScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState('');
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<DayItemType[]>([]);
   const [markedDays, setMarkedDays] = useState({});
 
   const getData = async () => {
@@ -41,10 +49,9 @@ export const CalendarScreen = () => {
         markedDays[item] = {
           selected: true,
           marked: true,
-          selectedColor: 'brown',
+          selectedColor: COLORS.buttons.brown,
         };
       });
-      console.log('markedDays', markedDays);
       setMarkedDays(markedDays);
     }
 
@@ -56,7 +63,7 @@ export const CalendarScreen = () => {
 
       if (snapshot.val()) {
         const values = snapshot.val();
-        const data: any = Object.values(values);
+        const data: DayItemType[] = Object.values(values);
         setItems(data);
       } else {
         setItems([]);
@@ -67,7 +74,7 @@ export const CalendarScreen = () => {
 
       if (snapshot.val()) {
         const values = snapshot.val();
-        const data: any = Object.values(values);
+        const data: DayItemType[] = Object.values(values);
         setItems(data);
       } else {
         setItems([]);
@@ -91,7 +98,7 @@ export const CalendarScreen = () => {
       .child('notes/')
       .child(`${pinnedDay}`)
       .child(`${taskId}`)
-      .set({ name: title, height: 20, date: pinnedDay, id: taskId });
+      .set({ name: title, date: pinnedDay, id: taskId });
     dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     getData();
     setTitle('');
@@ -112,8 +119,9 @@ export const CalendarScreen = () => {
         showSixWeeks={true}
         markedDates={markedDays}
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={[styles.titleText, { fontStyle: 'italic' }]}>Daily tasks</Text>
+
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <TextItemThin>Daily tasks</TextItemThin>
       </View>
       {items.length ? (
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -122,7 +130,7 @@ export const CalendarScreen = () => {
               marginHorizontal: 18,
               fontSize: 28,
               borderRadius: 10,
-              borderColor: 'grey',
+              borderColor: COLORS.text.grey,
               borderWidth: 1,
               padding: 4,
             }}
@@ -131,7 +139,7 @@ export const CalendarScreen = () => {
           </Text>
 
           <View style={styles.tasksContainer}>
-            {items.map((el, i): any => (
+            {items.map((el, i) => (
               <TouchableOpacity key={i} style={styles.itemContainer}>
                 <Text
                   style={styles.closeText}
@@ -142,17 +150,19 @@ export const CalendarScreen = () => {
                 >
                   X
                 </Text>
-                <Text style={styles.titleText}>{el.name}</Text>
+                <TextItemThin>{el.name}</TextItemThin>
               </TouchableOpacity>
             ))}
           </View>
         </View>
       ) : (
         <View style={{ flexDirection: 'row' }}>
-          <Text style={{ margin: 20, fontSize: 28, borderRadius: 10, borderColor: 'grey', borderWidth: 1, padding: 4 }}>
+          <TextItemThin
+            style={{ marginHorizontal: 10, borderBottomWidth: 1, borderBottomColor: COLORS.text.dark_blue }}
+          >
             {cutDate(pinnedDay)}
-          </Text>
-          <Text style={[styles.titleText, { color: 'grey' }]}>... free day</Text>
+          </TextItemThin>
+          <TextItemThin>... free day</TextItemThin>
         </View>
       )}
 

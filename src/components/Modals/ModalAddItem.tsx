@@ -1,27 +1,23 @@
 import React from 'react';
 import {
-  Image,
-  ImageBackground,
   Keyboard,
   KeyboardAvoidingView,
   Modal,
   Platform,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import { styles } from '../AddSection/style';
-import { createImg } from '../../utils/createImg';
 import { chaptersName } from '../../enum/chapters';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
 import { CustomTextInput } from '../TextInput/CustomTextInput';
-import { AppButton } from '../Button/CustomSquareButton';
+import { AppButton } from '../Button/AppButton';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
-import { images, screenWidth } from '../../consts/consts';
 import { COLORS } from '../../colors/colors';
+import { HeaderTextItem } from '../Text/HeaderTextItem/HeaderTextItem';
 
 export type ModalAddItemType = {
   isOpen: boolean;
@@ -31,11 +27,8 @@ export type ModalAddItemType = {
   setTitle: (title: string) => void;
   addedInfo: string;
   setInfo: (info: string) => void;
-  addItemPress: any;
+  addItemPress: () => void;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const img = require('../../assets/homster.jpeg');
 
 export const ModalAddItem = ({
   isOpen,
@@ -50,7 +43,7 @@ export const ModalAddItem = ({
   return (
     <Modal visible={isOpen}>
       <View style={styles.modalCommonContainer}>
-        <Text style={styles.chapterText}>{chapter}</Text>
+        <HeaderTextItem>{chapter}</HeaderTextItem>
         <View style={styles.modalContainer}>
           <TouchableOpacity style={styles.closeIcon} onPress={() => setIsOpen(false)}>
             <Icon name={iconsName.CLOSE_OUTLINE} size={24} color={COLORS.text.dark_blue} />

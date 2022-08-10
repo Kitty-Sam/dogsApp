@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_cat_fat.jpeg');
@@ -24,13 +25,11 @@ export const ShopsScreen = memo(() => {
   const shops = useSelector(getShops);
   const statusApp = useSelector(getAppStatus);
 
-  const currentUserId = useSelector(getCurrentUserId);
-
   const dispatch = useDispatch();
 
   const getUsefulInfo = async () => {
     dispatch(toggleAppStatus(requestStatus.LOADING));
-    const referenceShops: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/shops`);
+    const referenceShops: FirebaseDatabaseTypes.Reference = await database.ref(`/shops`);
     const snapshotShops: FirebaseDatabaseTypes.DataSnapshot = await referenceShops.once('value');
     if (snapshotShops.val()) {
       const values = snapshotShops.val();
@@ -38,7 +37,7 @@ export const ShopsScreen = memo(() => {
       dispatch(fetchShopsAC(shops));
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     } else {
-      const emptyArray: any[] = [];
+      const emptyArray: ItemType[] = [];
       dispatch(fetchShopsAC(emptyArray));
       dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     }
@@ -61,22 +60,18 @@ export const ShopsScreen = memo(() => {
     );
   }
   return (
-    <ScrollView style={stylesCommon.rootContainer}>
+    <SafeAreaView style={stylesCommon.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
-        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-          <ActivityIndicator />
-        </View>
+        <ActivityIndicator />
       ) : (
         <>
-          <Text style={stylesCommon.headerText}>Shops</Text>
+          <HeaderTextItem>Shops</HeaderTextItem>
           <View style={stylesCommon.addSectionContainer}>
             <AddSection chapter={chaptersName.SHOP} />
           </View>
-          <View style={styles.chapterContainer}>
-            <FlatList data={shops} renderItem={renderItem} horizontal />
-          </View>
+          <FlatList data={shops} renderItem={renderItem} horizontal contentContainerStyle={styles.chapterContainer} />
         </>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 });
