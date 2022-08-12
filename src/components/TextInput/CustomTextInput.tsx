@@ -4,14 +4,12 @@ import { CustomInputType } from './type';
 import { styles } from './style';
 import { COLORS } from '../../colors/colors';
 
-export const CustomTextInput = ({ placeholder, value, setValue }: CustomInputType) => {
+export const CustomTextInput = ({ style, placeholder }: CustomInputType) => {
   return (
     <TextInput
-      value={value}
       placeholder={placeholder}
       placeholderTextColor={COLORS.text.grey}
-      onChangeText={(text: string) => setValue(text)}
-      style={styles.customTextInputContainer}
+      style={[styles.customTextInputContainer, style]}
     />
   );
 };
