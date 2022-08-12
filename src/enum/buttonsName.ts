@@ -8,4 +8,5 @@ export const enum buttonsName {
   DONATE = 'donate',
   ADOPT = 'adopt',
   ADD_PET = 'add pet',
+  CLEAR = 'clear',
 }

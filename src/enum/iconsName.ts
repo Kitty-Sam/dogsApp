@@ -3,8 +3,6 @@ export const enum iconsName {
   PERSON_OUTLINE = 'person-outline',
   ATTACH = 'attach',
   ATTACH_OUTLINE = 'attach-outline',
-  PEOPLE = 'people',
-  PEOPLE_OUTLINE = 'people-outline',
   CHATBOX = 'chatbox',
   CHATBOX_OUTLINE = 'chatbox-outline',
   SHOPPING = 'shopping',
@@ -13,10 +11,7 @@ export const enum iconsName {
   HOSPITAL_BOX_OUTLINE = 'hospital-box-outline',
   ACCOUNT_SUPERVISOR = 'account-supervisor',
   ACCOUNT_SUPERVISOR_OUTLINE = 'account-supervisor-outline',
-
   ADD_OUTLINE = 'add-outline',
-
-  ALERT_OUTLINE = 'alert-outline',
   CLOSE_OUTLINE = 'close-outline',
   CALENDAR_OUTLINE = 'calendar-outline',
   CALENDAR = 'calendar',
@@ -36,4 +31,5 @@ export const enum iconsName {
   GIRL = 'female-outline',
   HEART = 'heart',
   HEART_OUTLINE = 'heart-outline',
+  LOG_OUT_OUTLINE = 'log-out-outline',
 }

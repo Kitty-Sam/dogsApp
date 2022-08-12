@@ -9,7 +9,6 @@ import { iconsName } from '../../enum/iconsName';
 import { ProfileScreenProps } from './type';
 import { database } from '../../utils/getDataBaseURL';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { getPersonalInfo } from '../../store/selectors/userSelector';
 import { fetchPersonalInfoAC } from '../../store/actions/userAC';
 import { COLORS } from '../../colors/colors';
 import { AppButton } from '../../components/Button/AppButton';
@@ -17,6 +16,7 @@ import { buttonsName } from '../../enum/buttonsName';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
+import { useInput } from '../../hooks/useInput';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -35,8 +35,16 @@ const initialPersonalInfo: PersonalInfoType = {
 
 export const ProfileScreen = (props: ProfileScreenProps) => {
   const currentUserId = useSelector(getCurrentUserId);
-  const personalInfoRedux = useSelector(getPersonalInfo);
-  console.log('personalInfoRedux', personalInfoRedux);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+
+  const petName = useInput('');
+  const petAge = useInput('');
+  const petHobbies = useInput('');
+
+  const photo = useSelector(getCurrentUserPhoto);
+  const currentUserName = useSelector(getCurrentUserName);
+
+  const photoString = String(photo);
 
   const dispatch = useDispatch();
 
@@ -47,8 +55,11 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
 
     if (snapshot.val()) {
-      const personalInfoFB = snapshot.val();
+      const personalInfoFB: PersonalInfoType = snapshot.val();
       dispatch(fetchPersonalInfoAC(personalInfoFB));
+      petName.onChangeText(personalInfoFB.petName);
+      petAge.onChangeText(personalInfoFB.petAge);
+      petHobbies.onChangeText(personalInfoFB.petHobbies);
     }
 
     if (!snapshot.val()) {
@@ -61,27 +72,11 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     fetchPersonalInfo();
   }, []);
 
-  // const { petName, petAge, petHobbies } = personalInfoRedux;
-
-  const NAME: string = personalInfoRedux.petName;
-  const AGE = personalInfoRedux.petAge;
-  const HOBBY = personalInfoRedux.petHobbies;
-
-  const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [petName, setPetName] = useState<string>(NAME);
-  const [petAge, setPetAge] = useState<string>(AGE);
-  const [petHobbies, setPetHobbies] = useState<string>(HOBBY);
-
-  const photo = useSelector(getCurrentUserPhoto);
-  const currentUserName = useSelector(getCurrentUserName);
-
-  const photoString = String(photo);
-
   const onSaveChangedNamePress = async () => {
     await database.ref(`/users/${currentUserId}/personalInfo`).update({
-      petName,
-      petAge,
-      petHobbies,
+      petName: petName.value,
+      petAge: petAge.value,
+      petHobbies: petHobbies.value,
     });
     fetchPersonalInfo();
     setIsEdit(false);
@@ -107,44 +102,41 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
             <TextItemBold>pet name:</TextItemBold>
             {isEdit ? (
               <TextInput
-                value={petName}
-                onChangeText={text => setPetName(text)}
+                {...petName}
                 autoFocus={true}
                 maxLength={19}
                 onSubmitEditing={onSaveChangedNamePress}
                 style={styles.text}
               />
             ) : (
-              <TextItemThin>{petName}</TextItemThin>
+              <TextItemThin>{petName.value}</TextItemThin>
             )}
           </View>
           <View style={styles.textBlock}>
             <TextItemBold>age:</TextItemBold>
             {isEdit ? (
               <TextInput
-                value={petAge}
-                onChangeText={text => setPetAge(text)}
+                {...petAge}
                 autoFocus={true}
                 maxLength={19}
                 onSubmitEditing={onSaveChangedNamePress}
                 style={styles.text}
               />
             ) : (
-              <TextItemThin>{petAge}</TextItemThin>
+              <TextItemThin>{petAge.value}</TextItemThin>
             )}
           </View>
           <View style={styles.textBlock}>
             <TextItemBold>hobbies: </TextItemBold>
             {isEdit ? (
               <TextInput
-                value={petHobbies}
-                onChangeText={text => setPetHobbies(text)}
+                {...petHobbies}
                 autoFocus={true}
                 onSubmitEditing={onSaveChangedNamePress}
                 style={styles.text}
               />
             ) : (
-              <TextItemThin>{petHobbies}</TextItemThin>
+              <TextItemThin>{petHobbies.value}</TextItemThin>
             )}
           </View>
         </View>

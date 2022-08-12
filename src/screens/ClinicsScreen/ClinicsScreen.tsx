@@ -8,14 +8,11 @@ import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
 import { stylesCommon } from '../MastersScreen/style';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { database } from '../../utils/getDataBaseURL';
-import { fetchClinicsAC } from '../../store/actions/clinicAC';
 import { getAppStatus } from '../../store/selectors/appSelector';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -26,26 +23,8 @@ export const ClinicsScreen = memo(() => {
 
   const dispatch = useDispatch();
 
-  const getUsefulInfo = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-
-    const referenceClinics: FirebaseDatabaseTypes.Reference = await database.ref(`/clinics`);
-    const snapshotClinics: FirebaseDatabaseTypes.DataSnapshot = await referenceClinics.once('value');
-
-    if (snapshotClinics.val()) {
-      const values = snapshotClinics.val();
-      const clinics: ItemType[] = Object.values(values);
-      dispatch(fetchClinicsAC(clinics));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    } else {
-      const emptyArray: ItemType[] = [];
-      dispatch(fetchClinicsAC(emptyArray));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    }
-  };
-
   useEffect(() => {
-    getUsefulInfo();
+    dispatch(fetchServicesAction({ chapter: chaptersName.CLINIC }));
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {

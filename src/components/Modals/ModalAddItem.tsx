@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Modal,
   Platform,
+  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -12,34 +13,23 @@ import { styles } from '../AddSection/style';
 import { chaptersName } from '../../enum/chapters';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
-import { CustomTextInput } from '../TextInput/CustomTextInput';
 import { AppButton } from '../Button/AppButton';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { COLORS } from '../../colors/colors';
 import { HeaderTextItem } from '../Text/HeaderTextItem/HeaderTextItem';
+import { UseInputResponseType } from '../../hooks/useInput';
 
 export type ModalAddItemType = {
   isOpen: boolean;
   chapter: chaptersName;
   setIsOpen: (isOpen: boolean) => void;
-  addedTitle: string;
-  setTitle: (title: string) => void;
-  addedInfo: string;
-  setInfo: (info: string) => void;
+  addedTitle: UseInputResponseType;
+  addedInfo: UseInputResponseType;
   addItemPress: () => void;
 };
 
-export const ModalAddItem = ({
-  isOpen,
-  chapter,
-  setIsOpen,
-  addedTitle,
-  setTitle,
-  addedInfo,
-  setInfo,
-  addItemPress,
-}: ModalAddItemType) => {
+export const ModalAddItem = ({ isOpen, chapter, setIsOpen, addItemPress, addedTitle, addedInfo }: ModalAddItemType) => {
   return (
     <Modal visible={isOpen}>
       <View style={styles.modalCommonContainer}>
@@ -51,12 +41,18 @@ export const ModalAddItem = ({
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.modalInputBlock}>
-                <CustomTextInput
+                <TextInput
+                  placeholderTextColor={COLORS.text.grey}
                   placeholder={inputsPlaceholdersName.ADD_TITLE}
-                  value={addedTitle}
-                  setValue={setTitle}
+                  {...addedTitle}
+                  style={styles.input}
                 />
-                <CustomTextInput placeholder={inputsPlaceholdersName.ADD_INFO} value={addedInfo} setValue={setInfo} />
+                <TextInput
+                  placeholderTextColor={COLORS.text.grey}
+                  placeholder={inputsPlaceholdersName.ADD_INFO}
+                  {...addedInfo}
+                  style={styles.input}
+                />
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>

@@ -1,5 +1,6 @@
+import { TextStyle } from 'react-native';
+
 export type CustomInputType = {
+  style?: TextStyle;
   placeholder: string;
-  value: string;
-  setValue: (text: string) => void;
 };

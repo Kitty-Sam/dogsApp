@@ -1,9 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import { database } from '../../utils/getDataBaseURL';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPetsAC } from '../../store/actions/userAC';
 import { getPets } from '../../store/selectors/userSelector';
 import { PetType } from '../../store/reducers/userReducer';
 import { COLORS } from '../../colors/colors';
@@ -14,12 +11,9 @@ import { iconsName } from '../../enum/iconsName';
 import { PetItem } from '../../components/PetItem/PetItem';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
-
-export enum filterName {
-  DOG = 'Dog',
-  CAT = 'Cat',
-  UNKNOWN = '',
-}
+import { animalsName } from '../../enum/animalsName';
+import { fetchPetsAction } from '../../store/sagas/sagaActions/fetchPets';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 
 export const AdoptionScreen = (props: AdoptionScreenProps) => {
   const { navigation } = props;
@@ -28,18 +22,8 @@ export const AdoptionScreen = (props: AdoptionScreenProps) => {
   const dispatch = useDispatch();
   const pets = useSelector(getPets);
 
-  const fetchPets = async () => {
-    const reference: FirebaseDatabaseTypes.Reference = await database.ref(`/pets/`);
-    const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
-
-    if (snapshot.val()) {
-      const petsFB: PetType[] = Object.values(snapshot.val());
-      dispatch(fetchPetsAC(petsFB));
-    }
-  };
-
   useLayoutEffect(() => {
-    fetchPets();
+    dispatch(fetchPetsAction());
   }, []);
 
   return (
@@ -52,61 +36,66 @@ export const AdoptionScreen = (props: AdoptionScreenProps) => {
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter(filterName.DOG);
+              setFilter(animalsName.DOG);
             }}
           >
             <Icon
               name={iconsName.DOG}
               size={36}
-              color={filter === filterName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === animalsName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
           </TouchableOpacity>
-          <TextItemThin>Dog</TextItemThin>
+          <TextItemThin>{animalsName.DOG}</TextItemThin>
         </View>
         <View style={styles.iconWithLabelContainer}>
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter(filterName.CAT);
+              setFilter(animalsName.CAT);
             }}
           >
             <Icon
               name={iconsName.CAT}
               size={36}
-              color={filter === filterName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === animalsName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
           </TouchableOpacity>
-          <TextItemThin>Cat</TextItemThin>
+          <TextItemThin>{animalsName.CAT}</TextItemThin>
         </View>
 
         <View style={styles.iconWithLabelContainer}>
           <TouchableOpacity
             style={styles.iconContainer}
             onPress={() => {
-              setFilter(filterName.UNKNOWN);
+              setFilter(animalsName.All);
             }}
           >
             <Icon
               name={iconsName.DOG}
               size={16}
-              color={filter === filterName.UNKNOWN ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === animalsName.All ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
             <Icon
               name={iconsName.CAT}
               size={16}
-              color={filter === filterName.UNKNOWN ? COLORS.buttons.brown : COLORS.text.dark_blue}
+              color={filter === animalsName.All ? COLORS.buttons.brown : COLORS.text.dark_blue}
             />
           </TouchableOpacity>
           <TextItemThin>All together</TextItemThin>
         </View>
       </View>
-      <ScrollView contentContainerStyle={styles.listContainer}>
-        {filter
-          ? pets
-              .filter((pet: PetType) => pet.animal === filter)
-              .map((pet: PetType) => <PetItem pet={pet} navigation={navigation} key={pet.id} />)
-          : pets.map((pet: PetType) => <PetItem pet={pet} navigation={navigation} key={pet.id} />)}
-      </ScrollView>
+
+      {!pets ? (
+        <HeaderTextItem style={{ textAlign: 'center' }}>All animals are adopted</HeaderTextItem>
+      ) : (
+        <ScrollView contentContainerStyle={styles.listContainer}>
+          {filter
+            ? pets
+                .filter((pet: PetType) => pet.animal === filter)
+                .map((pet: PetType) => <PetItem pet={pet} navigation={navigation} key={pet.id} />)
+            : pets.map((pet: PetType) => <PetItem pet={pet} navigation={navigation} key={pet.id} />)}
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };

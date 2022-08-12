@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,15 +8,11 @@ import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
 import { stylesCommon } from '../MastersScreen/style';
-import { getCurrentUserId } from '../../store/selectors/loginSelector';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { database } from '../../utils/getDataBaseURL';
-import { fetchShopsAC } from '../../store/actions/shopAC';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_cat_fat.jpeg');
@@ -27,23 +23,8 @@ export const ShopsScreen = memo(() => {
 
   const dispatch = useDispatch();
 
-  const getUsefulInfo = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    const referenceShops: FirebaseDatabaseTypes.Reference = await database.ref(`/shops`);
-    const snapshotShops: FirebaseDatabaseTypes.DataSnapshot = await referenceShops.once('value');
-    if (snapshotShops.val()) {
-      const values = snapshotShops.val();
-      const shops: ItemType[] = Object.values(values);
-      dispatch(fetchShopsAC(shops));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    } else {
-      const emptyArray: ItemType[] = [];
-      dispatch(fetchShopsAC(emptyArray));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    }
-  };
   useEffect(() => {
-    getUsefulInfo();
+    dispatch(fetchServicesAction({ chapter: chaptersName.SHOP }));
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {

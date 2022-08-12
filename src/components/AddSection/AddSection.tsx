@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { ModalAddItem } from '../Modals/ModalAddItem';
 import { useDispatch } from 'react-redux';
@@ -10,17 +10,12 @@ import { addShopAC } from '../../store/actions/shopAC';
 import { addClinicAC } from '../../store/actions/clinicAC';
 import { addMasterAC } from '../../store/actions/masterAC';
 import { COLORS } from '../../colors/colors';
+import { useInput } from '../../hooks/useInput';
 
 export const AddSection = ({ chapter }: any) => {
-  const [addedTitle, setTitle] = useState('');
-  const [addedInfo, setInfo] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
-  const addedTitleRef = useRef<any>(null); //InputHandler
-  addedTitleRef.current = addedTitle;
-
-  const addedAddressRef = useRef<any>(null);
-  addedAddressRef.current = addedInfo;
+  const addedTitle = useInput('');
+  const addedInfo = useInput('');
 
   const addButtonPress = () => {
     setIsOpen(true);
@@ -28,16 +23,17 @@ export const AddSection = ({ chapter }: any) => {
 
   const dispatch = useDispatch();
 
+  const payload = {
+    id: addedTitle.value,
+    title: addedTitle.value,
+    info: addedInfo.value,
+  };
+
   const addItemPress = async () => {
-    const payload = {
-      id: addedTitle,
-      title: addedTitle,
-      info: addedInfo,
-    };
-    if (addedInfo.trim() === '' || addedTitle.trim() === '') {
+    if (addedInfo.value.trim() === '' || addedTitle.value.trim() === '') {
       Alert.alert('Please, add the all necessary information');
-      setInfo('');
-      setTitle('');
+      addedTitle.resetValue();
+      addedInfo.resetValue();
       return;
     }
 
@@ -63,8 +59,8 @@ export const AddSection = ({ chapter }: any) => {
       dispatch(addMasterAC({ ...payload, chapter: chaptersName.MASTER }));
     }
     setIsOpen(false);
-    setInfo('');
-    setTitle('');
+    addedTitle.resetValue();
+    addedInfo.resetValue();
   };
 
   return (
@@ -72,13 +68,11 @@ export const AddSection = ({ chapter }: any) => {
       <Icon name={iconsName.ADD_OUTLINE} size={36} onPress={addButtonPress} color={COLORS.text.dark_blue} />
       <ModalAddItem
         addItemPress={addItemPress}
-        addedInfo={addedInfo}
-        addedTitle={addedTitle}
-        setInfo={setInfo}
-        setTitle={setTitle}
         chapter={chapter}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        addedTitle={addedTitle}
+        addedInfo={addedInfo}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
 
 export type AddSectionStyleType = {
@@ -7,9 +7,12 @@ export type AddSectionStyleType = {
   closeIcon: ViewStyle;
   imageContainer: ImageStyle;
   chapterText: TextStyle;
+  input: TextStyle;
   modalCommonContainer: ViewStyle;
   modalInputBlock: ViewStyle;
 };
+
+const ios = Platform.OS === 'ios';
 
 export const styles = StyleSheet.create<AddSectionStyleType>({
   modalContainer: {
@@ -58,5 +61,13 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     alignItems: 'center',
     backgroundColor: 'transparent',
     color: COLORS.text.dark_blue,
+  },
+  input: {
+    borderColor: COLORS.text.dark_blue,
+    margin: 8,
+    borderWidth: 1,
+    width: '80%',
+    borderRadius: 10,
+    padding: ios ? 10 : 8,
   },
 });
