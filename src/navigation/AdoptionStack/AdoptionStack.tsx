@@ -15,7 +15,11 @@ export const AdoptionStack = () => {
         component={AdoptionScreen}
         options={{ headerShown: false }}
       />
-      <Adoption.Screen name={AdoptionNavigationName.PET_UNITE} component={PetUniteScreen} />
+      <Adoption.Screen
+        name={AdoptionNavigationName.PET_UNITE}
+        component={PetUniteScreen}
+        options={{ headerShown: false }}
+      />
     </Adoption.Navigator>
   );
 };

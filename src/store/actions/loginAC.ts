@@ -3,7 +3,13 @@ type PayloadType = {
 };
 
 type SaveCurrentUserPayloadType = {
-  user: { currentUserId: string; currentUserName: string; currentUserPhoto: string; currentUserEmail: string };
+  user: {
+    currentUserId: string;
+    currentUserName: string;
+    currentUserPhoto: string;
+    currentUserEmail: string;
+    currentUserPhone: string;
+  };
 };
 
 export enum LoginActions {

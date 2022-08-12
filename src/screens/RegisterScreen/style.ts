@@ -24,6 +24,7 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
     textAlign: 'center',
     marginVertical: 10,
     color: COLORS.text.dark_blue,
+    backfaceVisibility: 'visible',
   },
   loginTextContainer: {
     fontSize: 16,

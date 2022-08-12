@@ -7,6 +7,7 @@ const initialState: initialStateType = {
     currentUserName: '',
     currentUserPhoto: '',
     currentUserEmail: '',
+    currentUserPhone: '',
   },
 };
 
@@ -17,6 +18,7 @@ type initialStateType = {
     currentUserName: string;
     currentUserPhoto: string;
     currentUserEmail: string;
+    currentUserPhone: string;
   };
 };
 

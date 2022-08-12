@@ -13,17 +13,19 @@ import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
 
 export type PetItemType = {
   pet: PetType;
-  navigation: StackNavigationProp<AdoptionStackParamList>;
+  navigation?: StackNavigationProp<AdoptionStackParamList>;
 };
 
 export const PetItem = ({ pet, navigation }: PetItemType) => {
   const petUnitNavigate = () => {
-    navigation.navigate(AdoptionNavigationName.PET_UNITE, {
+    navigation!.navigate(AdoptionNavigationName.PET_UNITE, {
       nickName: pet.nickName,
       description: pet.description,
       photo: pet.photo,
       age: pet.age,
       male: pet.male,
+      animal: pet.animal,
+      id: pet.id,
     });
   };
   return (

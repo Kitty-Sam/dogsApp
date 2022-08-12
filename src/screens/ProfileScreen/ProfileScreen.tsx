@@ -86,7 +86,7 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
     <ImageBackground style={styles.mainContainer} source={img}>
       <SafeAreaView style={styles.rootContainer}>
         <View style={styles.avatarContainer}>
-          <ImagePickerCrop photoString={photoString} sizeH={150} sizeW={150} />
+          <ImagePickerCrop photoString={photoString} sizeH={100} sizeW={100} />
           {currentUserName && <TextItemThin style={{ marginTop: 50 }}>{currentUserName}</TextItemThin>}
           <Icon
             name={iconsName.CREATE_OUTLINE}

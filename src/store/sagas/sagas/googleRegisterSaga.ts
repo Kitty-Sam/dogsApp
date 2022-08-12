@@ -8,9 +8,12 @@ import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { GoogleRegisterType } from '../sagaActions/googleRegister';
+import { saveCurrentUserAC } from '../../actions/loginAC';
+import { images } from '../../../consts/consts';
+import { database } from '../../../utils/getDataBaseURL';
 
 export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
-  const { userName, userPassword, userEmail, navigation } = payload;
+  const { userName, userPassword, userEmail, navigation, userPhone } = payload;
   yield put(toggleAppStatus(requestStatus.LOADING));
   try {
     const userCredential: UserCredential = yield createUserWithEmailAndPassword(
@@ -18,11 +21,33 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
       userEmail.value,
       userPassword.value,
     );
+
     const user = userCredential.user;
-    navigation.navigate(AuthNavigationName.LOGIN, { name: userName.value });
+
+    yield database.ref('/users/').child(`${user.uid}`).set({
+      userName: userName.value,
+      userEmail: userEmail.value,
+      userId: user.uid,
+      photo: images.avatar,
+      currentUserPhone: userPhone.value,
+    });
+
+    yield put(
+      saveCurrentUserAC({
+        user: {
+          currentUserId: user.uid,
+          currentUserName: userName.value,
+          currentUserPhoto: images.avatar,
+          currentUserEmail: userEmail.value,
+          currentUserPhone: userPhone.value,
+        },
+      }),
+    );
+
+    navigation.navigate(AuthNavigationName.LOGIN);
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
   } catch (error: any) {
-    Alert.alert('Please, try again');
+    Alert.alert('Please, try again', error.message);
     yield put(toggleAppStatus(requestStatus.FAILED));
   }
 }
