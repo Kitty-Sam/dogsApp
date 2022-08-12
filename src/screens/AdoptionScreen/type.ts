@@ -11,5 +11,7 @@ export type AdoptionStackParamList = {
     photo: string;
     age: string;
     male: string;
+    animal: string;
+    id: number;
   };
 };

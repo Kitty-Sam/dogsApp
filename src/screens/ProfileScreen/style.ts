@@ -42,6 +42,6 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
   avatarContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    margin: 10,
+    margin: 5,
   },
 });

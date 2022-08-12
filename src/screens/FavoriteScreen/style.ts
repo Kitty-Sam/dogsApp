@@ -1,10 +1,10 @@
 import { StyleSheet, ViewStyle } from 'react-native';
 
-export type FriendsScreenStyleType = {
+export type FavoriteScreenStyleType = {
   root: ViewStyle;
 };
 
-export const styles = StyleSheet.create<FriendsScreenStyleType>({
+export const styles = StyleSheet.create<FavoriteScreenStyleType>({
   root: {
     alignItems: 'center',
     justifyContent: 'center',

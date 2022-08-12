@@ -20,7 +20,7 @@ export const enum DrawerNavigationName {
   ADD_PET = 'Add pet',
   PROFILE = 'Profile',
   MESSAGE_STACK = 'Messages',
-  FRIENDS = 'Friends',
+  FAVORITE = 'Favorite',
   USEFUL_STACK = 'Services',
   CALENDAR = 'Calendar',
 }

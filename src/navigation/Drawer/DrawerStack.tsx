@@ -13,6 +13,7 @@ import { COLORS } from '../../colors/colors';
 import { DonationScreen } from '../../screens/DonationScreen/DonationScreen';
 import { AddPetScreen } from '../../screens/AddPetScreen/AddPetScreen';
 import { AdoptionStack } from '../AdoptionStack/AdoptionStack';
+import { FavoriteScreen } from '../../screens/FavoriteScreen/FavoriteScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -81,15 +82,15 @@ export const DrawerStack = () => {
           ),
         }}
       />
-      {/*<Drawer.Screen*/}
-      {/*  name={DrawerNavigationName.FRIENDS}*/}
-      {/*  component={ListItemsScreen}*/}
-      {/*  options={{*/}
-      {/*    drawerIcon: ({ color, size, focused }) => (*/}
-      {/*      <Icon name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE} color={color} size={size} />*/}
-      {/*    ),*/}
-      {/*  }}*/}
-      {/*/>*/}
+      <Drawer.Screen
+        name={DrawerNavigationName.FAVORITE}
+        component={FavoriteScreen}
+        options={{
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.HEART : iconsName.HEART_OUTLINE} color={color} size={size} />
+          ),
+        }}
+      />
       <Drawer.Screen
         name={DrawerNavigationName.MESSAGE_STACK}
         component={MessagesStack}

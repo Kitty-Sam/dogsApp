@@ -23,12 +23,13 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
   const userEmail = useInput('');
   const userPassword = useInput('');
   const userName = useInput('');
+  const userPhone = useInput('');
 
   const dispatch = useDispatch();
   const statusApp = useSelector(getAppStatus);
 
   const registerPress = () => {
-    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
+    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation, userPhone }));
   };
 
   const openLoginScreen = () => {
@@ -59,6 +60,13 @@ export const RegisterScreen = (props: RegisterScreenProps) => {
             style={styles.input}
             {...userPassword}
             secureTextEntry
+          />
+          <TextInput
+            keyboardType={'numeric'}
+            placeholderTextColor={COLORS.text.grey}
+            placeholder={inputsPlaceholdersName.PHONE}
+            style={styles.input}
+            {...userPhone}
           />
           <View style={styles.buttonsContainer}>
             <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />

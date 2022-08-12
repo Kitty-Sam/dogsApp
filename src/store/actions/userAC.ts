@@ -10,6 +10,8 @@ export enum UserActions {
   FETCH_PERSONAL_INFO = 'fetch_personal_info',
   FETCH_PETS = 'fetch_pets',
   ADD_PET = 'add_pet',
+  FAVORITE = 'favorite_pet',
+  FAVORITES = 'favorite_pets',
 }
 
 export const fetchPersonalInfoAC: FetchPersonalInfoActionType = (payload: FetchPersonalInfoPayloadType) => ({
@@ -32,6 +34,16 @@ export type FetchPetsActionType = (payload: PetType[]) => {
   type: UserActions.FETCH_PETS;
 };
 
+export const fetchFavoritePetsAC: FetchFavoritePetsActionType = (payload: PetType[]) => ({
+  type: UserActions.FAVORITES,
+  payload,
+});
+
+export type FetchFavoritePetsActionType = (payload: PetType[]) => {
+  payload: PetType[];
+  type: UserActions.FAVORITES;
+};
+
 export const addPetAC: AddPetActionType = (payload: PetType) => ({
   type: UserActions.ADD_PET,
   payload,
@@ -40,4 +52,14 @@ export const addPetAC: AddPetActionType = (payload: PetType) => ({
 export type AddPetActionType = (payload: PetType) => {
   payload: PetType;
   type: UserActions.ADD_PET;
+};
+
+export const toggleFavoriteAC: toggleFavoriteType = (payload: PetType) => ({
+  type: UserActions.FAVORITE,
+  payload,
+});
+
+export type toggleFavoriteType = (payload: PetType) => {
+  payload: PetType;
+  type: UserActions.FAVORITE;
 };

@@ -1,5 +1,12 @@
 import { PersonalInfoType } from '../../screens/ProfileScreen/ProfileScreen';
-import { addPetAC, fetchPersonalInfoAC, fetchPetsAC, UserActions } from '../actions/userAC';
+import {
+  addPetAC,
+  fetchFavoritePetsAC,
+  fetchPersonalInfoAC,
+  fetchPetsAC,
+  toggleFavoriteAC,
+  UserActions,
+} from '../actions/userAC';
 
 export type PetType = {
   animal: string;
@@ -14,17 +21,21 @@ export type PetType = {
 const initialState: initialStateType = {
   personalInfo: {} as PersonalInfoType,
   pets: [],
+  favorites: [],
 };
 
 type initialStateType = {
   personalInfo: PersonalInfoType;
   pets: PetType[];
+  favorites: PetType[];
 };
 
 type ActionsType =
   | ReturnType<typeof fetchPersonalInfoAC>
   | ReturnType<typeof fetchPetsAC>
-  | ReturnType<typeof addPetAC>;
+  | ReturnType<typeof addPetAC>
+  | ReturnType<typeof toggleFavoriteAC>
+  | ReturnType<typeof fetchFavoritePetsAC>;
 
 export const userReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -41,6 +52,25 @@ export const userReducer = (state = initialState, action: ActionsType) => {
         pets: action.payload,
       };
     }
+
+    case UserActions.FAVORITES: {
+      return {
+        ...state,
+        favorites: action.payload,
+      };
+    }
+
+    case UserActions.FAVORITE:
+      {
+        const hasFavoritePet = state.pets.find(pet => pet.id === action.payload.id);
+        if (!hasFavoritePet) {
+          return {
+            ...state,
+            favorites: [action.payload, ...state.favorites],
+          };
+        }
+      }
+      break;
 
     case UserActions.ADD_PET:
       {

@@ -17,7 +17,7 @@ import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 const img = require('../../assets/white_dog_fat.jpeg');
 
 export const LoginScreen = (props: LoginScreenProps) => {
-  const { route, navigation } = props;
+  const { navigation } = props;
 
   const userEmail = useInput('');
   const userPassword = useInput('');
@@ -27,7 +27,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
   const statusApp = useSelector(getAppStatus);
 
   const signIn = () => {
-    dispatch(googleSignInAction({ route, navigation, userPassword, userEmail }));
+    dispatch(googleSignInAction({ navigation, userPassword, userEmail }));
   };
 
   const openRegisterScreen = () => {
@@ -51,7 +51,7 @@ export const LoginScreen = (props: LoginScreenProps) => {
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.PASSWORD}
             {...userPassword}
-            // secureTextEntry
+            secureTextEntry
           />
           <View style={styles.buttonsContainer}>
             <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />
