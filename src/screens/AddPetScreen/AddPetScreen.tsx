@@ -60,14 +60,14 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
       <View style={styles.filterContainer}>
         <TouchableOpacity
           onPress={() => {
-            setMale('Unknown');
+            setMale(maleName.UNKNOWN);
           }}
           style={[
             styles.filterItemContainer,
-            { borderColor: [male].includes('Unknown') ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            { borderColor: [male].includes(maleName.UNKNOWN) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Unknown</TextItemThin>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.UNKNOWN}</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -79,19 +79,19 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes(maleName.GIRL) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Girl</TextItemThin>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.GIRL}</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={() => {
-            setMale('Boy');
+            setMale(maleName.BOY);
           }}
           style={[
             styles.filterItemContainer,
             { borderColor: [male].includes(maleName.BOY) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>Boy</TextItemThin>
+          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.BOY}</TextItemThin>
         </TouchableOpacity>
       </View>
       <TextInput

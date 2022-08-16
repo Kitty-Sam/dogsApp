@@ -4,8 +4,10 @@ import {
   fetchFavoritePetsAC,
   fetchPersonalInfoAC,
   fetchPetsAC,
-  toggleFavoriteAC,
+  addFavoriteAC,
   UserActions,
+  removeFavoriteAC,
+  FavoriteSaveIdType,
 } from '../actions/userAC';
 
 export type PetType = {
@@ -27,15 +29,16 @@ const initialState: initialStateType = {
 type initialStateType = {
   personalInfo: PersonalInfoType;
   pets: PetType[];
-  favorites: PetType[];
+  favorites: FavoriteSaveIdType[];
 };
 
 type ActionsType =
   | ReturnType<typeof fetchPersonalInfoAC>
   | ReturnType<typeof fetchPetsAC>
   | ReturnType<typeof addPetAC>
-  | ReturnType<typeof toggleFavoriteAC>
-  | ReturnType<typeof fetchFavoritePetsAC>;
+  | ReturnType<typeof addFavoriteAC>
+  | ReturnType<typeof fetchFavoritePetsAC>
+  | ReturnType<typeof removeFavoriteAC>;
 
 export const userReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -60,9 +63,9 @@ export const userReducer = (state = initialState, action: ActionsType) => {
       };
     }
 
-    case UserActions.FAVORITE:
+    case UserActions.ADD_FAVORITE:
       {
-        const hasFavoritePet = state.pets.find(pet => pet.id === action.payload.id);
+        const hasFavoritePet = state.favorites.find(el => el.id === action.payload.id);
         if (!hasFavoritePet) {
           return {
             ...state,
@@ -71,6 +74,13 @@ export const userReducer = (state = initialState, action: ActionsType) => {
         }
       }
       break;
+
+    case UserActions.REMOVE_FAVORITE: {
+      return {
+        ...state,
+        favorites: state.favorites.filter(el => el.id !== action.payload.id),
+      };
+    }
 
     case UserActions.ADD_PET:
       {

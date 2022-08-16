@@ -1,4 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type CalendarScreenStyleType = {
   closeText: TextStyle;
@@ -8,6 +9,7 @@ export type CalendarScreenStyleType = {
   inputContainer: ViewStyle;
   modalContainer: ViewStyle;
   tasksContainer: ViewStyle;
+  input: TextStyle;
 };
 
 export const styles = StyleSheet.create<CalendarScreenStyleType>({
@@ -45,5 +47,15 @@ export const styles = StyleSheet.create<CalendarScreenStyleType>({
   },
   tasksContainer: {
     flexDirection: 'column',
+  },
+  input: {
+    padding: 8,
+    width: 200,
+    borderRadius: 10,
+    borderColor: COLORS.text.dark_blue,
+    borderWidth: 2,
+    textAlign: 'center',
+    marginVertical: 10,
+    color: COLORS.text.dark_blue,
   },
 });

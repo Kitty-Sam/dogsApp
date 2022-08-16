@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View } from 'react-native';
+import { Modal, TextInput, View } from 'react-native';
 import { styles } from '../../screens/CalendarScreen/style';
 import { AppButton } from '../Button/AppButton';
 import { CustomTextInput } from '../TextInput/CustomTextInput';
@@ -22,22 +22,14 @@ export const ModalAddNewNote = ({ isOpen, pinnedDay, title, setTitle, savePress,
   return (
     <Modal visible={isOpen}>
       <View style={styles.modalContainer}>
-        <TextItemThin
-        // style={{
-        //   position: 'absolute',
-        //   top: 150,
-        //   right: 18,
-        //   fontSize: 16,
-        //   borderRadius: 10,
-        //   borderColor: 'grey',
-        //   borderWidth: 1,
-        //   padding: 4,
-        // }}
-        >
-          {changeDate(pinnedDay)}
-        </TextItemThin>
+        <TextItemThin>{changeDate(pinnedDay)}</TextItemThin>
         <TextItemThin>Create new note</TextItemThin>
-        <CustomTextInput placeholder={inputsPlaceholdersName.ADD_TITLE} value={title} setValue={setTitle} />
+        <TextInput
+          placeholder={inputsPlaceholdersName.ADD_TITLE}
+          value={title}
+          onChangeText={text => setTitle(text)}
+          style={styles.input}
+        />
         <View style={styles.buttonsContainer}>
           <AppButton title={buttonsName.SAVE} onPress={savePress} backgroundColor={COLORS.buttons.peach} />
           <AppButton

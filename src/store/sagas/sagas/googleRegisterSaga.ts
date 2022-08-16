@@ -47,7 +47,7 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
     navigation.navigate(AuthNavigationName.LOGIN);
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
   } catch (error: any) {
-    Alert.alert('Please, try again', error.message);
+    Alert.alert('Please, try again');
     yield put(toggleAppStatus(requestStatus.FAILED));
   }
 }

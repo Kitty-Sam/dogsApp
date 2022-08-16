@@ -10,9 +10,14 @@ export enum UserActions {
   FETCH_PERSONAL_INFO = 'fetch_personal_info',
   FETCH_PETS = 'fetch_pets',
   ADD_PET = 'add_pet',
-  FAVORITE = 'favorite_pet',
+  ADD_FAVORITE = 'add_favorite_pet',
+  REMOVE_FAVORITE = 'remove_favorite_pet',
   FAVORITES = 'favorite_pets',
 }
+
+export type FavoriteSaveIdType = {
+  id: number;
+};
 
 export const fetchPersonalInfoAC: FetchPersonalInfoActionType = (payload: FetchPersonalInfoPayloadType) => ({
   type: UserActions.FETCH_PERSONAL_INFO,
@@ -24,6 +29,8 @@ export type FetchPersonalInfoActionType = (payload: FetchPersonalInfoPayloadType
   type: UserActions.FETCH_PERSONAL_INFO;
 };
 
+//pets
+
 export const fetchPetsAC: FetchPetsActionType = (payload: PetType[]) => ({
   type: UserActions.FETCH_PETS,
   payload,
@@ -32,16 +39,6 @@ export const fetchPetsAC: FetchPetsActionType = (payload: PetType[]) => ({
 export type FetchPetsActionType = (payload: PetType[]) => {
   payload: PetType[];
   type: UserActions.FETCH_PETS;
-};
-
-export const fetchFavoritePetsAC: FetchFavoritePetsActionType = (payload: PetType[]) => ({
-  type: UserActions.FAVORITES,
-  payload,
-});
-
-export type FetchFavoritePetsActionType = (payload: PetType[]) => {
-  payload: PetType[];
-  type: UserActions.FAVORITES;
 };
 
 export const addPetAC: AddPetActionType = (payload: PetType) => ({
@@ -54,12 +51,34 @@ export type AddPetActionType = (payload: PetType) => {
   type: UserActions.ADD_PET;
 };
 
-export const toggleFavoriteAC: toggleFavoriteType = (payload: PetType) => ({
-  type: UserActions.FAVORITE,
+// favorites pets
+
+export const fetchFavoritePetsAC: FetchFavoritePetsActionType = (payload: FavoriteSaveIdType[]) => ({
+  type: UserActions.FAVORITES,
   payload,
 });
 
-export type toggleFavoriteType = (payload: PetType) => {
-  payload: PetType;
-  type: UserActions.FAVORITE;
+export type FetchFavoritePetsActionType = (payload: FavoriteSaveIdType[]) => {
+  payload: FavoriteSaveIdType[];
+  type: UserActions.FAVORITES;
+};
+
+export const addFavoriteAC: addFavoriteType = (payload: FavoriteSaveIdType) => ({
+  type: UserActions.ADD_FAVORITE,
+  payload,
+});
+
+export type addFavoriteType = (payload: FavoriteSaveIdType) => {
+  payload: FavoriteSaveIdType;
+  type: UserActions.ADD_FAVORITE;
+};
+
+export const removeFavoriteAC: removeFavoriteType = (payload: FavoriteSaveIdType) => ({
+  type: UserActions.REMOVE_FAVORITE,
+  payload,
+});
+
+export type removeFavoriteType = (payload: FavoriteSaveIdType) => {
+  payload: FavoriteSaveIdType;
+  type: UserActions.REMOVE_FAVORITE;
 };

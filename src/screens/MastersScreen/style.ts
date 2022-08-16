@@ -34,7 +34,7 @@ export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
     textAlign: 'justify',
   },
   rootContainer: {
-    margin: 16,
+    marginVertical: 16,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,

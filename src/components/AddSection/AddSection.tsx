@@ -2,15 +2,11 @@ import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { ModalAddItem } from '../Modals/ModalAddItem';
 import { useDispatch } from 'react-redux';
-import { chaptersName } from '../../enum/chapters';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
-import { database } from '../../utils/getDataBaseURL';
-import { addShopAC } from '../../store/actions/shopAC';
-import { addClinicAC } from '../../store/actions/clinicAC';
-import { addMasterAC } from '../../store/actions/masterAC';
 import { COLORS } from '../../colors/colors';
 import { useInput } from '../../hooks/useInput';
+import { addNewServiceAction } from '../../store/sagas/sagaActions/addNewService';
 
 export const AddSection = ({ chapter }: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,27 +33,8 @@ export const AddSection = ({ chapter }: any) => {
       return;
     }
 
-    if (chapter === chaptersName.SHOP) {
-      database
-        .ref(`/shops`)
-        .child(`${payload.id}`)
-        .set({ ...payload, chapter: chaptersName.SHOP });
-      dispatch(addShopAC({ ...payload, chapter: chaptersName.SHOP }));
-    }
-    if (chapter === chaptersName.CLINIC) {
-      database
-        .ref(`/clinics`)
-        .child(`${payload.id}`)
-        .set({ ...payload, chapter: chaptersName.CLINIC });
-      dispatch(addClinicAC({ ...payload, chapter: chaptersName.CLINIC }));
-    }
-    if (chapter === chaptersName.MASTER) {
-      database
-        .ref(`/masters`)
-        .child(`${payload.id}`)
-        .set({ ...payload, chapter: chaptersName.MASTER });
-      dispatch(addMasterAC({ ...payload, chapter: chaptersName.MASTER }));
-    }
+    dispatch(addNewServiceAction({ chapter, newService: payload }));
+
     setIsOpen(false);
     addedTitle.resetValue();
     addedInfo.resetValue();
