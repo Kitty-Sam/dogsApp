@@ -8,4 +8,5 @@ export const enum inputsPlaceholdersName {
   PET_NICK_NAME = 'Nick name',
   PET_DESCRIPTION = 'Description',
   PET_AGE = 'Age',
+  CODE = 'Enter your code',
 }
