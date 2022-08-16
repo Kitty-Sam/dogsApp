@@ -5,4 +5,5 @@ export type AuthStackParamList = {
   [AuthNavigationName.LOGIN]?: { name: string };
   [AuthNavigationName.REGISTER]: undefined;
   [AuthNavigationName.FORGOT_PASSWORD]: undefined;
+  [AuthNavigationName.NEW_PASSWORD]: undefined;
 };

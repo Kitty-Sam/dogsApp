@@ -32,8 +32,8 @@ export const ForgotPasswordScreen = (props: ForgotPasswordScreenProps) => {
         <View style={styles.buttonsContainer}>
           <AppButton
             onPress={() => {
-              console.log('send');
-              navigation.navigate(AuthNavigationName.LOGIN);
+              console.log('new password');
+              navigation.navigate(AuthNavigationName.NEW_PASSWORD);
             }}
             title={buttonsName.SEND}
             backgroundColor={COLORS.buttons.peach}
