@@ -22,7 +22,9 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
       userPassword.value,
     );
 
-    const user = userCredential.user;
+    const { user } = userCredential;
+
+    // yield user.sendEmailVerification();
 
     yield database.ref('/users/').child(`${user.uid}`).set({
       userName: userName.value,
