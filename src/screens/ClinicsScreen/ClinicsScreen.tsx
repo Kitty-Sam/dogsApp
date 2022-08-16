@@ -48,7 +48,7 @@ export const ClinicsScreen = memo(() => {
         <>
           <HeaderTextItem>Clinics</HeaderTextItem>
           <HeaderTextItem>Lime disease</HeaderTextItem>
-          <TextItemThin style={{ textAlign: 'justify' }}>
+          <TextItemThin style={{ textAlign: 'justify', marginHorizontal: 16 }}>
             Treatment for Lyme disease in dogs usually involves a course of antibiotics which will last for 4 weeks or
             longer (the antibiotic Doxycycline is typically a first-choice option). If your pooch seems to be
             experiencing a lot of pain, your vet may also prescribe anti-inflammatory medication to help alleviate joint

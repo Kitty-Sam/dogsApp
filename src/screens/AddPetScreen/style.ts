@@ -28,5 +28,12 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     width: 300,
     justifyContent: 'space-between',
   },
-  input: { borderBottomColor: COLORS.text.grey, borderBottomWidth: 2, width: 300, padding: 10, margin: 5 },
+  input: {
+    borderBottomColor: COLORS.text.grey,
+    borderBottomWidth: 2,
+    width: 300,
+    padding: 10,
+    margin: 5,
+    color: COLORS.text.dark_blue,
+  },
 });

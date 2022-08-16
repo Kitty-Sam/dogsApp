@@ -22,8 +22,7 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
     yield put(toggleIsLoggedAC({ isLogged: true }));
   } catch (error: any) {
-    const errorMessage = error.message;
-    Alert.alert('register at first', errorMessage);
+    Alert.alert('register at first or check your credentials again');
     yield put(toggleAppStatus(requestStatus.FAILED));
     navigation.navigate(AuthNavigationName.REGISTER);
   }

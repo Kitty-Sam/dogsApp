@@ -150,7 +150,7 @@ export const CalendarScreen = () => {
                 >
                   X
                 </Text>
-                <TextItemThin>{el.name}</TextItemThin>
+                <TextItemThin style={{ margin: 10 }}>{el.name}</TextItemThin>
               </TouchableOpacity>
             ))}
           </View>

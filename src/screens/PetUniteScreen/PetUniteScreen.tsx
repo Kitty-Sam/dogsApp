@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, Linking, Platform, SafeAreaView, View } from 'react-native';
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
 import { AdoptionNavigationName } from '../../enum/navigation';
@@ -14,13 +14,11 @@ import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextI
 import { getCurrentUserId, getCurrentUserPhone } from '../../store/selectors/loginSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
-import { animalsName } from '../../enum/animalsName';
-import { toggleFavoriteAC } from '../../store/actions/userAC';
-
-const catDefaultImg =
-  'https://images.unsplash.com/photo-1611915387288-fd8d2f5f928b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80';
-const dogDefaultImg =
-  'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*';
+import { FavoriteSaveIdType, addFavoriteAC, removeFavoriteAC } from '../../store/actions/userAC';
+import { maleName } from '../../enum/maleName';
+import { fetchFavoritePetsIdsAction } from '../../store/sagas/sagaActions/fetchFavoritePetsIds';
+import { getFavoritesIds } from '../../store/selectors/userSelector';
+import { callOwnerAction } from '../../store/sagas/sagaActions/callOwner';
 
 export const PetUniteScreen = (
   props: StackScreenNavigationProps<AdoptionNavigationName.PET_UNITE, AdoptionStackParamList>,
@@ -29,25 +27,44 @@ export const PetUniteScreen = (
 
   const currentUserPhone = useSelector(getCurrentUserPhone);
   const currentUserId = useSelector(getCurrentUserId);
+  const favoritesIds = useSelector(getFavoritesIds);
+  console.log('favoritesIds', favoritesIds);
 
-  const { nickName, description, photo, age, male, animal, id } = props.route.params;
-  const [isFavorite, setFavorite] = useState(false);
+  const favoritesIdsResult = favoritesIds.map((el: FavoriteSaveIdType) => Object.values(el)).flat();
+
+  const { nickName, description, photo, age, male, id } = props.route.params;
+  const [isFavorite, setFavorite] = useState(favoritesIdsResult.includes(id));
 
   const dispatch = useDispatch();
 
-  const callNumber = (phone: string) => {
-    const url = Platform.OS !== 'android' ? `telprompt:${phone}` : `tel:${phone}`;
+  useEffect(() => {
+    dispatch(fetchFavoritePetsIdsAction());
+  }, []);
 
-    Linking.canOpenURL(url)
-      .then(supported => {
-        if (!supported) {
-          Alert.alert(`Phone number ${phone} is not available`);
-        } else {
-          return Linking.openURL(url);
-        }
-      })
-      .catch(err => Alert.alert(err));
+  const callNumber = (phone: string) => {
+    dispatch(callOwnerAction({ phone }));
   };
+
+  const removeFromFavorites = async () => {
+    await database.ref(`/users/${currentUserId}`).child('favorites').child(`${id}`).remove();
+    dispatch(removeFavoriteAC({ id }));
+  };
+
+  const addFavorite = async () => {
+    await database.ref(`/users/${currentUserId}`).child('favorites').child(`${id}`).set({
+      id: id,
+    });
+    dispatch(addFavoriteAC({ id }));
+  };
+
+  useEffect(() => {
+    if (!isFavorite) {
+      removeFromFavorites();
+    }
+    if (isFavorite) {
+      addFavorite();
+    }
+  }, [!isFavorite]);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
@@ -71,7 +88,11 @@ export const PetUniteScreen = (
           <TextItemThin>{age}</TextItemThin>
           <Icon
             name={
-              [male].includes('Unknown') ? iconsName.UNKNOWN : [male].includes('Boy') ? iconsName.BOY : iconsName.GIRL
+              [male].includes(maleName.UNKNOWN)
+                ? iconsName.UNKNOWN
+                : [male].includes(maleName.BOY)
+                ? iconsName.BOY
+                : iconsName.GIRL
             }
             size={26}
             color={COLORS.text.dark_blue}
@@ -87,35 +108,12 @@ export const PetUniteScreen = (
             backgroundColor={COLORS.buttons.peach}
           />
         </View>
+
         <Icon
           name={isFavorite ? iconsName.HEART : iconsName.HEART_OUTLINE}
           size={26}
           onPress={async () => {
             setFavorite(!isFavorite);
-            await database
-              .ref(`/users/${currentUserId}/favorites`)
-              .child(`${id}`)
-              .set({
-                male: male,
-                animal: animal,
-                age: age,
-                description: description,
-                nickName: nickName,
-                id: id,
-                photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
-              });
-
-            dispatch(
-              toggleFavoriteAC({
-                male: male,
-                animal: animal,
-                age: age,
-                description: description,
-                nickName: nickName,
-                id: id,
-                photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
-              }),
-            );
           }}
           style={{ margin: 10 }}
           color={COLORS.text.dark_blue}
