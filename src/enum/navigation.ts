@@ -29,4 +29,5 @@ export const enum AuthNavigationName {
   WELCOME = 'Welcome',
   LOGIN = 'Login',
   REGISTER = 'Register',
+  FORGOT_PASSWORD = 'Forgot password',
 }

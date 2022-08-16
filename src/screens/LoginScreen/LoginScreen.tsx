@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, ImageBackground, TextInput, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, TextInput, View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
@@ -12,6 +12,7 @@ import { COLORS } from '../../colors/colors';
 import { LoginScreenProps } from './type';
 import { useInput } from '../../hooks/useInput';
 import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_fat.jpeg');
@@ -40,6 +41,9 @@ export const LoginScreen = (props: LoginScreenProps) => {
         <ActivityIndicator style={{ zIndex: 10 }} />
       ) : (
         <View style={styles.inputsContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
+            <TextItemThin>Forgot password?</TextItemThin>
+          </TouchableOpacity>
           <TextInput
             style={styles.input}
             placeholderTextColor={COLORS.text.grey}
