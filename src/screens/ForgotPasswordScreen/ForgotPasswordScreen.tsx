@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
-import { ImageBackground, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, ImageBackground, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { useInput } from '../../hooks/useInput';
 import { COLORS } from '../../colors/colors';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
@@ -10,12 +10,27 @@ import { buttonsName } from '../../enum/buttonsName';
 import { AuthNavigationName } from '../../enum/navigation';
 import { ForgotPasswordScreenProps } from './type';
 
+import { sendPasswordResetEmail } from '@firebase/auth';
+
+import { auth } from '../../../firebase';
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
 
 export const ForgotPasswordScreen = (props: ForgotPasswordScreenProps) => {
   const { navigation } = props;
   const email = useInput('');
+
+  const forgotPassword = async (text: string) => {
+    try {
+      await sendPasswordResetEmail(auth, text, null);
+      Alert.alert('reset email sent to ' + text);
+      email.resetValue();
+      navigation.navigate(AuthNavigationName.LOGIN);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <ImageBackground style={styles.rootContainer} source={img}>
       <SafeAreaView style={styles.mainBlock}>
@@ -31,10 +46,7 @@ export const ForgotPasswordScreen = (props: ForgotPasswordScreenProps) => {
         />
         <View style={styles.buttonsContainer}>
           <AppButton
-            onPress={() => {
-              console.log('new password');
-              navigation.navigate(AuthNavigationName.NEW_PASSWORD);
-            }}
+            onPress={() => forgotPassword(email.value)}
             title={buttonsName.SEND}
             backgroundColor={COLORS.buttons.peach}
             disabled={email.value === ''}
