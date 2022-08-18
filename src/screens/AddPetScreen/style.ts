@@ -6,8 +6,10 @@ export type AddPetScreenStyleType = {
   filterContainer: ViewStyle;
   filterItemContainer: ViewStyle;
   input: TextStyle;
+  textLocation: TextStyle;
   buttonsContainer: ViewStyle;
 };
+
 export const styles = StyleSheet.create<AddPetScreenStyleType>({
   rootContainer: {
     flex: 1,
@@ -35,5 +37,9 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     padding: 10,
     margin: 5,
     color: COLORS.text.dark_blue,
+  },
+  textLocation: {
+    textAlign: 'center',
+    paddingVertical: 8,
   },
 });

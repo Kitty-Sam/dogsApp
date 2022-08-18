@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ActivityIndicator, ImageBackground, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
@@ -17,7 +17,7 @@ import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegist
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
 
-export const RegisterScreen = (props: RegisterScreenProps) => {
+export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const { navigation } = props;
 
   const userEmail = useInput('');

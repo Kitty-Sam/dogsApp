@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { Image, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from './style';
 import { iconsName } from '../../enum/iconsName';
+import { COLORS } from '../../colors/colors';
+import { ImagePickerType } from './type';
 
-export type ImagePickerType = {
-  photoString: string | null;
-  sizeH: number;
-  sizeW: number;
-};
-
-export const ImagePickerCrop = ({ photoString, sizeH, sizeW }: ImagePickerType) => {
+export const ImagePickerCrop: FC<ImagePickerType> = ({ photoString, sizeH, sizeW }) => {
   const [image, setImage] = useState<string | null>(photoString);
 
   const takePhoto = () => {
@@ -56,10 +52,10 @@ export const ImagePickerCrop = ({ photoString, sizeH, sizeW }: ImagePickerType) 
       {image && <Image source={{ uri: image }} style={{ width: sizeW, height: sizeH }} />}
       <View style={styles.uploadBtnContainer}>
         <TouchableOpacity onPress={downLoadFromLibrary} style={styles.uploadBtn}>
-          <Icon name={iconsName.PENCIL} size={20} color="black" style={{ marginHorizontal: 4 }} />
+          <Icon name={iconsName.PENCIL} size={20} color={COLORS.text.black} style={styles.iconPosition} />
         </TouchableOpacity>
         <TouchableOpacity onPress={takePhoto} style={styles.uploadBtn}>
-          <Icon name={iconsName.CAMERA} size={20} color="black" style={{ marginHorizontal: 4 }} />
+          <Icon name={iconsName.CAMERA} size={20} color={COLORS.text.black} style={styles.iconPosition} />
         </TouchableOpacity>
       </View>
     </View>

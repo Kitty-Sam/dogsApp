@@ -9,5 +9,6 @@ export const COLORS = {
   text: {
     dark_blue: '#293462',
     grey: '#808080',
+    black: '#000000',
   },
 };

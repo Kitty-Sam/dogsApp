@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ActivityIndicator, ImageBackground, TextInput, View, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthNavigationName } from '../../enum/navigation';
@@ -17,7 +17,7 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_fat.jpeg');
 
-export const LoginScreen = (props: LoginScreenProps) => {
+export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
 
   const userEmail = useInput('');

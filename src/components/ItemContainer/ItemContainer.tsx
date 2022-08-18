@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { styles } from './style';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,7 @@ import { TextItemBold } from '../Text/TextItemBold/TextItemBold';
 import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
 import { removeServiceAction } from '../../store/sagas/sagaActions/removeService';
 
-export const ItemContainer = ({ title, info, id, chapter }: ItemType) => {
+export const ItemContainer: FC<ItemType> = ({ title, info, id, chapter }) => {
   const dispatch = useDispatch();
 
   const removeItem = (text: chaptersName) => () => {

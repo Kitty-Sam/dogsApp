@@ -1,4 +1,4 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
 import { screenWidth } from '../../consts/consts';
 
@@ -7,6 +7,9 @@ export type AdoptionScreenStyleType = {
   listContainer: ViewStyle;
   iconContainer: ViewStyle;
   iconWithLabelContainer: ViewStyle;
+  headerText: TextStyle;
+  headerTextBold: TextStyle;
+  headerTextView: TextStyle;
 };
 export const styles = StyleSheet.create<AdoptionScreenStyleType>({
   filterContainer: {
@@ -36,5 +39,17 @@ export const styles = StyleSheet.create<AdoptionScreenStyleType>({
   iconWithLabelContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  headerText: {
+    marginHorizontal: 8,
+    marginTop: 8,
+    fontSize: 24,
+  },
+  headerTextBold: {
+    marginHorizontal: 8,
+    textTransform: 'capitalize',
+  },
+  headerTextView: {
+    textAlign: 'center',
   },
 });

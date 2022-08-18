@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Image, Linking, Platform, SafeAreaView, View } from 'react-native';
-import { StackScreenNavigationProps } from '../../navigation/navPropsType';
+import React, { FC, useEffect, useState } from 'react';
+import { Image, SafeAreaView, View } from 'react-native';
 import { AdoptionNavigationName } from '../../enum/navigation';
-import { AdoptionStackParamList } from '../AdoptionScreen/type';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,25 +12,23 @@ import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextI
 import { getCurrentUserId, getCurrentUserPhone } from '../../store/selectors/loginSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
-import { FavoriteSaveIdType, addFavoriteAC, removeFavoriteAC } from '../../store/actions/userAC';
+import { addFavoriteAC, FavoriteSaveIdType, removeFavoriteAC } from '../../store/actions/userAC';
 import { maleName } from '../../enum/maleName';
 import { fetchFavoritePetsIdsAction } from '../../store/sagas/sagaActions/fetchFavoritePetsIds';
 import { getFavoritesIds } from '../../store/selectors/userSelector';
 import { callOwnerAction } from '../../store/sagas/sagaActions/callOwner';
+import { PetUniteScreenProps } from './type';
 
-export const PetUniteScreen = (
-  props: StackScreenNavigationProps<AdoptionNavigationName.PET_UNITE, AdoptionStackParamList>,
-) => {
+export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
+  const { nickName, description, photo, age, male, id } = props.route.params;
 
   const currentUserPhone = useSelector(getCurrentUserPhone);
   const currentUserId = useSelector(getCurrentUserId);
   const favoritesIds = useSelector(getFavoritesIds);
-  console.log('favoritesIds', favoritesIds);
 
   const favoritesIdsResult = favoritesIds.map((el: FavoriteSaveIdType) => Object.values(el)).flat();
 
-  const { nickName, description, photo, age, male, id } = props.route.params;
   const [isFavorite, setFavorite] = useState(favoritesIdsResult.includes(id));
 
   const dispatch = useDispatch();
@@ -68,10 +64,10 @@ export const PetUniteScreen = (
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <View style={{ position: 'absolute', left: 18, top: 18, zIndex: 10 }}>
+      <View style={styles.adoptionButtonContainer}>
         <AppButton
           onPress={() => navigation.navigate(AdoptionNavigationName.ADOPTION)}
-          title={'Back'}
+          title={buttonsName.BACK}
           backgroundColor={COLORS.buttons.brown}
         />
       </View>
@@ -112,10 +108,10 @@ export const PetUniteScreen = (
         <Icon
           name={isFavorite ? iconsName.HEART : iconsName.HEART_OUTLINE}
           size={26}
-          onPress={async () => {
+          onPress={() => {
             setFavorite(!isFavorite);
           }}
-          style={{ margin: 10 }}
+          style={styles.favoriteIcon}
           color={COLORS.text.dark_blue}
         />
       </View>

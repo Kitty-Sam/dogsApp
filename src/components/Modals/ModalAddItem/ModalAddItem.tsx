@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -9,27 +9,24 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import { styles } from '../AddSection/style';
-import { chaptersName } from '../../enum/chapters';
+import { styles } from '../../AddSection/style';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
-import { AppButton } from '../Button/AppButton';
-import { buttonsName } from '../../enum/buttonsName';
-import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
-import { COLORS } from '../../colors/colors';
-import { HeaderTextItem } from '../Text/HeaderTextItem/HeaderTextItem';
-import { UseInputResponseType } from '../../hooks/useInput';
+import { iconsName } from '../../../enum/iconsName';
+import { AppButton } from '../../Button/AppButton';
+import { buttonsName } from '../../../enum/buttonsName';
+import { inputsPlaceholdersName } from '../../../enum/inputPlaceholdersName';
+import { COLORS } from '../../../colors/colors';
+import { HeaderTextItem } from '../../Text/HeaderTextItem/HeaderTextItem';
+import { ModalAddItemType } from './type';
 
-export type ModalAddItemType = {
-  isOpen: boolean;
-  chapter: chaptersName;
-  setIsOpen: (isOpen: boolean) => void;
-  addedTitle: UseInputResponseType;
-  addedInfo: UseInputResponseType;
-  addItemPress: () => void;
-};
-
-export const ModalAddItem = ({ isOpen, chapter, setIsOpen, addItemPress, addedTitle, addedInfo }: ModalAddItemType) => {
+export const ModalAddItem: FC<ModalAddItemType> = ({
+  isOpen,
+  chapter,
+  setIsOpen,
+  addItemPress,
+  addedTitle,
+  addedInfo,
+}) => {
   return (
     <Modal visible={isOpen}>
       <View style={styles.modalCommonContainer}>

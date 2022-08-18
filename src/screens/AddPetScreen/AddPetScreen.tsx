@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
@@ -13,7 +13,7 @@ import { animalsName } from '../../enum/animalsName';
 import { useDispatch } from 'react-redux';
 import { maleName } from '../../enum/maleName';
 
-export const AddPetScreen = (props: AddPetScreenProps) => {
+export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const { navigation } = props;
 
   const id = Date.now();
@@ -30,6 +30,14 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
     dispatch(addNewPetAction({ age, animal, male, setMale, setAnimal, description, nickName, navigation, id }));
   };
 
+  const clearPet = () => {
+    setMale('');
+    setAnimal('');
+    description.resetValue();
+    age.resetValue();
+    nickName.resetValue();
+  };
+
   return (
     <SafeAreaView style={styles.rootContainer}>
       <View style={styles.filterContainer}>
@@ -42,7 +50,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: animal === animalsName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{animalsName.DOG}</TextItemThin>
+          <TextItemThin style={styles.textLocation}>{animalsName.DOG}</TextItemThin>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -53,7 +61,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: animal === animalsName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{animalsName.CAT}</TextItemThin>
+          <TextItemThin style={styles.textLocation}>{animalsName.CAT}</TextItemThin>
         </TouchableOpacity>
       </View>
 
@@ -67,7 +75,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes(maleName.UNKNOWN) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.UNKNOWN}</TextItemThin>
+          <TextItemThin style={styles.textLocation}>{maleName.UNKNOWN}</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -79,7 +87,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes(maleName.GIRL) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.GIRL}</TextItemThin>
+          <TextItemThin style={styles.textLocation}>{maleName.GIRL}</TextItemThin>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -91,7 +99,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
             { borderColor: [male].includes(maleName.BOY) ? COLORS.buttons.brown : COLORS.text.dark_blue },
           ]}
         >
-          <TextItemThin style={{ textAlign: 'center', paddingVertical: 8 }}>{maleName.BOY}</TextItemThin>
+          <TextItemThin style={styles.textLocation}>{maleName.BOY}</TextItemThin>
         </TouchableOpacity>
       </View>
       <TextInput
@@ -122,17 +130,7 @@ export const AddPetScreen = (props: AddPetScreenProps) => {
           title={buttonsName.ADD_PET}
           backgroundColor={COLORS.buttons.peach}
         />
-        <AppButton
-          onPress={() => {
-            setMale('');
-            setAnimal('');
-            description.resetValue();
-            age.resetValue();
-            nickName.resetValue();
-          }}
-          title={buttonsName.CLEAR}
-          backgroundColor={COLORS.buttons.brown}
-        />
+        <AppButton onPress={clearPet} title={buttonsName.CLEAR} backgroundColor={COLORS.buttons.brown} />
       </View>
     </SafeAreaView>
   );
