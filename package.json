@@ -10,7 +10,12 @@
     "lint": "eslint --debug src/",
     "lint:write": "eslint --debug src/ --fix",
     "prettier": "prettier --write src/**/*.js",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "pods": "cd ios && pod install",
+    "pods-m1": "cd ios && arch -x86_64 pod install",
+    "gradlew": "cd android && ./gradlew clean && ./gradlew installDebug",
+    "gradlew-m1": "cd android && ./gradlew clean && cd .. && npm cache clean --force",
+    "kill-port": "npx kill-port 8081"
   },
   "lint-staged": {
     "src/**/*.js": [
