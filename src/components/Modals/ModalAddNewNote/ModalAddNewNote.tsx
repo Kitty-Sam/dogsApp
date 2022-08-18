@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Modal, TextInput, View } from 'react-native';
-import { styles } from '../../screens/CalendarScreen/style';
-import { AppButton } from '../Button/AppButton';
-import { CustomTextInput } from '../TextInput/CustomTextInput';
-import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
-import { buttonsName } from '../../enum/buttonsName';
-import { changeDate } from '../../utils/changeDate';
-import { COLORS } from '../../colors/colors';
-import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
+import { styles } from '../../../screens/CalendarScreen/style';
+import { AppButton } from '../../Button/AppButton';
+import { inputsPlaceholdersName } from '../../../enum/inputPlaceholdersName';
+import { buttonsName } from '../../../enum/buttonsName';
+import { changeDate } from '../../../utils/changeDate';
+import { COLORS } from '../../../colors/colors';
+import { TextItemThin } from '../../Text/TextItemThin/TextItemThin';
+import { ModalAddNewNoteType } from './type';
 
-export type ModalAddNewNoteType = {
-  isOpen: boolean;
-  setTitle: (title: string) => void;
-  setIsOpen: (isOpen: boolean) => void;
-  title: string;
-  pinnedDay: string;
-  savePress: () => void;
-};
-
-export const ModalAddNewNote = ({ isOpen, pinnedDay, title, setTitle, savePress, setIsOpen }: ModalAddNewNoteType) => {
+export const ModalAddNewNote: FC<ModalAddNewNoteType> = ({
+  isOpen,
+  pinnedDay,
+  title,
+  setTitle,
+  savePress,
+  setIsOpen,
+}) => {
   return (
     <Modal visible={isOpen}>
       <View style={styles.modalContainer}>

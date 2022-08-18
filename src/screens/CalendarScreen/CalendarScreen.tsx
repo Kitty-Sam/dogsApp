@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { Agenda, Calendar } from 'react-native-calendars';
+import { Calendar } from 'react-native-calendars';
 import { Alert, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { database } from '../../utils/getDataBaseURL';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,19 +8,14 @@ import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { styles } from './style';
-import { ModalAddNewNote } from '../../components/Modals/ModalAddNewNote';
-import { ModalDialog } from '../../components/Modals/ModalDialog';
+import { ModalAddNewNote } from '../../components/Modals/ModalAddNewNote/ModalAddNewNote';
+import { ModalDialog } from '../../components/Modals/ModalDialog/ModalDialog';
 import { cutDate } from '../../utils/cutDate';
 import { COLORS } from '../../colors/colors';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { DayItemType } from './type';
 
 const date = new Date().toISOString().split('T')[0];
-
-export type DayItemType = {
-  name: string;
-  date: string;
-  id: string;
-};
 
 export const CalendarScreen = () => {
   const dispatch = useDispatch();
@@ -46,6 +41,7 @@ export const CalendarScreen = () => {
       const data = Object.keys(snapshotAll.val());
       const markedDays = {};
       data.map(item => {
+        // @ts-ignore
         markedDays[item] = {
           selected: true,
           marked: true,
@@ -110,7 +106,7 @@ export const CalendarScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.rootContainer}>
       <Calendar
         onDayPress={e => {
           setPinnedDay(e.dateString);
@@ -120,24 +116,13 @@ export const CalendarScreen = () => {
         markedDates={markedDays}
       />
 
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <View style={styles.headerContainer}>
         <TextItemThin>Daily tasks</TextItemThin>
       </View>
-      {items.length ? (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text
-            style={{
-              marginHorizontal: 18,
-              fontSize: 28,
-              borderRadius: 10,
-              borderColor: COLORS.text.grey,
-              borderWidth: 1,
-              padding: 4,
-            }}
-          >
-            {cutDate(pinnedDay)}
-          </Text>
 
+      {items.length ? (
+        <View style={styles.agenda}>
+          <Text style={styles.dateTextContainer}>{cutDate(pinnedDay)}</Text>
           <View style={styles.tasksContainer}>
             {items.map((el, i) => (
               <TouchableOpacity key={i} style={styles.itemContainer}>
@@ -150,18 +135,14 @@ export const CalendarScreen = () => {
                 >
                   X
                 </Text>
-                <TextItemThin style={{ margin: 10 }}>{el.name}</TextItemThin>
+                <TextItemThin style={styles.textNote}>{el.name}</TextItemThin>
               </TouchableOpacity>
             ))}
           </View>
         </View>
       ) : (
-        <View style={{ flexDirection: 'row' }}>
-          <TextItemThin
-            style={{ marginHorizontal: 10, borderBottomWidth: 1, borderBottomColor: COLORS.text.dark_blue }}
-          >
-            {cutDate(pinnedDay)}
-          </TextItemThin>
+        <View style={styles.noteContainer}>
+          <TextItemThin style={styles.dateText}>{cutDate(pinnedDay)}</TextItemThin>
           <TextItemThin>... free day</TextItemThin>
         </View>
       )}

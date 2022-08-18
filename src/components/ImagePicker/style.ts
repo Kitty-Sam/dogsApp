@@ -4,6 +4,7 @@ export type ImagePickerStyleType = {
   container: ViewStyle;
   uploadBtnContainer: ViewStyle;
   uploadBtn: ViewStyle;
+  iconPosition: ViewStyle;
 };
 
 export const styles = StyleSheet.create<ImagePickerStyleType>({
@@ -23,5 +24,8 @@ export const styles = StyleSheet.create<ImagePickerStyleType>({
   uploadBtn: {
     position: 'relative',
     top: 10,
+  },
+  iconPosition: {
+    marginHorizontal: 4,
   },
 });

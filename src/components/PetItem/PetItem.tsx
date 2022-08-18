@@ -1,22 +1,16 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { AdoptionNavigationName } from '../../enum/navigation';
 import { Image, TouchableOpacity, View } from 'react-native';
-import { PetType } from '../../store/reducers/userReducer';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { AdoptionStackParamList } from '../../screens/AdoptionScreen/type';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../colors/colors';
 import { iconsName } from '../../enum/iconsName';
 import { TextItemBold } from '../Text/TextItemBold/TextItemBold';
 import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
+import { maleName } from '../../enum/maleName';
+import { PetItemType } from './type';
 
-export type PetItemType = {
-  pet: PetType;
-  navigation?: StackNavigationProp<AdoptionStackParamList>;
-};
-
-export const PetItem = ({ pet, navigation }: PetItemType) => {
+export const PetItem: FC<PetItemType> = ({ pet, navigation }) => {
   const petUnitNavigate = () => {
     navigation!.navigate(AdoptionNavigationName.PET_UNITE, {
       nickName: pet.nickName,
@@ -39,9 +33,9 @@ export const PetItem = ({ pet, navigation }: PetItemType) => {
       </View>
       <Icon
         name={
-          [pet.male].includes('Unknown')
+          [pet.male].includes(maleName.UNKNOWN)
             ? iconsName.UNKNOWN
-            : [pet.male].includes('Boy')
+            : [pet.male].includes(maleName.BOY)
             ? iconsName.BOY
             : iconsName.GIRL
         }

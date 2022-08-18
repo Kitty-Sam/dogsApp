@@ -9,15 +9,19 @@ export type PetUniteScreenStyleType = {
   buttonWithIconContainer: ViewStyle;
   textContainer: TextStyle;
   informativeBlock: ViewStyle;
+  adoptionButtonContainer: ViewStyle;
+  favoriteIcon: ViewStyle;
 };
 
 export const styles = StyleSheet.create<PetUniteScreenStyleType>({
   rootContainer: {
     flex: 1,
   },
+  adoptionButtonContainer: { position: 'absolute', left: 18, top: 18, zIndex: 10 },
   imageContainer: {
     alignItems: 'center',
   },
+  favoriteIcon: { margin: 10 },
   image: {
     width: screenWidth * 0.8,
     height: screenWidth * 0.9,

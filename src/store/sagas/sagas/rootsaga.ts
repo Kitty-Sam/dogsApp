@@ -6,6 +6,7 @@ import {
   FETCH_FAVORITE_PETS_IDS,
   FETCH_PETS,
   FETCH_SERVICES,
+  FORGOT_PASSWORD,
   GOOGLE_REGISTER,
   GOOGLE_SIGN_IN,
   GOOGLE_SIGN_OUT,
@@ -22,6 +23,7 @@ import { fetchFavoritePetsIdsWorker } from './fetchFavoritesPetsIdsSaga';
 import { addNewServiceWorker } from './addNewServiceSaga';
 import { removeServiceWorker } from './removeServiceSaga';
 import { callOwnerWorker } from './callOwnerSaga';
+import { forgotPasswordWorker } from './forgotPasswordSaga';
 
 export function* watchClickSaga() {
   yield takeLatest(GOOGLE_SIGN_IN, googleSignInWorker);
@@ -34,6 +36,7 @@ export function* watchClickSaga() {
   yield takeLatest(FETCH_SERVICES, fetchServicesWorker);
   yield takeLatest(GOOGLE_REGISTER, googleRegisterWorker);
   yield takeLatest(CALL_OWNER, callOwnerWorker);
+  yield takeLatest(FORGOT_PASSWORD, forgotPasswordWorker);
 }
 
 export default function* rootSaga() {

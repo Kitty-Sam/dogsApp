@@ -5,6 +5,7 @@ import { COLORS } from '../../colors/colors';
 export type ProfileScreenStyleType = {
   mainContainer: TextStyle;
   text: TextStyle;
+  currentNameText: TextStyle;
   buttonsContainer: ViewStyle;
   textBlock: ViewStyle;
   rootContainer: ViewStyle;
@@ -18,6 +19,7 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
     width: screenWidth,
     position: 'relative',
   },
+  currentNameText: { marginTop: 50 },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',

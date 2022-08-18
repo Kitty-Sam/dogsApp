@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { FC, useLayoutEffect, useState } from 'react';
 import { ImageBackground, SafeAreaView, TextInput, View } from 'react-native';
 import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
 import { styles } from './style';
@@ -33,7 +33,7 @@ const initialPersonalInfo: PersonalInfoType = {
   petHobbies: 'pet hobbies',
 };
 
-export const ProfileScreen = (props: ProfileScreenProps) => {
+export const ProfileScreen: FC<ProfileScreenProps> = props => {
   const currentUserId = useSelector(getCurrentUserId);
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -87,13 +87,14 @@ export const ProfileScreen = (props: ProfileScreenProps) => {
       <SafeAreaView style={styles.rootContainer}>
         <View style={styles.avatarContainer}>
           <ImagePickerCrop photoString={photoString} sizeH={100} sizeW={100} />
-          {currentUserName && <TextItemThin style={{ marginTop: 50 }}>{currentUserName}</TextItemThin>}
+          {currentUserName && <TextItemThin style={styles.currentNameText}>{currentUserName}</TextItemThin>}
           <Icon
             name={iconsName.CREATE_OUTLINE}
             size={24}
             onPress={() => {
               setIsEdit(true);
             }}
+            color={COLORS.text.dark_blue}
           />
         </View>
         <View>

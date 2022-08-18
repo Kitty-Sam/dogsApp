@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Alert } from 'react-native';
-import { ModalAddItem } from '../Modals/ModalAddItem';
+import { ModalAddItem } from '../Modals/ModalAddItem/ModalAddItem';
 import { useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
 import { COLORS } from '../../colors/colors';
 import { useInput } from '../../hooks/useInput';
 import { addNewServiceAction } from '../../store/sagas/sagaActions/addNewService';
+import { AddSectionType } from './type';
 
-export const AddSection = ({ chapter }: any) => {
+export const AddSection: FC<AddSectionType> = ({ chapter }) => {
   const [isOpen, setIsOpen] = useState(false);
   const addedTitle = useInput('');
   const addedInfo = useInput('');

@@ -1,12 +1,8 @@
-import React, { ReactNode } from 'react';
-import { Text, TextStyle } from 'react-native';
+import React, { FC } from 'react';
+import { Text } from 'react-native';
 import { styles } from './style';
+import { TextPropsType } from '../type';
 
-export type TextItemBoldPropsType = {
-  children?: ReactNode;
-  style?: TextStyle;
-};
-
-export const TextItemBold = ({ children, style }: TextItemBoldPropsType) => {
+export const TextItemBold: FC<TextPropsType> = ({ children, style }) => {
   return <Text style={[styles.text, style]}>{children}</Text>;
 };

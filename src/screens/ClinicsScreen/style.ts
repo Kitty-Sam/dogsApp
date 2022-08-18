@@ -1,7 +1,8 @@
-import { StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export type ClinicsScreenStyleType = {
   chapterContainer: ViewStyle;
+  text: TextStyle;
 };
 
 export const styles = StyleSheet.create<ClinicsScreenStyleType>({
@@ -10,5 +11,9 @@ export const styles = StyleSheet.create<ClinicsScreenStyleType>({
     margin: 16,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  text: {
+    textAlign: 'justify',
+    marginHorizontal: 16,
   },
 });

@@ -1,12 +1,8 @@
-import React from 'react';
-import { Text, TextStyle } from 'react-native';
+import React, { FC } from 'react';
+import { Text } from 'react-native';
 import { styles } from './style';
+import { TextPropsType } from '../type';
 
-export type TextItemPropsType = {
-  children?: React.ReactNode;
-  style?: TextStyle;
-};
-
-export const TextItemThin = ({ children, style }: TextItemPropsType) => {
+export const TextItemThin: FC<TextPropsType> = ({ children, style }) => {
   return <Text style={[styles.text, style]}>{children}</Text>;
 };

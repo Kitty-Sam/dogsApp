@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 
 export const DonationScreen = () => {
-  return <Text>Donation Screen</Text>;
+  return <TextItemThin>Donation Screen</TextItemThin>;
 };

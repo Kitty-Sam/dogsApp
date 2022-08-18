@@ -2,8 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AdoptionNavigationName } from '../../enum/navigation';
 import { AdoptionScreen } from '../../screens/AdoptionScreen/AdoptionScreen';
-import { AdoptionStackParamList } from '../../screens/AdoptionScreen/type';
 import { PetUniteScreen } from '../../screens/PetUniteScreen/PetUniteScreen';
+import { AdoptionStackParamList } from './type';
 
 const Adoption = createNativeStackNavigator<AdoptionStackParamList>();
 

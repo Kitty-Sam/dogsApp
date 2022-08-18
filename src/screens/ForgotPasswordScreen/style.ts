@@ -6,6 +6,7 @@ export type ForgotPasswordScreenStyleType = {
   rootContainer: ImageStyle;
   input: TextStyle;
   textLogIn: TextStyle;
+  noteText: TextStyle;
   mainBlock: ViewStyle;
   buttonsContainer: ViewStyle;
 };
@@ -39,4 +40,5 @@ export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
   textLogIn: {
     margin: 12,
   },
+  noteText: { margin: 16, textAlign: 'center' },
 });

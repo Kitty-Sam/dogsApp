@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
-import { Alert, ImageBackground, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { useInput } from '../../hooks/useInput';
 import { COLORS } from '../../colors/colors';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
@@ -9,32 +9,24 @@ import { AppButton } from '../../components/Button/AppButton';
 import { buttonsName } from '../../enum/buttonsName';
 import { AuthNavigationName } from '../../enum/navigation';
 import { ForgotPasswordScreenProps } from './type';
-
-import { sendPasswordResetEmail } from '@firebase/auth';
-
-import { auth } from '../../../firebase';
+import { forgotPasswordAction } from '../../store/sagas/sagaActions/forgotPassword';
+import { useDispatch } from 'react-redux';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
 
-export const ForgotPasswordScreen = (props: ForgotPasswordScreenProps) => {
+export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const { navigation } = props;
   const email = useInput('');
+  const dispatch = useDispatch();
 
-  const forgotPassword = async (text: string) => {
-    try {
-      await sendPasswordResetEmail(auth, text, null);
-      Alert.alert('reset email sent to ' + text);
-      email.resetValue();
-      navigation.navigate(AuthNavigationName.LOGIN);
-    } catch (e) {
-      console.log(e);
-    }
+  const forgotPassword = (text: string) => {
+    dispatch(forgotPasswordAction({ email, text, navigation }));
   };
   return (
     <ImageBackground style={styles.rootContainer} source={img}>
       <SafeAreaView style={styles.mainBlock}>
-        <TextItemThin style={{ margin: 16, textAlign: 'center' }}>
+        <TextItemThin style={styles.noteText}>
           Enter your email and we will send you link for reset your old password
         </TextItemThin>
         <TextInput

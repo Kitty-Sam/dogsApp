@@ -1,5 +1,6 @@
 import { ImageStyle, Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
+import { screenWidth } from '../../consts/consts';
 
 export type AddSectionStyleType = {
   modalContainer: ViewStyle;
@@ -55,8 +56,8 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     flex: 1,
   },
   modalInputBlock: {
-    width: 300,
-    height: 200,
+    width: screenWidth * 0.9,
+    height: screenWidth * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',

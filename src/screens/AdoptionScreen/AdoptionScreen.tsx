@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { FC, useLayoutEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPets } from '../../store/selectors/userSelector';
@@ -15,7 +15,7 @@ import { animalsName } from '../../enum/animalsName';
 import { fetchPetsAction } from '../../store/sagas/sagaActions/fetchPets';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 
-export const AdoptionScreen = (props: AdoptionScreenProps) => {
+export const AdoptionScreen: FC<AdoptionScreenProps> = props => {
   const { navigation } = props;
   const [filter, setFilter] = useState('');
 
@@ -28,8 +28,8 @@ export const AdoptionScreen = (props: AdoptionScreenProps) => {
 
   return (
     <SafeAreaView>
-      <TextItemBold style={{ marginHorizontal: 8, marginTop: 8, fontSize: 24 }}>Adopt a</TextItemBold>
-      <TextItemBold style={{ marginHorizontal: 8, textTransform: 'capitalize' }}>friend</TextItemBold>
+      <TextItemBold style={styles.headerText}>Adopt a</TextItemBold>
+      <TextItemBold style={styles.headerTextBold}>friend</TextItemBold>
 
       <View style={styles.filterContainer}>
         <View style={styles.iconWithLabelContainer}>
@@ -86,7 +86,7 @@ export const AdoptionScreen = (props: AdoptionScreenProps) => {
       </View>
 
       {!pets ? (
-        <HeaderTextItem style={{ textAlign: 'center' }}>All animals are adopted</HeaderTextItem>
+        <HeaderTextItem style={styles.headerTextView}>All animals are adopted</HeaderTextItem>
       ) : (
         <ScrollView contentContainerStyle={styles.listContainer}>
           {filter
