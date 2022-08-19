@@ -41,14 +41,19 @@ export const ModalAddItem: FC<ModalAddItemType> = ({
                 <TextInput
                   placeholderTextColor={COLORS.text.grey}
                   placeholder={inputsPlaceholdersName.ADD_TITLE}
+                  multiline={true}
+                  numberOfLines={2}
                   {...addedTitle}
                   style={styles.input}
+                  editable
                 />
                 <TextInput
                   placeholderTextColor={COLORS.text.grey}
                   placeholder={inputsPlaceholdersName.ADD_INFO}
+                  multiline={true}
+                  editable
                   {...addedInfo}
-                  style={styles.input}
+                  style={[styles.input, { height: 100 }]}
                 />
               </View>
             </TouchableWithoutFeedback>

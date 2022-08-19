@@ -22,8 +22,8 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const age = useInput('');
   const nickName = useInput('');
 
-  const [animal, setAnimal] = useState('');
-  const [male, setMale] = useState('');
+  const [animal, setAnimal] = useState<animalsName | string>('');
+  const [male, setMale] = useState<maleName | string>('');
   const dispatch = useDispatch();
 
   const addPet = () => {
@@ -121,6 +121,9 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         placeholder={inputsPlaceholdersName.PET_DESCRIPTION}
         placeholderTextColor={COLORS.text.grey}
         style={styles.input}
+        multiline={true}
+        maxLength={800}
+        editable
       />
 
       <View style={styles.buttonsContainer}>

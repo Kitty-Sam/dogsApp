@@ -3,7 +3,7 @@ import { PetType } from '../reducers/userReducer';
 export type FetchPersonalInfoPayloadType = {
   petName: string;
   petAge: string;
-  petHobbies: string;
+  petBreed: string;
 };
 
 export enum UserActions {

@@ -17,6 +17,7 @@ import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextI
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
 import { useInput } from '../../hooks/useInput';
+import { getPersonalInfo } from '../../store/selectors/userSelector';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -24,22 +25,17 @@ const img = require('../../assets/white_buldog.jpeg');
 export type PersonalInfoType = {
   petName: string;
   petAge: string;
-  petHobbies: string;
-};
-
-const initialPersonalInfo: PersonalInfoType = {
-  petName: 'pet name',
-  petAge: 'pet age',
-  petHobbies: 'pet hobbies',
+  petBreed: string;
 };
 
 export const ProfileScreen: FC<ProfileScreenProps> = props => {
   const currentUserId = useSelector(getCurrentUserId);
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const currentUserInfo = useSelector(getPersonalInfo);
 
-  const petName = useInput('');
-  const petAge = useInput('');
-  const petHobbies = useInput('');
+  const petName = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petName);
+  const petAge = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petAge);
+  const petBreed = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petBreed);
 
   const photo = useSelector(getCurrentUserPhoto);
   const currentUserName = useSelector(getCurrentUserName);
@@ -57,14 +53,6 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
     if (snapshot.val()) {
       const personalInfoFB: PersonalInfoType = snapshot.val();
       dispatch(fetchPersonalInfoAC(personalInfoFB));
-      petName.onChangeText(personalInfoFB.petName);
-      petAge.onChangeText(personalInfoFB.petAge);
-      petHobbies.onChangeText(personalInfoFB.petHobbies);
-    }
-
-    if (!snapshot.val()) {
-      await database.ref(`/users/${currentUserId}`).child('personalInfo').set(initialPersonalInfo);
-      dispatch(fetchPersonalInfoAC(initialPersonalInfo));
     }
   };
 
@@ -76,7 +64,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
     await database.ref(`/users/${currentUserId}/personalInfo`).update({
       petName: petName.value,
       petAge: petAge.value,
-      petHobbies: petHobbies.value,
+      petBreed: petBreed.value,
     });
     fetchPersonalInfo();
     setIsEdit(false);
@@ -98,9 +86,9 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
           />
         </View>
         <View>
-          <HeaderTextItem>Home pet</HeaderTextItem>
+          <HeaderTextItem>Pet</HeaderTextItem>
           <View style={styles.textBlock}>
-            <TextItemBold>pet name:</TextItemBold>
+            <TextItemBold>pet name: </TextItemBold>
             {isEdit ? (
               <TextInput
                 {...petName}
@@ -114,7 +102,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
             )}
           </View>
           <View style={styles.textBlock}>
-            <TextItemBold>age:</TextItemBold>
+            <TextItemBold>age: </TextItemBold>
             {isEdit ? (
               <TextInput
                 {...petAge}
@@ -128,16 +116,11 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
             )}
           </View>
           <View style={styles.textBlock}>
-            <TextItemBold>hobbies: </TextItemBold>
+            <TextItemBold>bread: </TextItemBold>
             {isEdit ? (
-              <TextInput
-                {...petHobbies}
-                autoFocus={true}
-                onSubmitEditing={onSaveChangedNamePress}
-                style={styles.text}
-              />
+              <TextInput {...petBreed} autoFocus={true} onSubmitEditing={onSaveChangedNamePress} style={styles.text} />
             ) : (
-              <TextItemThin>{petHobbies.value}</TextItemThin>
+              <TextItemThin>{petBreed.value}</TextItemThin>
             )}
           </View>
         </View>

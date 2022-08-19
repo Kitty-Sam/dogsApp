@@ -49,13 +49,15 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.EMAIL}
             {...userEmail}
+            contextMenuHidden={true}
           />
           <TextInput
             style={styles.input}
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.PASSWORD}
             {...userPassword}
-            secureTextEntry
+            contextMenuHidden={true}
+            // secureTextEntry
           />
           <View style={styles.buttonsContainer}>
             <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />

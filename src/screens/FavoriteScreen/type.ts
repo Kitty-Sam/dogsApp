@@ -1,5 +1,5 @@
-import { DrawerNavigationName } from '../../enum/navigation';
+import { AdoptionNavigationName } from '../../enum/navigation';
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
-import { DrawerStackParamList } from '../../navigation/Drawer/type';
+import { AdoptionStackParamList } from '../../navigation/AdoptionStack/type';
 
-export type FavoriteScreenProps = StackScreenNavigationProps<DrawerNavigationName.FAVORITE, DrawerStackParamList>;
+export type FavoriteScreenProps = StackScreenNavigationProps<AdoptionNavigationName.FAVORITE, AdoptionStackParamList>;

@@ -10,7 +10,7 @@ import { FavoriteSaveIdType } from '../../store/actions/userAC';
 import { fetchPetsAction } from '../../store/sagas/sagaActions/fetchPets';
 import { fetchFavoritePetsIdsAction } from '../../store/sagas/sagaActions/fetchFavoritePetsIds';
 
-export const FavoriteScreen: FC<FavoriteScreenProps> = props => {
+export const FavoriteScreen: FC<FavoriteScreenProps> = ({ navigation }) => {
   const favoritesIds = useSelector(getFavoritesIds);
   const favoritesIdsResult = favoritesIds.map((el: FavoriteSaveIdType) => Object.values(el)).flat();
   const pets = useSelector(getPets);
@@ -27,7 +27,7 @@ export const FavoriteScreen: FC<FavoriteScreenProps> = props => {
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.listContainer}>
         {favorites.map((el: PetType) => (
-          <PetItem pet={el} key={el.id} />
+          <PetItem pet={el} key={el.id} navigation={navigation} />
         ))}
       </ScrollView>
     </SafeAreaView>

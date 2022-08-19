@@ -36,13 +36,13 @@ export const styles = StyleSheet.create<PetUniteScreenStyleType>({
     justifyContent: 'center',
   },
   textContainer: {
-    width: screenWidth * 0.5,
+    width: screenWidth * 0.65,
   },
   informativeBlock: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     width: screenWidth,
     marginVertical: 24,
-    height: screenWidth * 0.5,
+    height: screenWidth * 0.6,
   },
 });
