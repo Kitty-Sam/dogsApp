@@ -17,8 +17,8 @@ export const styles = StyleSheet.create<ItemContainerStyleType>({
     marginVertical: 4,
     padding: 16,
     borderRadius: 10,
-    width: screenWidth * 0.8,
-    height: screenWidth * 0.9,
+    width: screenWidth * 0.7,
+    height: screenWidth * 0.7,
   },
   text: {
     borderBottomColor: COLORS.text.dark_blue,

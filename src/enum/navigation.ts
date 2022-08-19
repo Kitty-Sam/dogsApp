@@ -12,6 +12,7 @@ export const enum MessagesNavigationName {
 export const enum AdoptionNavigationName {
   ADOPTION = 'Adoption Pet',
   PET_UNITE = 'Pet',
+  FAVORITE = 'Favorite',
 }
 
 export const enum DrawerNavigationName {

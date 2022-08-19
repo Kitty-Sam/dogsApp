@@ -47,25 +47,29 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
             placeholder={inputsPlaceholdersName.NICK_NAME}
             style={styles.input}
             {...userName}
+            contextMenuHidden={true}
           />
           <TextInput
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.EMAIL}
             style={styles.input}
             {...userEmail}
+            contextMenuHidden={true}
           />
           <TextInput
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.PASSWORD}
             style={styles.input}
             {...userPassword}
-            secureTextEntry
+            contextMenuHidden={true}
+            // secureTextEntry
           />
           <TextInput
             keyboardType={'numeric'}
             placeholderTextColor={COLORS.text.grey}
             placeholder={inputsPlaceholdersName.PHONE}
             style={styles.input}
+            contextMenuHidden={true}
             {...userPhone}
           />
           <View style={styles.buttonsContainer}>

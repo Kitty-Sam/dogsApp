@@ -10,5 +10,6 @@ export const styles = StyleSheet.create<TextItemBoldStyleType>({
     fontWeight: 'bold',
     color: COLORS.text.dark_blue,
     fontSize: 16,
+    // marginVertical: 8,
   },
 });

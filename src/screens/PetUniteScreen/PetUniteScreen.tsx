@@ -13,11 +13,11 @@ import { getCurrentUserId, getCurrentUserPhone } from '../../store/selectors/log
 import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
 import { addFavoriteAC, FavoriteSaveIdType, removeFavoriteAC } from '../../store/actions/userAC';
-import { maleName } from '../../enum/maleName';
 import { fetchFavoritePetsIdsAction } from '../../store/sagas/sagaActions/fetchFavoritePetsIds';
 import { getFavoritesIds } from '../../store/selectors/userSelector';
 import { callOwnerAction } from '../../store/sagas/sagaActions/callOwner';
 import { PetUniteScreenProps } from './type';
+import { selectItem } from '../../utils/selectItem';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
@@ -82,17 +82,7 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
         </View>
         <View>
           <TextItemThin>{age}</TextItemThin>
-          <Icon
-            name={
-              [male].includes(maleName.UNKNOWN)
-                ? iconsName.UNKNOWN
-                : [male].includes(maleName.BOY)
-                ? iconsName.BOY
-                : iconsName.GIRL
-            }
-            size={26}
-            color={COLORS.text.dark_blue}
-          />
+          <Icon name={selectItem(male)} size={26} color={COLORS.text.dark_blue} />
         </View>
       </View>
 

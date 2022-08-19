@@ -56,8 +56,8 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     flex: 1,
   },
   modalInputBlock: {
-    width: screenWidth * 0.9,
-    height: screenWidth * 0.8,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.6,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',

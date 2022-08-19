@@ -72,6 +72,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
             favorites: [action.payload, ...state.favorites],
           };
         }
+        return { ...state };
       }
       break;
 
