@@ -9,13 +9,15 @@ import {
   removeFavoriteAC,
   FavoriteSaveIdType,
 } from '../actions/userAC';
+import { maleName } from '../../enum/maleName';
+import { animalsName } from '../../enum/animalsName';
 
 export type PetType = {
-  animal: string;
+  animal: animalsName;
   age: string;
   description: string;
   id: number;
-  male: string;
+  male: maleName;
   nickName: string;
   photo: string;
 };

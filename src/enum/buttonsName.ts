@@ -11,4 +11,6 @@ export const enum buttonsName {
   CLEAR = 'clear',
   SEND = 'send',
   BACK = 'back',
+  RELOAD = 'reload',
+  PAY = 'pay',
 }

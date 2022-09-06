@@ -18,7 +18,7 @@ export const styles = StyleSheet.create<PetItemStyleType>({
     borderColor: COLORS.text.dark_blue,
     borderWidth: 1,
     margin: 8,
-    borderRadius: 50,
+    borderRadius: 40,
   },
   itemPetText: {
     color: COLORS.text.dark_blue,
