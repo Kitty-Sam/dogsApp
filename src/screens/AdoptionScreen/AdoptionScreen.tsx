@@ -1,5 +1,5 @@
 import React, { FC, useLayoutEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { RefreshControl, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPets } from '../../store/selectors/userSelector';
 import { PetType } from '../../store/reducers/userReducer';
@@ -14,6 +14,7 @@ import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
 import { animalsName } from '../../enum/animalsName';
 import { fetchPetsAction } from '../../store/sagas/sagaActions/fetchPets';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { useRefreshControl } from '../../hooks/useRefreshControl';
 
 export const AdoptionScreen: FC<AdoptionScreenProps> = props => {
   const { navigation } = props;
@@ -25,6 +26,13 @@ export const AdoptionScreen: FC<AdoptionScreenProps> = props => {
   useLayoutEffect(() => {
     dispatch(fetchPetsAction());
   }, []);
+
+  const { value, resetRefresh, onRefresh } = useRefreshControl(false);
+
+  const onRefreshPress = () => {
+    onRefresh(true);
+    resetRefresh();
+  };
 
   return (
     <SafeAreaView>
@@ -88,7 +96,11 @@ export const AdoptionScreen: FC<AdoptionScreenProps> = props => {
       {!pets ? (
         <HeaderTextItem style={styles.headerTextView}>All animals are adopted</HeaderTextItem>
       ) : (
-        <ScrollView contentContainerStyle={styles.listContainer}>
+        <ScrollView
+          contentContainerStyle={styles.listContainer}
+          showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={value} onRefresh={onRefreshPress} />}
+        >
           {filter
             ? pets
                 .filter((pet: PetType) => pet.animal === filter)

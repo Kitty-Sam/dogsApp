@@ -4,12 +4,13 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 buildscript {
     ext {
-        kotlin_version = '1.5.31'
+        kotlin_version = '1.7.10'
         buildToolsVersion = "31.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 31
-        targetSdkVersion = 31
+        compileSdkVersion = 32
+        targetSdkVersion = 32
         googlePlayServicesAuthVersion = "19.2.0"
+        androidXCore = "1.7.0"
 
 
         if (System.properties['os.arch'] == "aarch64") {

@@ -1,5 +1,5 @@
 import React, { FC, useLayoutEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, TextInput, View } from 'react-native';
+import { ImageBackground, SafeAreaView, Switch, TextInput, View } from 'react-native';
 import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,6 +41,9 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
   const currentUserName = useSelector(getCurrentUserName);
 
   const photoString = String(photo);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
   const dispatch = useDispatch();
 
@@ -135,6 +138,12 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
             />
           </View>
         ) : null}
+        <Switch
+          trackColor={{ false: COLORS.text.grey, true: COLORS.text.dark_blue }}
+          thumbColor={isEnabled ? COLORS.buttons.brown : COLORS.buttons.peach}
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
       </SafeAreaView>
     </ImageBackground>
   );
