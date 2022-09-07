@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { COLORS } from '../../colors/colors';
@@ -12,21 +12,36 @@ import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { styles } from './style';
 import { SelectShelter } from '../../components/Select/SelectShelter';
+import { shelters } from '../../consts/consts';
+import { SUM } from '../../enum/sum';
+import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
+import { Gap } from '../../components/Gap/Gap';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FAB } from 'react-native-paper';
+import { iconsName } from '../../enum/iconsName';
 
-export enum SUM {
-  FIVE = 50,
-  TEN = 100,
-  FIFTEEN = 150,
-  TWENTY = 200,
-}
+const sum = [SUM.FIVE, SUM.TEN, SUM.FIFTEEN, SUM.TWENTY];
 
 export const DonationScreen = () => {
   const [name, setName] = useState('');
+  const [shelter, setShelter] = useState('');
   const [amount, setAmount] = useState(0);
+
   const { confirmPayment } = useConfirmPayment();
 
   const statusApp = useSelector(getAppStatus);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    async function addShelter() {
+      const shelterJSON = await AsyncStorage.getItem('shelter');
+      if (shelterJSON) {
+        const shelter = JSON.parse(shelterJSON);
+        setShelter(shelter);
+      }
+    }
+    addShelter();
+  }, [shelter]);
 
   const payPress = async () => {
     try {
@@ -47,7 +62,7 @@ export const DonationScreen = () => {
         Alert.alert(error.message);
         dispatch(toggleAppStatus(requestStatus.FAILED));
       } else if (paymentIntent) {
-        Alert.alert('Success', `Payment successful: ${paymentIntent.id}`);
+        Alert.alert(`Thanks for your payment for ${shelter}`);
         dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
       }
     } catch (ERROR) {
@@ -62,66 +77,41 @@ export const DonationScreen = () => {
       ) : (
         <>
           <TextItemBold>Choose the correct sum (in $) </TextItemBold>
+          <Gap size={1} />
           <View style={styles.sumItemContainer}>
-            <TouchableOpacity onPress={() => setAmount(SUM.FIVE)}>
-              <Text
-                style={[
-                  styles.sumItem,
-                  {
-                    borderColor: amount === SUM.FIVE ? COLORS.buttons.brown : COLORS.text.grey,
-                  },
-                ]}
-              >
-                {SUM.FIVE}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setAmount(SUM.TEN)}>
-              <Text
-                style={[
-                  styles.sumItem,
-                  {
-                    borderColor: amount === SUM.TEN ? COLORS.buttons.brown : COLORS.text.grey,
-                  },
-                ]}
-              >
-                {SUM.TEN}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setAmount(SUM.FIFTEEN)}>
-              <Text
-                style={[
-                  styles.sumItem,
-                  {
-                    borderColor: amount === SUM.FIFTEEN ? COLORS.buttons.brown : COLORS.text.grey,
-                  },
-                ]}
-              >
-                {SUM.FIFTEEN}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setAmount(SUM.TWENTY)}>
-              <Text
-                style={[
-                  styles.sumItem,
-                  {
-                    borderColor: amount === SUM.TWENTY ? COLORS.buttons.brown : COLORS.text.grey,
-                  },
-                ]}
-              >
-                {SUM.TWENTY}
-              </Text>
-            </TouchableOpacity>
+            {sum.map(element => (
+              <TouchableOpacity onPress={() => setAmount(element)} key={element}>
+                <Text
+                  style={[
+                    styles.sumItem,
+                    {
+                      borderColor: amount === element ? COLORS.buttons.brown : COLORS.text.grey,
+                    },
+                  ]}
+                >
+                  {element}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
+          <Gap size={3} />
+          <TextItemBold>Choose the shelters</TextItemBold>
+          <Gap size={1} />
+          <SelectShelter shelters={shelters} />
+          <Gap size={3} />
 
-          <SelectShelter />
-
+          <TextItemBold>Enter your name</TextItemBold>
+          <Gap size={1} />
           <TextInput
             autoCapitalize="none"
-            placeholder={'ENTER YOUR NAME'}
+            placeholder={inputsPlaceholdersName.NICK_NAME}
             keyboardType="name-phone-pad"
             onChangeText={() => setName(name)}
             style={styles.input}
           />
+          <Gap size={3} />
+          <TextItemBold>Enter your credit card</TextItemBold>
+          <Gap size={1} />
           <CardField
             onCardChange={cardDetails => console.log(cardDetails)}
             postalCodeEnabled={false}
@@ -132,8 +122,9 @@ export const DonationScreen = () => {
             }}
             style={styles.cardField}
           />
+          <Gap size={2} />
           <View style={styles.buttonsContainer}>
-            <AppButton onPress={() => payPress()} title={buttonsName.PAY} />
+            <AppButton onPress={() => payPress()} title={buttonsName.PAY} disabled={shelter === '' || amount === 0} />
             <AppButton
               onPress={() => {
                 setAmount(0);
@@ -143,6 +134,7 @@ export const DonationScreen = () => {
               backgroundColor={COLORS.buttons.brown}
             />
           </View>
+          <FAB icon={iconsName.PAW} style={styles.fab} onPress={() => Alert.alert('thanks for you help')} />
         </>
       )}
     </ScrollView>
