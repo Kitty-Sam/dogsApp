@@ -1,10 +1,27 @@
-import React from 'react';
-import { Linking, Text } from 'react-native';
+import React, { FC } from 'react';
+import SelectDropdown from 'react-native-select-dropdown';
+import { ShelterTypeProps } from './type';
+import { styles } from './style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const SelectShelter = () => {
+export const SelectShelter: FC<ShelterTypeProps> = ({ shelters }) => {
+  async function saveShelter(item: string) {
+    await AsyncStorage.setItem('shelter', JSON.stringify(item));
+  }
   return (
-    <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('http://google.com')}>
-      Google
-    </Text>
+    <SelectDropdown
+      data={shelters}
+      onSelect={(selectedItem, index) => {
+        saveShelter(selectedItem);
+      }}
+      buttonTextAfterSelection={(selectedItem, index) => {
+        return selectedItem;
+      }}
+      rowTextForSelection={(item, index) => {
+        return item;
+      }}
+      buttonStyle={styles.button}
+      defaultButtonText={'Choose shelter'}
+    />
   );
 };

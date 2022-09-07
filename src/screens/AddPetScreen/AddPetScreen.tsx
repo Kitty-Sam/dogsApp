@@ -13,6 +13,9 @@ import { animalsName } from '../../enum/animalsName';
 import { useDispatch } from 'react-redux';
 import { maleName } from '../../enum/maleName';
 
+const animals = [animalsName.DOG, animalsName.CAT];
+const males = [maleName.GIRL, maleName.BOY, maleName.UNKNOWN];
+
 export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const { navigation } = props;
 
@@ -41,67 +44,38 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
   return (
     <SafeAreaView style={styles.rootContainer}>
       <View style={styles.filterContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            setAnimal(animalsName.DOG);
-          }}
-          style={[
-            styles.filterItemContainer,
-            { borderColor: animal === animalsName.DOG ? COLORS.buttons.brown : COLORS.text.dark_blue },
-          ]}
-        >
-          <TextItemThin style={styles.textLocation}>{animalsName.DOG}</TextItemThin>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setAnimal(animalsName.CAT);
-          }}
-          style={[
-            styles.filterItemContainer,
-            { borderColor: animal === animalsName.CAT ? COLORS.buttons.brown : COLORS.text.dark_blue },
-          ]}
-        >
-          <TextItemThin style={styles.textLocation}>{animalsName.CAT}</TextItemThin>
-        </TouchableOpacity>
+        {animals.map(animal_item => (
+          <TouchableOpacity
+            key={animal_item}
+            onPress={() => {
+              setAnimal(animal_item);
+            }}
+            style={[
+              styles.filterItemContainer,
+              { borderColor: animal === animal_item ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            ]}
+          >
+            <TextItemThin style={styles.textLocation}>{animal_item}</TextItemThin>
+          </TouchableOpacity>
+        ))}
       </View>
-
       <View style={styles.filterContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            setMale(maleName.UNKNOWN);
-          }}
-          style={[
-            styles.filterItemContainer,
-            { borderColor: [male].includes(maleName.UNKNOWN) ? COLORS.buttons.brown : COLORS.text.dark_blue },
-          ]}
-        >
-          <TextItemThin style={styles.textLocation}>{maleName.UNKNOWN}</TextItemThin>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setMale(maleName.GIRL);
-          }}
-          style={[
-            styles.filterItemContainer,
-            { borderColor: [male].includes(maleName.GIRL) ? COLORS.buttons.brown : COLORS.text.dark_blue },
-          ]}
-        >
-          <TextItemThin style={styles.textLocation}>{maleName.GIRL}</TextItemThin>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => {
-            setMale(maleName.BOY);
-          }}
-          style={[
-            styles.filterItemContainer,
-            { borderColor: [male].includes(maleName.BOY) ? COLORS.buttons.brown : COLORS.text.dark_blue },
-          ]}
-        >
-          <TextItemThin style={styles.textLocation}>{maleName.BOY}</TextItemThin>
-        </TouchableOpacity>
+        {males.map(male_item => (
+          <TouchableOpacity
+            key={male_item}
+            onPress={() => {
+              setMale(male_item);
+            }}
+            style={[
+              styles.filterItemContainer,
+              { borderColor: [male].includes(male_item) ? COLORS.buttons.brown : COLORS.text.dark_blue },
+            ]}
+          >
+            <TextItemThin style={styles.textLocation}>{male_item}</TextItemThin>
+          </TouchableOpacity>
+        ))}
       </View>
+
       <TextInput
         {...nickName}
         placeholder={inputsPlaceholdersName.PET_NICK_NAME}

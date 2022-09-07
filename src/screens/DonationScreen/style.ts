@@ -6,12 +6,13 @@ export type DonationScreenStyleType = {
   input: TextStyle;
   buttonsContainer: ViewStyle;
   cardField: TextStyle;
+  fab: TextStyle;
   sumItemContainer: ViewStyle;
   root: ViewStyle;
 };
 
 export const styles = StyleSheet.create<DonationScreenStyleType>({
-  root: { flex: 1, paddingTop: 20, paddingHorizontal: 16 },
+  root: { flex: 1, paddingTop: 20, paddingHorizontal: 16, alignSelf: 'stretch' },
   sumItem: {
     width: 100,
     height: 50,
@@ -37,12 +38,18 @@ export const styles = StyleSheet.create<DonationScreenStyleType>({
     borderBottomColor: COLORS.text.dark_blue,
     borderBottomWidth: 1,
     width: '100%',
-    marginVertical: 20,
+    height: 50,
     textTransform: 'uppercase',
   },
   cardField: {
     width: '100%',
     height: 50,
-    marginVertical: 20,
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: -150,
+    backgroundColor: COLORS.buttons.peach,
   },
 });
