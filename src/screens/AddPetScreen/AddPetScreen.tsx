@@ -24,13 +24,17 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const description = useInput('');
   const age = useInput('');
   const nickName = useInput('');
+  const ownerInfo = useInput('');
 
   const [animal, setAnimal] = useState<animalsName | string>('');
   const [male, setMale] = useState<maleName | string>('');
   const dispatch = useDispatch();
 
-  const addPet = () => {
-    dispatch(addNewPetAction({ age, animal, male, setMale, setAnimal, description, nickName, navigation, id }));
+  const addPet = async () => {
+    dispatch(
+      addNewPetAction({ age, animal, male, setMale, setAnimal, description, nickName, navigation, id, ownerInfo }),
+    );
+    clearPet();
   };
 
   const clearPet = () => {
@@ -39,6 +43,7 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
     description.resetValue();
     age.resetValue();
     nickName.resetValue();
+    ownerInfo.resetValue();
   };
 
   return (
@@ -96,8 +101,24 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         placeholderTextColor={COLORS.text.grey}
         style={styles.input}
         multiline={true}
-        maxLength={800}
+        maxLength={700}
         editable
+      />
+
+      <TextInput
+        {...ownerInfo}
+        placeholder={inputsPlaceholdersName.PET_OWNER_INFO}
+        placeholderTextColor={COLORS.text.grey}
+        style={[
+          styles.input,
+          {
+            borderBottomColor: ownerInfo.value.length === 13 ? COLORS.text.grey : COLORS.buttons.brown,
+          },
+        ]}
+        editable
+        keyboardType={'name-phone-pad'}
+        onFocus={() => ownerInfo.onChangeText('+375')}
+        onBlur={() => ownerInfo.onChangeText('')}
       />
 
       <View style={styles.buttonsContainer}>

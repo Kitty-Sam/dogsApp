@@ -12,7 +12,7 @@ const dogDefaultImg =
   'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*';
 
 export function* addNewPetWorker({ payload }: AddNewPetActionType) {
-  const { navigation, description, age, nickName, id, male, animal, setMale, setAnimal } = payload;
+  const { navigation, description, age, nickName, id, male, animal, setMale, setAnimal, ownerInfo } = payload;
   try {
     yield database
       .ref(`/pets/`)
@@ -23,6 +23,7 @@ export function* addNewPetWorker({ payload }: AddNewPetActionType) {
         age: age.value,
         description: description.value,
         nickName: nickName.value,
+        ownerInfo: ownerInfo.value,
         id: id,
         photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
       });
@@ -33,6 +34,7 @@ export function* addNewPetWorker({ payload }: AddNewPetActionType) {
         age: age.value,
         description: description.value,
         nickName: nickName.value,
+        ownerInfo: ownerInfo.value,
         id,
         photo: animal === animalsName.CAT ? catDefaultImg : dogDefaultImg,
       }),

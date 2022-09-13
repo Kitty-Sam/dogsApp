@@ -7,7 +7,6 @@ import { AuthStackParamList } from '../../../navigation/AuthStack/type';
 export type GoogleRegisterPayloadType = {
   userPassword: UseInputResponseType;
   userEmail: UseInputResponseType;
-  userPhone: UseInputResponseType;
   userName: UseInputResponseType;
   navigation: StackNavigationProp<AuthStackParamList>;
 };

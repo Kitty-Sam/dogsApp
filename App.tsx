@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { getLoginStatus } from './src/store/selectors/loginSelector';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { fetchPublishAbleKey } from './helpers';
+import { Toast } from './src/components/Toast/Toast';
 
 export const App = () => {
   const isLogged = useSelector(getLoginStatus);
@@ -29,8 +30,11 @@ export const App = () => {
   }, []);
 
   return (
-    <StripeProvider publishableKey={publishableKey}>
-      <NavigationContainer>{isLogged ? <DrawerStack /> : <AuthStack />}</NavigationContainer>
-    </StripeProvider>
+    <>
+      <Toast />
+      <StripeProvider publishableKey={publishableKey}>
+        <NavigationContainer>{isLogged ? <DrawerStack /> : <AuthStack />}</NavigationContainer>
+      </StripeProvider>
+    </>
   );
 };

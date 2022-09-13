@@ -13,7 +13,7 @@ import { images } from '../../../consts/consts';
 import { database } from '../../../utils/getDataBaseURL';
 
 export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
-  const { userName, userPassword, userEmail, navigation, userPhone } = payload;
+  const { userName, userPassword, userEmail, navigation } = payload;
   yield put(toggleAppStatus(requestStatus.LOADING));
   try {
     const userCredential: UserCredential = yield createUserWithEmailAndPassword(
@@ -31,7 +31,6 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
       userEmail: userEmail.value,
       userId: user.uid,
       photo: images.avatar,
-      currentUserPhone: userPhone.value,
     });
 
     yield put(
@@ -41,7 +40,6 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
           currentUserName: userName.value,
           currentUserPhoto: images.avatar,
           currentUserEmail: userEmail.value,
-          currentUserPhone: userPhone.value,
         },
       }),
     );

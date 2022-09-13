@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import { COLORS } from '../../colors/colors';
@@ -16,7 +16,6 @@ import { shelters } from '../../consts/consts';
 import { SUM } from '../../enum/sum';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { Gap } from '../../components/Gap/Gap';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FAB } from 'react-native-paper';
 import { iconsName } from '../../enum/iconsName';
 
@@ -24,7 +23,7 @@ const sum = [SUM.FIVE, SUM.TEN, SUM.FIFTEEN, SUM.TWENTY];
 
 export const DonationScreen = () => {
   const [name, setName] = useState('');
-  const [shelter, setShelter] = useState('');
+  const [shelter, setShelter] = useState<string>('');
   const [amount, setAmount] = useState(0);
 
   const { confirmPayment } = useConfirmPayment();
@@ -32,16 +31,9 @@ export const DonationScreen = () => {
   const statusApp = useSelector(getAppStatus);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    async function addShelter() {
-      const shelterJSON = await AsyncStorage.getItem('shelter');
-      if (shelterJSON) {
-        const shelter = JSON.parse(shelterJSON);
-        setShelter(shelter);
-      }
-    }
-    addShelter();
-  }, [shelter]);
+  const updateCurrentShelter = (selectedShelter: string) => {
+    setShelter(selectedShelter);
+  };
 
   const payPress = async () => {
     try {
@@ -97,7 +89,7 @@ export const DonationScreen = () => {
           <Gap size={3} />
           <TextItemBold>Choose the shelters</TextItemBold>
           <Gap size={1} />
-          <SelectShelter shelters={shelters} />
+          <SelectShelter shelters={shelters} updateCurrentShelter={updateCurrentShelter} />
           <Gap size={3} />
 
           <TextItemBold>Enter your name</TextItemBold>
@@ -124,7 +116,7 @@ export const DonationScreen = () => {
           />
           <Gap size={2} />
           <View style={styles.buttonsContainer}>
-            <AppButton onPress={() => payPress()} title={buttonsName.PAY} disabled={shelter === '' || amount === 0} />
+            <AppButton onPress={() => payPress()} title={buttonsName.PAY} disabled={amount === 0 || shelter === ''} />
             <AppButton
               onPress={() => {
                 setAmount(0);

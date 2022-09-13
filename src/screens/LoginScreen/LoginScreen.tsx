@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { ActivityIndicator, ImageBackground, TextInput, View, TouchableOpacity } from 'react-native';
+import React, { FC, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
@@ -13,6 +13,9 @@ import { LoginScreenProps } from './type';
 import { useInput } from '../../hooks/useInput';
 import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
+import { Icon } from '../../components/Icon/Icon';
+import { iconsName } from '../../enum/iconsName';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_fat.jpeg');
@@ -34,6 +37,7 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
   const openRegisterScreen = () => {
     navigation.navigate(AuthNavigationName.REGISTER);
   };
+  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
 
   return (
     <ImageBackground source={img} style={styles.rootContainer}>
@@ -44,21 +48,31 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
           <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
             <TextItemThin>Forgot password?</TextItemThin>
           </TouchableOpacity>
-          <TextInput
-            style={styles.input}
-            placeholderTextColor={COLORS.text.grey}
-            placeholder={inputsPlaceholdersName.EMAIL}
-            {...userEmail}
-            contextMenuHidden={true}
-          />
-          <TextInput
-            style={styles.input}
-            placeholderTextColor={COLORS.text.grey}
+
+          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...userEmail} />
+
+          <CustomTextInput
             placeholder={inputsPlaceholdersName.PASSWORD}
             {...userPassword}
-            contextMenuHidden={true}
-            // secureTextEntry
+            iconPosition="right"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry(prev => !prev);
+                }}
+              >
+                <Text>
+                  {isSecureEntry ? (
+                    <Icon type={'ionicon'} name={'eye'} size={16} color={COLORS.text.grey} />
+                  ) : (
+                    <Icon type={'ionicon'} name={'eye-off'} size={16} color={COLORS.text.grey} />
+                  )}
+                </Text>
+              </TouchableOpacity>
+            }
           />
+
           <View style={styles.buttonsContainer}>
             <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />
             <AppButton

@@ -13,6 +13,7 @@ import { iconsName } from '../../enum/iconsName';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DrawerStackParamList } from './type';
+import { images } from '../../consts/consts';
 
 export const CustomDrawer = (props: any) => {
   const photo = useSelector(getCurrentUserPhoto);
@@ -28,7 +29,7 @@ export const CustomDrawer = (props: any) => {
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={{ flexDirection: 'row' }}>
-          <Image source={{ uri: photo }} style={styles.avatarContainer} />
+          <Image source={{ uri: !photo ? images.avatar : photo }} style={styles.avatarContainer} />
           <TouchableOpacity
             style={styles.userNameTextContainer}
             onPress={() => navigation.navigate(DrawerNavigationName.PROFILE)}
