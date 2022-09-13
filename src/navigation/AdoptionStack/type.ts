@@ -10,8 +10,9 @@ export type AdoptionStackParamList = {
     description: string;
     photo: string;
     age: string;
-    male: maleName;
-    animal: animalsName;
+    male: maleName | string;
+    animal: animalsName | string;
     id: number;
+    ownerInfo: string;
   };
 };

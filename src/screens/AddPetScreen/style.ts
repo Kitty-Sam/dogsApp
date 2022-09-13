@@ -14,14 +14,14 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
   rootContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-around',
   },
   filterContainer: {
     flexDirection: 'row',
   },
   filterItemContainer: {
     width: 100,
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 10,
     margin: 4,
   },
@@ -35,7 +35,6 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     borderBottomWidth: 2,
     width: 300,
     padding: 10,
-    margin: 5,
     color: COLORS.text.dark_blue,
   },
   textLocation: {

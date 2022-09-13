@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { ActivityIndicator, ImageBackground, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { FC, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
@@ -13,6 +13,8 @@ import { RegisterScreenProps } from './type';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { useInput } from '../../hooks/useInput';
 import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegister';
+import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
+import { Icon } from '../../components/Icon/Icon';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -23,18 +25,18 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const userEmail = useInput('');
   const userPassword = useInput('');
   const userName = useInput('');
-  const userPhone = useInput('');
 
   const dispatch = useDispatch();
   const statusApp = useSelector(getAppStatus);
 
   const registerPress = () => {
-    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation, userPhone }));
+    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
   };
 
   const openLoginScreen = () => {
     navigation.navigate(AuthNavigationName.LOGIN);
   };
+  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
 
   return (
     <ImageBackground source={img} style={styles.rootContainer}>
@@ -42,35 +44,29 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
         <ActivityIndicator style={{ zIndex: 10 }} />
       ) : (
         <View style={styles.inputsContainer}>
-          <TextInput
-            placeholderTextColor={COLORS.text.grey}
-            placeholder={inputsPlaceholdersName.NICK_NAME}
-            style={styles.input}
-            {...userName}
-            contextMenuHidden={true}
-          />
-          <TextInput
-            placeholderTextColor={COLORS.text.grey}
-            placeholder={inputsPlaceholdersName.EMAIL}
-            style={styles.input}
-            {...userEmail}
-            contextMenuHidden={true}
-          />
-          <TextInput
-            placeholderTextColor={COLORS.text.grey}
+          <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />
+          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} {...userEmail} contextMenuHidden={true} />
+          <CustomTextInput
             placeholder={inputsPlaceholdersName.PASSWORD}
-            style={styles.input}
             {...userPassword}
             contextMenuHidden={true}
-            // secureTextEntry
-          />
-          <TextInput
-            keyboardType={'numeric'}
-            placeholderTextColor={COLORS.text.grey}
-            placeholder={inputsPlaceholdersName.PHONE}
-            style={styles.input}
-            contextMenuHidden={true}
-            {...userPhone}
+            iconPosition="right"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry(prev => !prev);
+                }}
+              >
+                <Text>
+                  {isSecureEntry ? (
+                    <Icon type={'ionicon'} name={'eye'} size={16} color={COLORS.text.grey} />
+                  ) : (
+                    <Icon type={'ionicon'} name={'eye-off'} size={16} color={COLORS.text.grey} />
+                  )}
+                </Text>
+              </TouchableOpacity>
+            }
           />
           <View style={styles.buttonsContainer}>
             <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />

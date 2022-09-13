@@ -9,7 +9,7 @@ import { iconsName } from '../../enum/iconsName';
 import { styles } from './style';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
-import { getCurrentUserId, getCurrentUserPhone } from '../../store/selectors/loginSelector';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { database } from '../../utils/getDataBaseURL';
 import { addFavoriteAC, FavoriteSaveIdType, removeFavoriteAC } from '../../store/actions/userAC';
@@ -21,9 +21,8 @@ import { selectItem } from '../../utils/selectItem';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
-  const { nickName, description, photo, age, male, id } = props.route.params;
+  const { nickName, description, photo, age, male, id, ownerInfo } = props.route.params;
 
-  const currentUserPhone = useSelector(getCurrentUserPhone);
   const currentUserId = useSelector(getCurrentUserId);
   const favoritesIds = useSelector(getFavoritesIds);
 
@@ -89,7 +88,7 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
       <View style={styles.buttonWithIconContainer}>
         <View style={styles.buttonContainer}>
           <AppButton
-            onPress={() => callNumber(currentUserPhone)}
+            onPress={() => callNumber(ownerInfo)}
             title={buttonsName.ADOPT}
             backgroundColor={COLORS.buttons.peach}
           />

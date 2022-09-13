@@ -20,6 +20,7 @@ export const PetItem: FC<PetItemType> = ({ pet, navigation }) => {
       male: pet.male,
       animal: pet.animal,
       id: pet.id,
+      ownerInfo: pet.ownerInfo,
     });
   };
   return (

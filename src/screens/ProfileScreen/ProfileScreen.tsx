@@ -1,5 +1,5 @@
-import React, { FC, useLayoutEffect, useState } from 'react';
-import { ImageBackground, SafeAreaView, Switch, TextInput, View } from 'react-native';
+import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { Button, ImageBackground, Platform, SafeAreaView, Switch, TextInput, View } from 'react-native';
 import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +18,7 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
 import { useInput } from '../../hooks/useInput';
 import { getPersonalInfo } from '../../store/selectors/userSelector';
+import { toast } from '../../utils/toast';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -33,11 +34,27 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const currentUserInfo = useSelector(getPersonalInfo);
 
-  const petName = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petName);
-  const petAge = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petAge);
-  const petBreed = useInput(!currentUserInfo ? 'edit' : currentUserInfo.petBreed);
+  const petName = useInput(!Object.keys(currentUserInfo).length ? 'edit' : currentUserInfo.petName);
+  const petAge = useInput(!Object.keys(currentUserInfo).length ? 'edit' : currentUserInfo.petAge);
+  const petBreed = useInput(!Object.keys(currentUserInfo).length ? 'edit' : currentUserInfo.petBreed);
 
-  const photo = useSelector(getCurrentUserPhoto);
+  const [photo, setPhoto] = useState();
+
+  useEffect(() => {
+    const photoStable = async () => {
+      const reference: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/photo`);
+      const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
+      if (snapshot.val()) {
+        const photoSnap: any = snapshot.val();
+        console.log('photoSnap', photoSnap);
+        setPhoto(photoSnap);
+      }
+    };
+    photoStable();
+  });
+
+  // const photo = useSelector(getCurrentUserPhoto);
+
   const currentUserName = useSelector(getCurrentUserName);
 
   const photoString = String(photo);
@@ -143,6 +160,33 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
           thumbColor={isEnabled ? COLORS.buttons.brown : COLORS.buttons.peach}
           onValueChange={toggleSwitch}
           value={isEnabled}
+        />
+        {Platform.OS === 'android' && (
+          <Button
+            title="USE NATIVE TOAST"
+            onPress={() => {
+              toast.info({ message: 'Am native lol', useNativeToast: true });
+            }}
+          />
+        )}
+
+        <Button
+          title="SHOW ERROR"
+          onPress={() => {
+            toast.danger({ message: 'An error occurred' });
+          }}
+        />
+        <Button
+          title="SHOW SUCCESS"
+          onPress={() => {
+            toast.success({ message: 'success' });
+          }}
+        />
+        <Button
+          title="SHOW info"
+          onPress={() => {
+            toast.info({ message: 'Button press' });
+          }}
         />
       </SafeAreaView>
     </ImageBackground>

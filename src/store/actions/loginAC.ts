@@ -8,7 +8,6 @@ type SaveCurrentUserPayloadType = {
     currentUserName: string;
     currentUserPhoto: string;
     currentUserEmail: string;
-    currentUserPhone: string;
   };
 };
 

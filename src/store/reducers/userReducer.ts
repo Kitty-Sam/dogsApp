@@ -13,13 +13,14 @@ import { maleName } from '../../enum/maleName';
 import { animalsName } from '../../enum/animalsName';
 
 export type PetType = {
-  animal: animalsName;
+  animal: animalsName | string;
   age: string;
   description: string;
   id: number;
-  male: maleName;
+  male: maleName | string;
   nickName: string;
   photo: string;
+  ownerInfo: string;
 };
 
 const initialState: initialStateType = {
@@ -87,7 +88,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
 
     case UserActions.ADD_PET:
       {
-        const { nickName, description, id, male, animal, age, photo } = action.payload;
+        const { nickName, description, id, male, animal, age, photo, ownerInfo } = action.payload;
         const hasPet = state.pets.find(pet => pet.id === id);
 
         if (!hasPet) {
@@ -99,6 +100,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
             male,
             age,
             photo,
+            ownerInfo,
           };
           return {
             ...state,

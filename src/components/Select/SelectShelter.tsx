@@ -2,18 +2,14 @@ import React, { FC } from 'react';
 import SelectDropdown from 'react-native-select-dropdown';
 import { ShelterTypeProps } from './type';
 import { styles } from './style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const SelectShelter: FC<ShelterTypeProps> = ({ shelters }) => {
-  async function saveShelter(item: string) {
-    await AsyncStorage.setItem('shelter', JSON.stringify(item));
-  }
+export const SelectShelter: FC<ShelterTypeProps> = props => {
+  const { shelters, updateCurrentShelter } = props;
+
   return (
     <SelectDropdown
       data={shelters}
-      onSelect={(selectedItem, index) => {
-        saveShelter(selectedItem);
-      }}
+      onSelect={updateCurrentShelter}
       buttonTextAfterSelection={(selectedItem, index) => {
         return selectedItem;
       }}
