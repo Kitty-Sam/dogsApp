@@ -1,18 +1,27 @@
-import { Platform, StyleSheet, ViewStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
-export type ModalInsideContainerStyleType = {
-  customTextInputContainer: ViewStyle;
-};
-
-const ios = Platform.OS === 'ios';
-
-export const styles = StyleSheet.create<ModalInsideContainerStyleType>({
-  customTextInputContainer: {
-    borderColor: 'grey',
-    margin: 8,
-    borderWidth: 2,
-    width: '80%',
+export default StyleSheet.create({
+  wrapper: {
+    height: 40,
+    borderWidth: 1,
     borderRadius: 10,
-    padding: ios ? 10 : 8,
+    paddingHorizontal: 10,
+  },
+
+  inputContainer: {
+    paddingVertical: 10,
+  },
+
+  textInput: {
+    flex: 1,
+    width: '100%',
+    textAlign: 'center',
+  },
+
+  error: {
+    color: COLORS.background.dark_brown,
+    paddingTop: 4,
+    fontSize: 12,
   },
 });

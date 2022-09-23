@@ -1,11 +1,3 @@
-/*
-export const enum MainNavigationName {
-  TAB_BOTTOM = 'TabBottom',
-  ERROR = 'Error',
-  DRAWER = 'Drawer',
-}
-*/
-
 export const enum TabBottomNavigationName {
   SHOPS = 'Shops',
   CLINICS = 'Clinics',
@@ -13,19 +5,30 @@ export const enum TabBottomNavigationName {
 }
 
 export const enum MessagesNavigationName {
-  MESSAGES = 'Messages',
+  MESSAGES = 'Message',
   CHAT = 'Chat',
 }
 
+export const enum AdoptionNavigationName {
+  ADOPTION = 'Adoption Pet',
+  PET_UNITE = 'Pet',
+  FAVORITE = 'Favorite',
+}
+
 export const enum DrawerNavigationName {
+  ADOPTION_STACK = 'Adoption',
+  DONATION = 'Donation',
+  ADD_PET = 'Add pet',
   PROFILE = 'Profile',
-  MESSAGE_STACK = 'Message',
-  FRIENDS = 'Friends',
-  USEFUL_STACK = 'Helpful advice',
+  MESSAGE_STACK = 'Messages',
+  FAVORITE = 'Favorite',
+  USEFUL_STACK = 'Services',
   CALENDAR = 'Calendar',
 }
 
 export const enum AuthNavigationName {
+  WELCOME = 'Welcome',
   LOGIN = 'Login',
   REGISTER = 'Register',
+  FORGOT_PASSWORD = 'Forgot password',
 }

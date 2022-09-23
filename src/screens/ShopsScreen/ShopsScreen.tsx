@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,45 +7,24 @@ import { getShops } from '../../store/selectors/shopSelector';
 import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
 import { stylesCommon } from '../MastersScreen/style';
-import { getCurrentUserId } from '../../store/selectors/loginSelector';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { database } from '../../utils/getDataBaseURL';
-import { fetchShopsAC } from '../../store/actions/shopAC';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 
-const img = 'https://dogbizsuccess.com/wp-content/uploads/article-the-professional-bio-300x300.jpg';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_cat_fat.jpeg');
 
 export const ShopsScreen = memo(() => {
   const shops = useSelector(getShops);
   const statusApp = useSelector(getAppStatus);
 
-  const currentUserId = useSelector(getCurrentUserId);
-
   const dispatch = useDispatch();
 
-  const getUsefulInfo = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    const referenceShops: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/shops`);
-    const snapshotShops: FirebaseDatabaseTypes.DataSnapshot = await referenceShops.once('value');
-    if (snapshotShops.val()) {
-      const values = snapshotShops.val();
-      const shops: ItemType[] = Object.values(values);
-      dispatch(fetchShopsAC(shops));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    } else {
-      const emptyArray: any[] = [];
-      dispatch(fetchShopsAC(emptyArray));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    }
-  };
   useEffect(() => {
-    getUsefulInfo();
-    console.log('Render');
+    dispatch(fetchServicesAction({ chapter: chaptersName.SHOP }));
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
@@ -55,38 +34,25 @@ export const ShopsScreen = memo(() => {
 
   if (!shops.length) {
     return (
-      <View style={stylesCommon.emptyContainer}>
-        <View style={stylesCommon.addSectionContainer}>
-          <AddSection chapter={chaptersName.SHOP} />
-        </View>
-        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
-        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
-      </View>
+      <ImageBackground source={img} style={stylesCommon.emptyContainer}>
+        <Text style={{ color: COLORS.text.dark_blue }}>Add shop</Text>
+        <AddSection chapter={chaptersName.SHOP} />
+      </ImageBackground>
     );
   }
   return (
-    <ScrollView style={stylesCommon.rootContainer}>
+    <SafeAreaView style={stylesCommon.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
-        <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-          <ActivityIndicator />
-        </View>
+        <ActivityIndicator />
       ) : (
         <>
-          <Text style={stylesCommon.headerText}>Shops</Text>
-          <View style={stylesCommon.textSectionContainer}>
-            <Icon name={iconsName.ALERT_OUTLINE} size={36} />
-            <Text style={stylesCommon.textSectionContainer}>
-              Add here your favorite shop with a big amount of discounts.
-            </Text>
-          </View>
+          <HeaderTextItem>Shops</HeaderTextItem>
           <View style={stylesCommon.addSectionContainer}>
             <AddSection chapter={chaptersName.SHOP} />
           </View>
-          <View style={styles.chapterContainer}>
-            <FlatList data={shops} renderItem={renderItem} horizontal />
-          </View>
+          <FlatList data={shops} renderItem={renderItem} horizontal contentContainerStyle={styles.chapterContainer} />
         </>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 });

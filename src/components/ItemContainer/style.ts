@@ -1,4 +1,6 @@
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
+import { screenWidth } from '../../consts/consts';
 
 export type ItemContainerStyleType = {
   itemContainer: ViewStyle;
@@ -9,24 +11,25 @@ export type ItemContainerStyleType = {
 
 export const styles = StyleSheet.create<ItemContainerStyleType>({
   itemContainer: {
-    borderColor: 'grey',
+    borderColor: COLORS.text.dark_blue,
     borderWidth: 2,
     marginHorizontal: 16,
     marginVertical: 4,
     padding: 16,
     borderRadius: 10,
-    width: 300,
-    height: 300,
+    width: screenWidth * 0.7,
+    height: screenWidth * 0.7,
   },
   text: {
-    borderBottomColor: 'grey',
+    borderBottomColor: COLORS.text.dark_blue,
     borderBottomWidth: 1,
     margin: 4,
     fontSize: 24,
+    color: COLORS.text.dark_blue,
   },
   imageContainer: {
-    width: 150,
-    height: 150,
+    width: screenWidth * 0.25,
+    height: screenWidth * 0.25,
     borderRadius: 10,
     position: 'absolute',
     bottom: 16,

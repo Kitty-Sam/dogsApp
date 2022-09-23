@@ -1,4 +1,5 @@
 import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type ChatItemStyleType = {
   chatItemContainer: ViewStyle;
@@ -7,7 +8,7 @@ export type ChatItemStyleType = {
 
 export const styles = StyleSheet.create<ChatItemStyleType>({
   chatItemContainer: {
-    borderColor: 'black',
+    borderColor: COLORS.text.black,
     borderWidth: 2,
     marginHorizontal: 16,
     marginVertical: 4,

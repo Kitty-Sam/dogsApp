@@ -1,4 +1,5 @@
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type MastersScreenStyleType = {
   chapterContainer: ViewStyle;
@@ -9,18 +10,16 @@ export type CommonScreenStyleType = {
   textSectionContainer: ViewStyle;
   text: TextStyle;
   textArticle: TextStyle;
-  headerText: TextStyle;
   rootContainer: ViewStyle;
   emptyContainer: ViewStyle;
   emptyImageContainer: ImageStyle;
-  emptyText: TextStyle;
 };
 export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
   addSectionContainer: {
-    width: 50,
+    width: 60,
     height: 50,
     position: 'absolute',
-    right: 16,
+    right: 8,
     top: 8,
   },
   textSectionContainer: {
@@ -29,19 +28,16 @@ export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
   text: {
     width: 200,
     textAlign: 'justify',
+    color: COLORS.text.dark_blue,
   },
   textArticle: {
     textAlign: 'justify',
   },
-
-  headerText: {
-    margin: 16,
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
   rootContainer: {
-    // flex: 1,
-    margin: 16,
+    marginVertical: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
   emptyContainer: {
     flex: 1,
@@ -53,9 +49,6 @@ export const stylesCommon = StyleSheet.create<CommonScreenStyleType>({
     height: 300,
     margin: 20,
     borderRadius: 20,
-  },
-  emptyText: {
-    fontSize: 14,
   },
 });
 

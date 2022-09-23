@@ -1,75 +1,81 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
-import { useNavigation } from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { AuthNavigationName } from '../../enum/navigation';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { AppButton } from '../../components/Button/AppButton';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { buttonsName } from '../../enum/buttonsName';
 import { styles } from './style';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
+import { RegisterScreenProps } from './type';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { useInput } from '../../hooks/useInput';
+import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegister';
+import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
+import { Icon } from '../../components/Icon/Icon';
 
-export const RegisterScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_dog_thin.jpeg');
 
-  const navigation = useNavigation();
+export const RegisterScreen: FC<RegisterScreenProps> = props => {
+  const { navigation } = props;
+
+  const userEmail = useInput('');
+  const userPassword = useInput('');
+  const userName = useInput('');
+
   const dispatch = useDispatch();
   const statusApp = useSelector(getAppStatus);
 
-  const registerPress = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      navigation.navigate(AuthNavigationName.LOGIN, { name: name });
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    } catch (error: any) {
-      Alert.alert(error.message);
-      dispatch(toggleAppStatus(requestStatus.FAILED));
-    }
+  const registerPress = () => {
+    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
   };
 
+  const openLoginScreen = () => {
+    navigation.navigate(AuthNavigationName.LOGIN);
+  };
+  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
+
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <ImageBackground source={img} style={styles.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
-        <View style={styles.rootContainer}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate(AuthNavigationName.LOGIN)}
-            activeOpacity={0.4}
-            style={styles.loginText}
-          >
-            <Text style={{ color: 'grey' }}>Try sign in</Text>
-          </TouchableOpacity>
-          <TextInput
-            placeholder={inputsPlaceholdersName.NICK_NAME}
-            value={name}
-            onChangeText={text => setName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder={inputsPlaceholdersName.EMAIL}
-            value={email}
-            onChangeText={text => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
+        <View style={styles.inputsContainer}>
+          <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />
+          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} {...userEmail} contextMenuHidden={true} />
+          <CustomTextInput
             placeholder={inputsPlaceholdersName.PASSWORD}
-            value={password}
-            onChangeText={text => setPassword(text)}
-            style={styles.input}
-            // secureTextEntry
+            {...userPassword}
+            contextMenuHidden={true}
+            iconPosition="right"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry(prev => !prev);
+                }}
+              >
+                <Text>
+                  {isSecureEntry ? (
+                    <Icon type={'ionicon'} name={'eye'} size={16} color={COLORS.text.grey} />
+                  ) : (
+                    <Icon type={'ionicon'} name={'eye-off'} size={16} color={COLORS.text.grey} />
+                  )}
+                </Text>
+              </TouchableOpacity>
+            }
           />
-          <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={'brown'} />
+          <View style={styles.buttonsContainer}>
+            <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />
+            <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
+              <TextItemThin>Try sign in</TextItemThin>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
-    </SafeAreaView>
+    </ImageBackground>
   );
 };

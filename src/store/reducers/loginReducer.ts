@@ -1,4 +1,4 @@
-import { LoginActions, saveCurrentUserAC, toggleIsLoggedAC } from '../actions/loginAC';
+import { LoginActions, saveCurrentUserAC, saveLoginErrorAC, toggleIsLoggedAC } from '../actions/loginAC';
 
 const initialState: initialStateType = {
   isLogged: false,
@@ -7,7 +7,9 @@ const initialState: initialStateType = {
     currentUserName: '',
     currentUserPhoto: '',
     currentUserEmail: '',
+    currentUserPhone: '',
   },
+  error: null,
 };
 
 type initialStateType = {
@@ -17,10 +19,15 @@ type initialStateType = {
     currentUserName: string;
     currentUserPhoto: string;
     currentUserEmail: string;
+    currentUserPhone: string;
   };
+  error: null | string;
 };
 
-type ActionsType = ReturnType<typeof saveCurrentUserAC> | ReturnType<typeof toggleIsLoggedAC>;
+type ActionsType =
+  | ReturnType<typeof saveCurrentUserAC>
+  | ReturnType<typeof toggleIsLoggedAC>
+  | ReturnType<typeof saveLoginErrorAC>;
 
 export const loginReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -36,6 +43,13 @@ export const loginReducer = (state = initialState, action: ActionsType) => {
       return {
         ...state,
         user: action.payload.user,
+      };
+    }
+
+    case LoginActions.SAVE_ERROR: {
+      return {
+        ...state,
+        error: action.payload.error,
       };
     }
 
