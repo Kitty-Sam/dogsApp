@@ -1,119 +1,97 @@
-import React, { useState } from 'react';
-import { ActivityIndicator, Alert, SafeAreaView, TextInput, View } from 'react-native';
-import { saveCurrentUserAC, toggleIsLoggedAC } from '../../store/actions/loginAC';
+import React, { FC, useState } from 'react';
+import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { database } from '../../utils/getDataBaseURL';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { signInWithEmailAndPassword } from '@firebase/auth';
-import { useNavigation } from '@react-navigation/native';
 import { AuthNavigationName } from '../../enum/navigation';
-import { auth } from '../../../firebase';
-import { AppButton } from '../../components/Button/CustomSquareButton';
+import { AppButton } from '../../components/Button/AppButton';
 import { styles } from './style';
 import { buttonsName } from '../../enum/buttonsName';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { COLORS } from '../../colors/colors';
+import { LoginScreenProps } from './type';
+import { useInput } from '../../hooks/useInput';
+import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
+import { Icon } from '../../components/Icon/Icon';
+import { iconsName } from '../../enum/iconsName';
+import { getLoginError } from '../../store/selectors/loginSelector';
 
-const imgForRedux = 'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_dog_fat.jpeg');
 
-export const LoginScreen = (props: any) => {
-  const { route } = props;
+export const LoginScreen: FC<LoginScreenProps> = props => {
+  const { navigation } = props;
+  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
 
-  const [userEmail, setUserEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigation = useNavigation();
+  const userEmail = useInput('');
+  const userPassword = useInput('');
+
   const dispatch = useDispatch();
 
   const statusApp = useSelector(getAppStatus);
 
-  const signIn = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, userEmail, password);
-      const { uid, email } = userCredential.user;
-
-      const reference: FirebaseDatabaseTypes.Reference = await database.ref(`/users/`);
-      const snapshot: FirebaseDatabaseTypes.DataSnapshot = await reference.once('value');
-
-      if (snapshot.val()) {
-        const values = snapshot.val();
-        const users: any[] = Object.values(values);
-        const currentUserInFb = users.find(el => el.userId === uid);
-
-        if (currentUserInFb) {
-          dispatch(
-            saveCurrentUserAC({
-              user: {
-                currentUserId: uid,
-                currentUserName: currentUserInFb.userName,
-                currentUserPhoto: imgForRedux,
-                currentUserEmail: email!,
-              },
-            }),
-          );
-        }
-
-        if (!currentUserInFb) {
-          await database
-            .ref('/users/')
-            .child(`${uid}`)
-            .set({ userName: route.params.name, userEmail: email, userId: uid, photo: imgForRedux });
-
-          dispatch(
-            saveCurrentUserAC({
-              user: {
-                currentUserId: uid,
-                currentUserName: route.params.name,
-                currentUserPhoto: imgForRedux,
-                currentUserEmail: email!,
-              },
-            }),
-          );
-        }
-      }
-      setUserEmail('');
-      setPassword('');
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-      dispatch(toggleIsLoggedAC({ isLogged: true }));
-    } catch (error: any) {
-      const errorMessage = error.message;
-      Alert.alert('register at first', errorMessage);
-      dispatch(toggleAppStatus(requestStatus.FAILED));
-      navigation.navigate(AuthNavigationName.REGISTER);
-    }
+  const signIn = () => {
+    dispatch(googleSignInAction({ navigation, userPassword, userEmail }));
   };
 
   const openRegisterScreen = () => {
     navigation.navigate(AuthNavigationName.REGISTER);
   };
 
+  const error = useSelector(getLoginError);
+
   return (
-    <SafeAreaView style={styles.rootContainer}>
+    <ImageBackground source={img} style={styles.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
-        <View>
-          <TextInput
-            style={styles.input}
+        <View style={styles.inputsContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
+            <TextItemThin>Forgot password?</TextItemThin>
+          </TouchableOpacity>
+
+          <CustomTextInput
             placeholder={inputsPlaceholdersName.EMAIL}
-            value={userEmail}
-            onChangeText={text => setUserEmail(text)}
+            contextMenuHidden={true}
+            {...userEmail}
+            error={error}
           />
-          <TextInput
-            style={styles.input}
+
+          <CustomTextInput
+            error={error}
             placeholder={inputsPlaceholdersName.PASSWORD}
-            value={password}
-            onChangeText={text => setPassword(text)}
-            // secureTextEntry
+            {...userPassword}
+            iconPosition="right"
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => {
+                  setIsSecureEntry(prev => !prev);
+                }}
+              >
+                <Text>
+                  {isSecureEntry ? (
+                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
+                  ) : (
+                    <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
+                  )}
+                </Text>
+              </TouchableOpacity>
+            }
           />
+
           <View style={styles.buttonsContainer}>
-            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={'orange'} />
-            <AppButton onPress={openRegisterScreen} title={buttonsName.REGISTER} backgroundColor={'brown'} />
+            <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />
+            <AppButton
+              onPress={openRegisterScreen}
+              title={buttonsName.REGISTER}
+              backgroundColor={COLORS.buttons.brown}
+            />
           </View>
         </View>
       )}
-    </SafeAreaView>
+    </ImageBackground>
   );
 };

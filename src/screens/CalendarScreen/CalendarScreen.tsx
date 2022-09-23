@@ -8,9 +8,12 @@ import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
 import { styles } from './style';
-import { ModalAddNewNote } from '../../components/Modals/ModalAddNewNote';
-import { ModalDialog } from '../../components/Modals/ModalDialog';
+import { ModalAddNewNote } from '../../components/Modals/ModalAddNewNote/ModalAddNewNote';
+import { ModalDialog } from '../../components/Modals/ModalDialog/ModalDialog';
 import { cutDate } from '../../utils/cutDate';
+import { COLORS } from '../../colors/colors';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { DayItemType } from './type';
 
 const date = new Date().toISOString().split('T')[0];
 
@@ -23,7 +26,7 @@ export const CalendarScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [title, setTitle] = useState('');
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<DayItemType[]>([]);
   const [markedDays, setMarkedDays] = useState({});
 
   const getData = async () => {
@@ -38,13 +41,13 @@ export const CalendarScreen = () => {
       const data = Object.keys(snapshotAll.val());
       const markedDays = {};
       data.map(item => {
+        // @ts-ignore
         markedDays[item] = {
           selected: true,
           marked: true,
-          selectedColor: 'brown',
+          selectedColor: COLORS.buttons.brown,
         };
       });
-      console.log('markedDays', markedDays);
       setMarkedDays(markedDays);
     }
 
@@ -56,7 +59,7 @@ export const CalendarScreen = () => {
 
       if (snapshot.val()) {
         const values = snapshot.val();
-        const data: any = Object.values(values);
+        const data: DayItemType[] = Object.values(values);
         setItems(data);
       } else {
         setItems([]);
@@ -67,7 +70,7 @@ export const CalendarScreen = () => {
 
       if (snapshot.val()) {
         const values = snapshot.val();
-        const data: any = Object.values(values);
+        const data: DayItemType[] = Object.values(values);
         setItems(data);
       } else {
         setItems([]);
@@ -91,7 +94,7 @@ export const CalendarScreen = () => {
       .child('notes/')
       .child(`${pinnedDay}`)
       .child(`${taskId}`)
-      .set({ name: title, height: 20, date: pinnedDay, id: taskId });
+      .set({ name: title, date: pinnedDay, id: taskId });
     dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     getData();
     setTitle('');
@@ -102,21 +105,8 @@ export const CalendarScreen = () => {
     await database.ref(`/users/${currentUserId}/notes`).child(`${pinnedDay}`).child(`${id}`).remove();
   };
 
-  if (isOpen) {
-    return (
-      <ModalAddNewNote
-        isOpen={isOpen}
-        setTitle={setTitle}
-        setIsOpen={setIsOpen}
-        title={title}
-        pinnedDay={pinnedDay}
-        savePress={savePress}
-      />
-    );
-  }
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.rootContainer}>
       <Calendar
         onDayPress={e => {
           setPinnedDay(e.dateString);
@@ -125,26 +115,16 @@ export const CalendarScreen = () => {
         showSixWeeks={true}
         markedDates={markedDays}
       />
-      <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={[styles.titleText, { fontStyle: 'italic' }]}>Daily tasks</Text>
-      </View>
-      {items.length ? (
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Text
-            style={{
-              marginHorizontal: 18,
-              fontSize: 28,
-              borderRadius: 10,
-              borderColor: 'grey',
-              borderWidth: 1,
-              padding: 4,
-            }}
-          >
-            {cutDate(pinnedDay)}
-          </Text>
 
+      <View style={styles.headerContainer}>
+        <TextItemThin>Daily tasks</TextItemThin>
+      </View>
+
+      {items.length ? (
+        <View style={styles.agenda}>
+          <Text style={styles.dateTextContainer}>{cutDate(pinnedDay)}</Text>
           <View style={styles.tasksContainer}>
-            {items.map((el, i): any => (
+            {items.map((el, i) => (
               <TouchableOpacity key={i} style={styles.itemContainer}>
                 <Text
                   style={styles.closeText}
@@ -155,17 +135,15 @@ export const CalendarScreen = () => {
                 >
                   X
                 </Text>
-                <Text style={styles.titleText}>{el.name}</Text>
+                <TextItemThin style={styles.textNote}>{el.name}</TextItemThin>
               </TouchableOpacity>
             ))}
           </View>
         </View>
       ) : (
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={{ margin: 20, fontSize: 28, borderRadius: 10, borderColor: 'grey', borderWidth: 1, padding: 4 }}>
-            {cutDate(pinnedDay)}
-          </Text>
-          <Text style={[styles.titleText, { color: 'grey' }]}>... free day</Text>
+        <View style={styles.noteContainer}>
+          <TextItemThin style={styles.dateText}>{cutDate(pinnedDay)}</TextItemThin>
+          <TextItemThin>... free day</TextItemThin>
         </View>
       )}
 
@@ -175,6 +153,14 @@ export const CalendarScreen = () => {
         pinnedDay={pinnedDay}
         setIsOpen={setIsOpen}
         getData={getData}
+      />
+      <ModalAddNewNote
+        isOpen={isOpen}
+        setTitle={setTitle}
+        setIsOpen={setIsOpen}
+        title={title}
+        pinnedDay={pinnedDay}
+        savePress={savePress}
       />
     </SafeAreaView>
   );

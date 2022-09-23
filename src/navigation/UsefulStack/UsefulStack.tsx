@@ -7,12 +7,21 @@ import { MastersScreen } from '../../screens/MastersScreen/MastersScreen';
 import { TabBottomNavigationName } from '../../enum/navigation';
 import { UsefulStackParamList } from './type';
 import { iconsName } from '../../enum/iconsName';
+import { COLORS } from '../../colors/colors';
 
 const Tab = createBottomTabNavigator<UsefulStackParamList>();
 
 export const UsefulBottomStack = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: COLORS.text.dark_blue,
+        tabBarStyle: {
+          backgroundColor: COLORS.buttons.peach,
+        },
+      }}
+    >
       <Tab.Screen
         name={TabBottomNavigationName.SHOPS}
         component={ShopsScreen}

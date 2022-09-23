@@ -6,9 +6,11 @@ install! 'cocoapods', :deterministic_uuids => false
 
 target 'healthApp' do
   config = use_native_modules!
+#   use_frameworks! :linkage => :static
+#     use_modular_headers!
 
   # Flags change depending on the env values.
-  flags = get_default_flags()
+    flags = get_default_flags()
 
         pod 'Firebase', :modular_headers => true
         pod 'FirebaseCore', :modular_headers => true
@@ -38,8 +40,9 @@ target 'healthApp' do
 post_install do |installer|
   react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
-  installer.pods_project.build_configurations.each do |config|
+    installer.pods_project.build_configurations.each do |config|
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
+    config.build_settings["ONLY_ACTIVE_ARCH"] = "YES"
     end
   end
 end

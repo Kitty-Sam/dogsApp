@@ -1,4 +1,6 @@
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, Platform, StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
+import { screenWidth } from '../../consts/consts';
 
 export type AddSectionStyleType = {
   modalContainer: ViewStyle;
@@ -6,14 +8,17 @@ export type AddSectionStyleType = {
   closeIcon: ViewStyle;
   imageContainer: ImageStyle;
   chapterText: TextStyle;
+  input: TextStyle;
   modalCommonContainer: ViewStyle;
   modalInputBlock: ViewStyle;
 };
 
+const ios = Platform.OS === 'ios';
+
 export const styles = StyleSheet.create<AddSectionStyleType>({
   modalContainer: {
-    borderColor: 'grey',
-    borderWidth: 2,
+    borderColor: COLORS.text.dark_blue,
+    borderWidth: 1,
     marginHorizontal: 20,
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -30,6 +35,7 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     right: 16,
     top: 8,
     zIndex: 10,
+    color: COLORS.text.dark_blue,
   },
   imageContainer: {
     width: 200,
@@ -37,12 +43,11 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     borderRadius: 20,
   },
   chapterText: {
+    color: COLORS.text.dark_blue,
     textAlign: 'left',
-    marginHorizontal: 18,
+    margin: 18,
     marginTop: 8,
-    fontSize: 24,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+    fontSize: 18,
     textTransform: 'capitalize',
   },
   modalCommonContainer: {
@@ -51,10 +56,19 @@ export const styles = StyleSheet.create<AddSectionStyleType>({
     flex: 1,
   },
   modalInputBlock: {
-    width: 300,
-    height: 200,
+    width: screenWidth * 0.8,
+    height: screenWidth * 0.6,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
+    color: COLORS.text.dark_blue,
+  },
+  input: {
+    borderColor: COLORS.text.dark_blue,
+    margin: 8,
+    borderWidth: 1,
+    width: '80%',
+    borderRadius: 10,
+    padding: ios ? 10 : 8,
   },
 });

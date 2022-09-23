@@ -1,23 +1,27 @@
 import { ImageStyle, StyleSheet, TextStyle } from 'react-native';
+import { COLORS } from '../../colors/colors';
 
 export type CustomDrawerStyleType = {
   avatarContainer: ImageStyle;
-  userNameText: TextStyle;
+  userNameTextContainer: TextStyle;
   logOutText: TextStyle;
 };
 
 export const styles = StyleSheet.create<CustomDrawerStyleType>({
   avatarContainer: {
-    height: 80,
-    width: 80,
+    height: 70,
+    width: 70,
     borderRadius: 20,
     margin: 16,
+    borderWidth: 1,
+    borderColor: COLORS.text.dark_blue,
   },
-  userNameText: {
-    marginHorizontal: 16,
-    marginBottom: 60,
+  userNameTextContainer: {
+    marginVertical: 60,
+    marginTop: 50,
   },
   logOutText: {
+    flexDirection: 'row',
     margin: 24,
   },
 });

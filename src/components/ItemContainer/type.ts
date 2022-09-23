@@ -6,5 +6,3 @@ export type ItemType = {
   info: string;
   chapter: chaptersName;
 };
-
-// export type ItemTypeCommon = ItemType & {chapter: string};

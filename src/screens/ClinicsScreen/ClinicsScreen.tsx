@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,45 +8,23 @@ import { ItemType } from '../../components/ItemContainer/type';
 import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
 import { styles } from './style';
 import { stylesCommon } from '../MastersScreen/style';
-import { getCurrentUserId } from '../../store/selectors/loginSelector';
-import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
-import { database } from '../../utils/getDataBaseURL';
-import { fetchClinicsAC } from '../../store/actions/clinicAC';
 import { getAppStatus } from '../../store/selectors/appSelector';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
+import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 
-const img =
-  'https://media.istockphoto.com/photos/office-worker-boss-dog-picture-id1150752409?k=20&m=1150752409&s=612x612&w=0&h=XGjpxvih3cxFDCgeHU86sw8Fkc07_YImun4IfKCbf0Y=';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const img = require('../../assets/white_buldog.jpeg');
 
 export const ClinicsScreen = memo(() => {
   const clinics = useSelector(getClinics);
-
-  const currentUserId = useSelector(getCurrentUserId);
   const statusApp = useSelector(getAppStatus);
 
   const dispatch = useDispatch();
 
-  const getUsefulInfo = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-
-    const referenceClinics: FirebaseDatabaseTypes.Reference = await database.ref(`/users/${currentUserId}/clinics`);
-    const snapshotClinics: FirebaseDatabaseTypes.DataSnapshot = await referenceClinics.once('value');
-
-    if (snapshotClinics.val()) {
-      const values = snapshotClinics.val();
-      const clinics: any = Object.values(values);
-      dispatch(fetchClinicsAC(clinics));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    } else {
-      const emptyArray: any[] = [];
-      dispatch(fetchClinicsAC(emptyArray));
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    }
-  };
-
   useEffect(() => {
-    getUsefulInfo();
+    dispatch(fetchServicesAction({ chapter: chaptersName.CLINIC }));
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
@@ -56,37 +34,37 @@ export const ClinicsScreen = memo(() => {
 
   if (!clinics.length) {
     return (
-      <View style={stylesCommon.emptyContainer}>
-        <View style={stylesCommon.addSectionContainer}>
-          <AddSection chapter={chaptersName.CLINIC} />
-        </View>
-        <Image source={{ uri: img }} style={stylesCommon.emptyImageContainer} />
-        <Text style={stylesCommon.emptyText}>You can be the first!</Text>
-      </View>
+      <ImageBackground source={img} style={stylesCommon.emptyContainer}>
+        <TextItemThin>Add clinic</TextItemThin>
+        <AddSection chapter={chaptersName.CLINIC} />
+      </ImageBackground>
     );
   }
   return (
-    <ScrollView style={stylesCommon.rootContainer}>
+    <SafeAreaView style={stylesCommon.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
         <>
-          <Text style={stylesCommon.headerText}>Clinics</Text>
-          <Text style={stylesCommon.headerText}>Lime disease</Text>
-          <Text style={stylesCommon.textArticle}>
+          <HeaderTextItem>Clinics</HeaderTextItem>
+          <HeaderTextItem>Lime disease</HeaderTextItem>
+          <TextItemThin style={styles.text}>
             Treatment for Lyme disease in dogs usually involves a course of antibiotics which will last for 4 weeks or
             longer (the antibiotic Doxycycline is typically a first-choice option). If your pooch seems to be
             experiencing a lot of pain, your vet may also prescribe anti-inflammatory medication to help alleviate joint
             pain.
-          </Text>
+          </TextItemThin>
           <View style={stylesCommon.addSectionContainer}>
             <AddSection chapter={chaptersName.CLINIC} />
           </View>
-          <View style={styles.chapterContainer}>
-            <FlatList data={clinics} renderItem={renderItem} horizontal />
-          </View>
+          <FlatList
+            data={clinics}
+            renderItem={renderItem}
+            horizontal={false}
+            contentContainerStyle={styles.chapterContainer}
+          />
         </>
       )}
-    </ScrollView>
+    </SafeAreaView>
   );
 });

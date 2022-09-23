@@ -1,30 +1,25 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
+import { screenWidth } from '../../consts/consts';
 
 export type LoginScreenStyleType = {
-  rootContainer: ViewStyle;
-  input: TextStyle;
+  rootContainer: ImageStyle;
   buttonsContainer: ViewStyle;
+  inputsContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<LoginScreenStyleType>({
   rootContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10,
-    marginTop: 100,
-  },
-  input: {
-    padding: 8,
-    width: 200,
-    borderRadius: 10,
-    borderColor: 'grey',
-    borderWidth: 2,
-    textAlign: 'center',
-    marginVertical: 10,
+    height: '100%',
+    width: screenWidth,
+    position: 'relative',
   },
   buttonsContainer: {
     flexDirection: 'row',
     width: 200,
     justifyContent: 'space-between',
+  },
+  inputsContainer: {
+    position: 'absolute',
+    top: 250,
+    left: 100,
   },
 });
