@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Image, SafeAreaView, View } from 'react-native';
+import { ActivityIndicator, Image, Modal, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AdoptionNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
@@ -18,6 +18,8 @@ import { getFavoritesIds } from '../../store/selectors/userSelector';
 import { callOwnerAction } from '../../store/sagas/sagaActions/callOwner';
 import { PetUniteScreenProps } from './type';
 import { selectItem } from '../../utils/selectItem';
+import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
+import { ScrollView } from 'native-base';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
@@ -61,6 +63,14 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
     }
   }, [!isFavorite]);
 
+  const [image, setImage] = useState<string>('');
+  const [storeImages, setStoreImages] = useState<string[]>([]);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const openGallery = () => {
+    setIsVisible(prev => true);
+  };
+
   return (
     <SafeAreaView style={styles.rootContainer}>
       <View style={styles.adoptionButtonContainer}>
@@ -71,8 +81,31 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
         />
       </View>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: photo }} style={styles.image} />
+        <TouchableOpacity onPress={openGallery}>
+          <Image source={{ uri: image ? image : photo }} style={styles.image} />
+        </TouchableOpacity>
+        <LoadImagePickerButton
+          setImage={setImage}
+          setStoreImages={setStoreImages}
+          currentUserId={currentUserId}
+          screen={'Animals'}
+        />
       </View>
+
+      <Modal visible={isVisible}>
+        <SafeAreaView style={{ justifyContent: 'center', alignItems: 'center' }}>
+          {!storeImages ? (
+            <ActivityIndicator />
+          ) : (
+            <ScrollView horizontal={true}>
+              {storeImages.map(el => (
+                <Image source={{ uri: el }} style={{ width: 200, height: 200, margin: 16 }} key={el + Date.now()} />
+              ))}
+            </ScrollView>
+          )}
+          <AppButton onPress={() => setIsVisible(false)} title={'Close'} />
+        </SafeAreaView>
+      </Modal>
 
       <View style={styles.informativeBlock}>
         <View style={styles.textContainer}>

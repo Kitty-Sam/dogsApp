@@ -1,9 +1,8 @@
 import React, { FC, useEffect, useLayoutEffect, useState } from 'react';
-import { Button, ImageBackground, Platform, SafeAreaView, Switch, TextInput, View } from 'react-native';
-import { ImagePickerCrop } from '../../components/ImagePicker/ImagePickerCrop';
+import { ImageBackground, SafeAreaView, TextInput, View } from 'react-native';
 import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentUserId, getCurrentUserName, getCurrentUserPhoto } from '../../store/selectors/loginSelector';
+import { getCurrentUserId, getCurrentUserName } from '../../store/selectors/loginSelector';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { iconsName } from '../../enum/iconsName';
 import { ProfileScreenProps } from './type';
@@ -18,7 +17,7 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { TextItemBold } from '../../components/Text/TextItemBold/TextItemBold';
 import { useInput } from '../../hooks/useInput';
 import { getPersonalInfo } from '../../store/selectors/userSelector';
-import { toast } from '../../utils/toast';
+import { UploadImage } from '../../components/UploadImage/UploadImage';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -59,9 +58,6 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
 
   const photoString = String(photo);
 
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-
   const dispatch = useDispatch();
 
   const fetchPersonalInfo = async () => {
@@ -94,7 +90,7 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
     <ImageBackground style={styles.mainContainer} source={img}>
       <SafeAreaView style={styles.rootContainer}>
         <View style={styles.avatarContainer}>
-          <ImagePickerCrop photoString={photoString} sizeH={100} sizeW={100} />
+          <UploadImage avatar={photoString} sizeH={70} sizeW={70} />
           {currentUserName && <TextItemThin style={styles.currentNameText}>{currentUserName}</TextItemThin>}
           <Icon
             name={iconsName.CREATE_OUTLINE}
@@ -155,39 +151,6 @@ export const ProfileScreen: FC<ProfileScreenProps> = props => {
             />
           </View>
         ) : null}
-        <Switch
-          trackColor={{ false: COLORS.text.grey, true: COLORS.text.dark_blue }}
-          thumbColor={isEnabled ? COLORS.buttons.brown : COLORS.buttons.peach}
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-        />
-        {Platform.OS === 'android' && (
-          <Button
-            title="USE NATIVE TOAST"
-            onPress={() => {
-              toast.info({ message: 'Am native lol', useNativeToast: true });
-            }}
-          />
-        )}
-
-        <Button
-          title="SHOW ERROR"
-          onPress={() => {
-            toast.danger({ message: 'An error occurred' });
-          }}
-        />
-        <Button
-          title="SHOW SUCCESS"
-          onPress={() => {
-            toast.success({ message: 'success' });
-          }}
-        />
-        <Button
-          title="SHOW info"
-          onPress={() => {
-            toast.info({ message: 'Button press' });
-          }}
-        />
       </SafeAreaView>
     </ImageBackground>
   );

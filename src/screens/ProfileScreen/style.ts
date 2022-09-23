@@ -36,7 +36,7 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
     alignItems: 'center',
   },
   rootContainer: {
-    margin: 24,
+    margin: 16,
   },
   buttonContainer: {
     width: '40%',

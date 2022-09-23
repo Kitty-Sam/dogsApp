@@ -32,4 +32,6 @@ export const enum iconsName {
   HEART = 'heart',
   HEART_OUTLINE = 'heart-outline',
   LOG_OUT_OUTLINE = 'log-out-outline',
+  EYE = 'eye',
+  EYE_OFF = 'eye-off',
 }
