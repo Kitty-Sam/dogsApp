@@ -3,7 +3,7 @@ import { iconsName } from '../enum/iconsName';
 import { animalsName } from '../enum/animalsName';
 import { COLORS } from '../colors/colors';
 
-export const selectItem = (male: maleName): string => {
+export const selectItem = (male: maleName) => {
   switch (male) {
     case maleName.UNKNOWN:
       return iconsName.UNKNOWN;
@@ -16,7 +16,7 @@ export const selectItem = (male: maleName): string => {
   }
 };
 
-export const selectAnimal = (animal: any) => {
+export const selectAnimal = (animal: animalsName) => {
   switch (animal) {
     case animalsName.DOG:
       return COLORS.buttons.brown;

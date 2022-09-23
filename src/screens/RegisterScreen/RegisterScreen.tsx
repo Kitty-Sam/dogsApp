@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
@@ -41,7 +41,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
   return (
     <ImageBackground source={img} style={styles.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator style={{ zIndex: 10 }} />
+        <ActivityIndicator />
       ) : (
         <View style={styles.inputsContainer}>
           <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />

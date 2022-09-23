@@ -7,6 +7,7 @@ import { getLoginStatus } from './src/store/selectors/loginSelector';
 import { StripeProvider } from '@stripe/stripe-react-native';
 import { fetchPublishAbleKey } from './helpers';
 import { Toast } from './src/components/Toast/Toast';
+import { NativeBaseProvider } from 'native-base';
 
 export const App = () => {
   const isLogged = useSelector(getLoginStatus);
@@ -30,11 +31,11 @@ export const App = () => {
   }, []);
 
   return (
-    <>
+    <NativeBaseProvider>
       <Toast />
       <StripeProvider publishableKey={publishableKey}>
         <NavigationContainer>{isLogged ? <DrawerStack /> : <AuthStack />}</NavigationContainer>
       </StripeProvider>
-    </>
+    </NativeBaseProvider>
   );
 };

@@ -4,7 +4,7 @@ import { toggleAppStatus } from '../../actions/appAC';
 import { requestStatus } from '../../reducers/appReducer';
 import { signInWithEmailAndPassword, UserCredential } from '@firebase/auth';
 import { auth } from '../../../../firebase';
-import { toggleIsLoggedAC } from '../../actions/loginAC';
+import { saveCurrentUserAC, toggleIsLoggedAC } from '../../actions/loginAC';
 import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
 import { GoogleSignInType } from '../sagaActions/googleSignIn';
@@ -24,6 +24,7 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
   } catch (error: any) {
     Alert.alert('register at first or check your credentials again');
     yield put(toggleAppStatus(requestStatus.FAILED));
+    yield put(saveCurrentUserAC(error.message));
     navigation.navigate(AuthNavigationName.REGISTER);
   }
 }

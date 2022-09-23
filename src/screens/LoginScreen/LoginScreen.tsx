@@ -16,12 +16,14 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
+import { getLoginError } from '../../store/selectors/loginSelector';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_fat.jpeg');
 
 export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
+  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
 
   const userEmail = useInput('');
   const userPassword = useInput('');
@@ -37,21 +39,28 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
   const openRegisterScreen = () => {
     navigation.navigate(AuthNavigationName.REGISTER);
   };
-  const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
+
+  const error = useSelector(getLoginError);
 
   return (
     <ImageBackground source={img} style={styles.rootContainer}>
       {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator style={{ zIndex: 10 }} />
+        <ActivityIndicator />
       ) : (
         <View style={styles.inputsContainer}>
           <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
             <TextItemThin>Forgot password?</TextItemThin>
           </TouchableOpacity>
 
-          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...userEmail} />
+          <CustomTextInput
+            placeholder={inputsPlaceholdersName.EMAIL}
+            contextMenuHidden={true}
+            {...userEmail}
+            error={error}
+          />
 
           <CustomTextInput
+            error={error}
             placeholder={inputsPlaceholdersName.PASSWORD}
             {...userPassword}
             iconPosition="right"
@@ -64,9 +73,9 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               >
                 <Text>
                   {isSecureEntry ? (
-                    <Icon type={'ionicon'} name={'eye'} size={16} color={COLORS.text.grey} />
+                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
                   ) : (
-                    <Icon type={'ionicon'} name={'eye-off'} size={16} color={COLORS.text.grey} />
+                    <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
                   )}
                 </Text>
               </TouchableOpacity>
