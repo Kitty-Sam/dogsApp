@@ -109,7 +109,7 @@ export const Toast = () => {
         <Text
           style={{
             padding: 14,
-            color: 'white',
+            color: COLORS.text.dark_blue,
             fontSize: 16,
             textAlign: 'center',
           }}

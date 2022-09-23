@@ -13,10 +13,13 @@ const metadata = {
 };
 
 export type LoadImagePickerButtonType = {
-  setImage: (image: string) => void;
-  setStoreImages: (images: string[]) => void;
+  setImage?: (image: string) => void;
+  setStoreImages?: (images: string[]) => void;
+  nickName?: string;
   currentUserId: string;
   screen: string;
+  isDone?: boolean;
+  setIsDone?: (isDone: boolean) => void;
 };
 
 export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
@@ -24,10 +27,11 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   setStoreImages,
   currentUserId,
   screen,
+  nickName,
+  isDone,
+  setIsDone,
 }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclose();
-
-  console.log('isOpen', isOpen);
 
   const makeImage = async () => {
     try {
@@ -36,7 +40,9 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
         includeBase64: true,
         mediaType: 'photo',
       });
-      setImage(image.path);
+      if (setImage) {
+        setImage(image.path);
+      }
     } catch (error) {
       console.warn(error);
     }
@@ -50,7 +56,10 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
         includeBase64: true,
         mediaType: 'photo',
       });
-      setImage(image.path);
+      if (setImage) {
+        setImage(image.path);
+      }
+
       const imageFileName = getUniqueFileName(image.path);
       if (screen === 'Profile') {
         const referenceAll = storage().ref().child(`${currentUserId}`).child('/avatars').child(`${imageFileName}`);
@@ -62,7 +71,9 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
           task.then(async () => {
             try {
               const images = await getImages('/avatars', currentUserId);
-              setStoreImages(images);
+              if (setStoreImages) {
+                setStoreImages(images);
+              }
             } catch (error) {
               console.log(error);
             }
@@ -76,14 +87,18 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
           .ref()
           .child(`${currentUserId}`)
           .child('/animals')
-          // .child('animalName')
+          .child(`${nickName}`)
           .child(`${imageFileName}`);
         try {
           const task = reference.putFile(image.path, metadata);
           task.then(async () => {
             try {
-              const images = await getImages('/animals', currentUserId);
-              setStoreImages(images);
+              const images = await getImages('/animals', currentUserId, nickName);
+              if (setStoreImages && setIsDone) {
+                setStoreImages(images);
+                setIsDone(true);
+              }
+              setIsDone && setIsDone(true);
             } catch (error) {
               console.log(error);
             }
