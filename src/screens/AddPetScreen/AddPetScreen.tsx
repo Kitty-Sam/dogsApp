@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
@@ -10,8 +10,11 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { useInput } from '../../hooks/useInput';
 import { addNewPetAction } from '../../store/sagas/sagaActions/addNewPet';
 import { animalsName } from '../../enum/animalsName';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { maleName } from '../../enum/maleName';
+import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
+import { toast } from '../../utils/toast';
 
 const animals = [animalsName.DOG, animalsName.CAT];
 const males = [maleName.GIRL, maleName.BOY, maleName.UNKNOWN];
@@ -25,6 +28,8 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const age = useInput('');
   const nickName = useInput('');
   const ownerInfo = useInput('');
+
+  const currentUserId = useSelector(getCurrentUserId);
 
   const [animal, setAnimal] = useState<animalsName | string>('');
   const [male, setMale] = useState<maleName | string>('');
@@ -45,6 +50,14 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
     nickName.resetValue();
     ownerInfo.resetValue();
   };
+
+  const [isDone, setIsDone] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isDone) {
+      toast.success({ message: 'photo is uploaded' });
+    }
+  }, [isDone]);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
@@ -80,21 +93,18 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
           </TouchableOpacity>
         ))}
       </View>
-
       <TextInput
         {...nickName}
         placeholder={inputsPlaceholdersName.PET_NICK_NAME}
         placeholderTextColor={COLORS.text.grey}
         style={styles.input}
       />
-
       <TextInput
         {...age}
         placeholder={inputsPlaceholdersName.PET_AGE}
         placeholderTextColor={COLORS.text.grey}
         style={styles.input}
       />
-
       <TextInput
         {...description}
         placeholder={inputsPlaceholdersName.PET_DESCRIPTION}
@@ -104,7 +114,6 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         maxLength={700}
         editable
       />
-
       <TextInput
         {...ownerInfo}
         placeholder={inputsPlaceholdersName.PET_OWNER_INFO}
@@ -116,11 +125,18 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
           },
         ]}
         editable
-        keyboardType={'name-phone-pad'}
+        textContentType={'telephoneNumber'}
+        keyboardType={'phone-pad'}
         onFocus={() => ownerInfo.onChangeText('+375')}
         onBlur={() => ownerInfo.onChangeText('')}
       />
-
+      <LoadImagePickerButton
+        currentUserId={currentUserId}
+        screen={'Animals'}
+        nickName={nickName.value}
+        isDone={isDone}
+        setIsDone={setIsDone}
+      />
       <View style={styles.buttonsContainer}>
         <AppButton
           disabled={animal === '' || male === ''}
