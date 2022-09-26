@@ -91,7 +91,7 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
           const task = reference.putFile(image.path, metadata);
           task.then(async () => {
             try {
-              const images = await getImages('/animals', currentUserId, nickName);
+              const images = await getImages('/animals', nickName);
               if (setStoreImages && setIsDone) {
                 setStoreImages(images);
                 setIsDone('succeed');
