@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
 import { buttonsName } from '../../enum/buttonsName';
@@ -15,6 +15,7 @@ import { maleName } from '../../enum/maleName';
 import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { toast } from '../../utils/toast';
+import { ScrollView } from 'native-base';
 
 const animals = [animalsName.DOG, animalsName.CAT];
 const males = [maleName.GIRL, maleName.BOY, maleName.UNKNOWN];
@@ -37,7 +38,19 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
 
   const addPet = async () => {
     dispatch(
-      addNewPetAction({ age, animal, male, setMale, setAnimal, description, nickName, navigation, id, ownerInfo }),
+      addNewPetAction({
+        age,
+        animal,
+        male,
+        setMale,
+        setAnimal,
+        description,
+        nickName,
+        navigation,
+        id,
+        ownerInfo,
+        photo: storeImages[0],
+      }),
     );
     clearPet();
   };
@@ -51,10 +64,14 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
     ownerInfo.resetValue();
   };
 
-  const [isDone, setIsDone] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<string>('idle');
+  const [storeImages, setStoreImages] = useState<string[]>([]);
 
   useEffect(() => {
-    if (isDone) {
+    if (isDone === 'isLoading') {
+      toast.info({ message: 'wait a few minutes' });
+    }
+    if (isDone === 'succeed') {
       toast.success({ message: 'photo is uploaded' });
     }
   }, [isDone]);
@@ -125,21 +142,32 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
           },
         ]}
         editable
-        textContentType={'telephoneNumber'}
         keyboardType={'phone-pad'}
-        onFocus={() => ownerInfo.onChangeText('+375')}
-        onBlur={() => ownerInfo.onChangeText('')}
+        // onFocus={() => ownerInfo.onChangeText('+375')}
+        // onBlur={() => ownerInfo.onChangeText('')}
       />
+      <View>
+        {storeImages.length === 0 ? (
+          <TextItemThin>Gallery is empty</TextItemThin>
+        ) : (
+          <ScrollView horizontal={true}>
+            {storeImages.map(el => (
+              <Image source={{ uri: el }} style={{ width: 50, height: 50, margin: 16 }} key={el + Date.now()} />
+            ))}
+          </ScrollView>
+        )}
+      </View>
       <LoadImagePickerButton
         currentUserId={currentUserId}
         screen={'Animals'}
         nickName={nickName.value}
         isDone={isDone}
         setIsDone={setIsDone}
+        setStoreImages={setStoreImages}
       />
       <View style={styles.buttonsContainer}>
         <AppButton
-          disabled={animal === '' || male === ''}
+          disabled={animal === '' || male === '' || ownerInfo.value === '+375' || isDone === 'idle'}
           onPress={addPet}
           title={buttonsName.ADD_PET}
           backgroundColor={COLORS.buttons.peach}

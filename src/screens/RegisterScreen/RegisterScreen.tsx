@@ -15,6 +15,7 @@ import { useInput } from '../../hooks/useInput';
 import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegister';
 import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
+import { iconsName } from '../../enum/iconsName';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -60,9 +61,9 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               >
                 <Text>
                   {isSecureEntry ? (
-                    <Icon type={'ionicon'} name={'eye'} size={16} color={COLORS.text.grey} />
+                    <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
                   ) : (
-                    <Icon type={'ionicon'} name={'eye-off'} size={16} color={COLORS.text.grey} />
+                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
                   )}
                 </Text>
               </TouchableOpacity>

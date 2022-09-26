@@ -16,6 +16,7 @@ export type AddNewPetPayloadType = {
   animal: animalsName | string;
   setMale: (text: string) => void;
   setAnimal: (text: string) => void;
+  photo: string;
 };
 
 export const addNewPetAction = (payload: AddNewPetPayloadType): AddNewPetActionType => ({

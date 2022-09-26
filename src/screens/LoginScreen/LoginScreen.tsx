@@ -73,9 +73,9 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               >
                 <Text>
                   {isSecureEntry ? (
-                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
-                  ) : (
                     <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
+                  ) : (
+                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
                   )}
                 </Text>
               </TouchableOpacity>
