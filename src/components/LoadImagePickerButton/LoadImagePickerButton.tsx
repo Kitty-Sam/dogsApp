@@ -4,9 +4,7 @@ import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { getUniqueFileName } from '../../utils/getUniqName';
 import storage from '@react-native-firebase/storage';
 import { getImages } from '../../utils/getImagesFromStore';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
-import { COLORS } from '../../colors/colors';
+import { AppButton } from '../Button/AppButton';
 
 const metadata = {
   contentType: 'image/jpeg',
@@ -18,8 +16,8 @@ export type LoadImagePickerButtonType = {
   nickName?: string;
   currentUserId: string;
   screen: string;
-  isDone?: boolean;
-  setIsDone?: (isDone: boolean) => void;
+  isDone?: string;
+  setIsDone?: (isDone: string) => void;
 };
 
 export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
@@ -28,7 +26,6 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   currentUserId,
   screen,
   nickName,
-  isDone,
   setIsDone,
 }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclose();
@@ -83,9 +80,10 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
         }
       }
       if (screen === 'Animals') {
+        setIsDone && setIsDone('isLoading');
         const reference = storage()
           .ref()
-          .child(`${currentUserId}`)
+          // .child(`${currentUserId}`)
           .child('/animals')
           .child(`${nickName}`)
           .child(`${imageFileName}`);
@@ -96,9 +94,9 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
               const images = await getImages('/animals', currentUserId, nickName);
               if (setStoreImages && setIsDone) {
                 setStoreImages(images);
-                setIsDone(true);
+                setIsDone('succeed');
               }
-              setIsDone && setIsDone(true);
+              setIsDone && setIsDone('succeed');
             } catch (error) {
               console.log(error);
             }
@@ -113,7 +111,7 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   };
   return (
     <>
-      <Icon name={iconsName.CAMERA} size={24} onPress={onOpen} color={COLORS.text.dark_blue} />
+      <AppButton onPress={onOpen} title={'Add photo'} />
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
           <Actionsheet.Item onPress={makeImage}>Take photo</Actionsheet.Item>

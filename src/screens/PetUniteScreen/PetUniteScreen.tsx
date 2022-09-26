@@ -18,8 +18,10 @@ import { getFavoritesIds } from '../../store/selectors/userSelector';
 import { callOwnerAction } from '../../store/sagas/sagaActions/callOwner';
 import { PetUniteScreenProps } from './type';
 import { selectItem } from '../../utils/selectItem';
-import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { ScrollView } from 'native-base';
+import { screenWidth } from '../../consts/consts';
+import { getImages } from '../../utils/getImagesFromStore';
+import { Gap } from '../../components/Gap/Gap';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
@@ -36,6 +38,11 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
 
   useEffect(() => {
     dispatch(fetchFavoritePetsIdsAction());
+    async function addGalleryPhotos() {
+      const images = await getImages('/animals', nickName);
+      setStoreImages(images);
+    }
+    addGalleryPhotos();
   }, []);
 
   const callNumber = (phone: string) => {
@@ -63,12 +70,16 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
     }
   }, [!isFavorite]);
 
-  const [image, setImage] = useState<string>('');
   const [storeImages, setStoreImages] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const openGallery = () => {
     setIsVisible(prev => true);
+  };
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const onLoading = (value: boolean) => {
+    setLoading(value);
   };
 
   return (
@@ -81,29 +92,56 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
         />
       </View>
       <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={openGallery}>
-          <Image source={{ uri: image ? image : photo }} style={styles.image} />
-        </TouchableOpacity>
-        <LoadImagePickerButton
-          setImage={setImage}
-          setStoreImages={setStoreImages}
-          currentUserId={currentUserId}
-          screen={'Animals'}
-        />
+        {loading && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              alignContent: 'center',
+              width: '100%',
+              position: 'absolute',
+              zIndex: 0,
+              height: 350,
+            }}
+          >
+            <ActivityIndicator color={COLORS.text.dark_blue} />
+          </View>
+        )}
+        {
+          <TouchableOpacity onPress={openGallery}>
+            <Image
+              source={{ uri: photo }}
+              style={styles.image}
+              onLoadEnd={() => onLoading(false)}
+              onLoadStart={() => onLoading(true)}
+            />
+          </TouchableOpacity>
+        }
       </View>
 
       <Modal visible={isVisible}>
-        <SafeAreaView style={{ justifyContent: 'center', alignItems: 'center' }}>
-          {!storeImages ? (
-            <ActivityIndicator />
-          ) : (
-            <ScrollView horizontal={true}>
+        <SafeAreaView style={{ justifyContent: 'center', alignContent: 'center', flex: 1, marginHorizontal: 24 }}>
+          <Gap size={2} />
+          <HeaderTextItem>Gallery</HeaderTextItem>
+          <Gap size={3} />
+          <ScrollView horizontal={true}>
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {storeImages.map(el => (
-                <Image source={{ uri: el }} style={{ width: 200, height: 200, margin: 16 }} key={el + Date.now()} />
+                <Image
+                  source={{ uri: el }}
+                  style={{ width: screenWidth / 3 - 6, height: screenWidth / 2, margin: 2, borderRadius: 10 }}
+                  key={el + Date.now()}
+                />
               ))}
-            </ScrollView>
-          )}
-          <AppButton onPress={() => setIsVisible(false)} title={'Close'} />
+            </View>
+          </ScrollView>
+          <View style={{ marginHorizontal: 24 }}>
+            <AppButton
+              onPress={() => setIsVisible(false)}
+              title={buttonsName.BACK}
+              backgroundColor={COLORS.buttons.brown}
+            />
+          </View>
         </SafeAreaView>
       </Modal>
 

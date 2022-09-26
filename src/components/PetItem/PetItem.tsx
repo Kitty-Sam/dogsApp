@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { AdoptionNavigationName } from '../../enum/navigation';
-import { Image, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../../colors/colors';
@@ -23,10 +23,37 @@ export const PetItem: FC<PetItemType> = ({ pet, navigation }) => {
       ownerInfo: pet.ownerInfo,
     });
   };
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const onLoading = (value: boolean) => {
+    setLoading(value);
+  };
   return (
     <TouchableOpacity style={styles.itemPetContainer} onPress={petUnitNavigate}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: pet.photo }} style={styles.image} />
+        {loading && (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignSelf: 'center',
+              alignContent: 'center',
+              width: '100%',
+              position: 'absolute',
+              zIndex: 0,
+              height: 350,
+            }}
+          >
+            <ActivityIndicator color={COLORS.text.dark_blue} />
+          </View>
+        )}
+        {
+          <Image
+            source={{ uri: pet.photo }}
+            style={styles.image}
+            onLoadEnd={() => onLoading(false)}
+            onLoadStart={() => onLoading(true)}
+          />
+        }
       </View>
       <View style={styles.textContainer}>
         <TextItemBold>{pet.nickName}</TextItemBold>
