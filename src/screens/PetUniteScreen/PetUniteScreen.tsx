@@ -20,7 +20,7 @@ import { PetUniteScreenProps } from './type';
 import { selectItem } from '../../utils/selectItem';
 import { ScrollView } from 'native-base';
 import { screenWidth } from '../../consts/consts';
-import { getImages } from '../../utils/getImagesFromStore';
+import { getGalleryImages } from '../../utils/getImagesFromStore';
 import { Gap } from '../../components/Gap/Gap';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
@@ -39,7 +39,7 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   useEffect(() => {
     dispatch(fetchFavoritePetsIdsAction());
     async function addGalleryPhotos() {
-      const images = await getImages('/animals', nickName);
+      const images = await getGalleryImages('/animals', id);
       setStoreImages(images);
     }
     addGalleryPhotos();

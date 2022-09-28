@@ -3,7 +3,7 @@ import { Actionsheet, useDisclose } from 'native-base';
 import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { getUniqueFileName } from '../../utils/getUniqName';
 import storage from '@react-native-firebase/storage';
-import { getImages } from '../../utils/getImagesFromStore';
+import { getAvatars, getGalleryImages } from '../../utils/getImagesFromStore';
 import { AppButton } from '../Button/AppButton';
 
 const metadata = {
@@ -13,11 +13,11 @@ const metadata = {
 export type LoadImagePickerButtonType = {
   setImage?: (image: string) => void;
   setStoreImages?: (images: string[]) => void;
-  nickName?: string;
-  currentUserId: string;
+  currentUserId?: string;
   screen: string;
   isDone?: string;
   setIsDone?: (isDone: string) => void;
+  id?: number;
 };
 
 export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
@@ -25,8 +25,8 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   setStoreImages,
   currentUserId,
   screen,
-  nickName,
   setIsDone,
+  id,
 }) => {
   const { isOpen, onOpen, onClose, onToggle } = useDisclose();
 
@@ -67,9 +67,11 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
           // });
           task.then(async () => {
             try {
-              const images = await getImages('/avatars', currentUserId);
-              if (setStoreImages) {
-                setStoreImages(images);
+              if (currentUserId) {
+                const images = await getAvatars('/avatars', currentUserId);
+                if (setStoreImages) {
+                  setStoreImages(images);
+                }
               }
             } catch (error) {
               console.log(error);
@@ -81,20 +83,17 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
       }
       if (screen === 'Animals') {
         setIsDone && setIsDone('isLoading');
-        const reference = storage()
-          .ref()
-          // .child(`${currentUserId}`)
-          .child('/animals')
-          .child(`${nickName}`)
-          .child(`${imageFileName}`);
+        const reference = storage().ref().child('/animals').child(`${id}`).child(`${imageFileName}`);
         try {
           const task = reference.putFile(image.path, metadata);
           task.then(async () => {
             try {
-              const images = await getImages('/animals', nickName);
-              if (setStoreImages && setIsDone) {
-                setStoreImages(images);
-                setIsDone('succeed');
+              if (id) {
+                const images = await getGalleryImages('/animals', id);
+                if (setStoreImages && setIsDone) {
+                  setStoreImages(images);
+                  setIsDone('succeed');
+                }
               }
               setIsDone && setIsDone('succeed');
             } catch (error) {
