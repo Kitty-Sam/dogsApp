@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Image, SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TextInput, TouchableOpacity, View } from 'react-native';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
 import { buttonsName } from '../../enum/buttonsName';
@@ -15,15 +15,13 @@ import { maleName } from '../../enum/maleName';
 import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { toast } from '../../utils/toast';
-import { ScrollView } from 'native-base';
 
 const animals = [animalsName.DOG, animalsName.CAT];
 const males = [maleName.GIRL, maleName.BOY, maleName.UNKNOWN];
+const id = Date.now();
 
 export const AddPetScreen: FC<AddPetScreenProps> = props => {
   const { navigation } = props;
-
-  const id = Date.now();
 
   const description = useInput('');
   const age = useInput('');
@@ -143,25 +141,14 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         ]}
         editable
         keyboardType={'phone-pad'}
-        // onFocus={() => ownerInfo.onChangeText('+375')}
-        // onBlur={() => ownerInfo.onChangeText('')}
+        onFocus={() => ownerInfo.onChangeText('+375')}
+        onBlur={() => ownerInfo.onChangeText('')}
       />
-      <View>
-        {storeImages.length === 0 ? (
-          <TextItemThin>Gallery is empty</TextItemThin>
-        ) : (
-          <ScrollView horizontal={true}>
-            {storeImages.map(el => (
-              <Image source={{ uri: el }} style={{ width: 50, height: 50, margin: 16 }} key={el + Date.now()} />
-            ))}
-          </ScrollView>
-        )}
-      </View>
       <LoadImagePickerButton
         currentUserId={currentUserId}
         screen={'Animals'}
-        nickName={nickName.value}
         isDone={isDone}
+        id={id}
         setIsDone={setIsDone}
         setStoreImages={setStoreImages}
       />
