@@ -8,10 +8,15 @@ import { StripeProvider } from '@stripe/stripe-react-native';
 import { fetchPublishAbleKey } from './helpers';
 import { Toast } from './src/components/Toast/Toast';
 import { NativeBaseProvider } from 'native-base';
+import SplashScreen from 'react-native-splash-screen';
 
 export const App = () => {
   const isLogged = useSelector(getLoginStatus);
   const [publishableKey, setPublishableKey] = useState('');
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   useEffect(() => {
     const init = async () => {
