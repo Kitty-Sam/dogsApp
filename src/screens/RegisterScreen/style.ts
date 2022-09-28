@@ -3,18 +3,12 @@ import { COLORS } from '../../colors/colors';
 import { screenWidth } from '../../consts/consts';
 
 export type RegisterScreenStyleType = {
-  rootContainer: ViewStyle;
   input: TextStyle;
   loginTextContainer: TextStyle;
   inputsContainer: ViewStyle;
   buttonsContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<RegisterScreenStyleType>({
-  rootContainer: {
-    height: '100%',
-    width: screenWidth,
-    position: 'relative',
-  },
   input: {
     padding: 8,
     width: 200,
@@ -28,14 +22,15 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
   },
   loginTextContainer: {
     fontSize: 16,
-    margin: 15,
+    margin: 16,
   },
   inputsContainer: {
-    position: 'absolute',
-    top: 200,
-    left: 100,
+    padding: 24,
+    flex: 1,
+    justifyContent: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });

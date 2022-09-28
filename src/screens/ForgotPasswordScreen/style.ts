@@ -1,9 +1,7 @@
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { screenWidth } from '../../consts/consts';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
 
 export type ForgotPasswordScreenStyleType = {
-  rootContainer: ImageStyle;
   input: TextStyle;
   textLogIn: TextStyle;
   noteText: TextStyle;
@@ -11,16 +9,7 @@ export type ForgotPasswordScreenStyleType = {
   buttonsContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
-  rootContainer: {
-    flex: 1,
-    alignItems: 'center',
-    height: '100%',
-    width: screenWidth,
-    position: 'relative',
-  },
   input: {
-    padding: 8,
-    width: 200,
     borderRadius: 10,
     borderColor: COLORS.text.dark_blue,
     borderWidth: 2,
@@ -29,12 +18,12 @@ export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
     color: COLORS.text.dark_blue,
   },
   mainBlock: {
-    alignItems: 'center',
-    marginTop: screenWidth * 0.5,
+    padding: 24,
+    flex: 1,
+    justifyContent: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
-    width: screenWidth * 0.4,
     justifyContent: 'space-around',
   },
   textLogIn: {
