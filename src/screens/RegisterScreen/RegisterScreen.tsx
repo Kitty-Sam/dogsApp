@@ -1,11 +1,19 @@
 import React, { FC, useState } from 'react';
-import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AppButton } from '../../components/Button/AppButton';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
 import { buttonsName } from '../../enum/buttonsName';
 import { styles } from './style';
-import { requestStatus } from '../../store/reducers/appReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
@@ -16,9 +24,7 @@ import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegist
 import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const img = require('../../assets/white_dog_thin.jpeg');
+import { requestStatus } from '../../store/reducers/appReducer';
 
 export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const { navigation } = props;
@@ -40,43 +46,45 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
 
   return (
-    <ImageBackground source={img} style={styles.rootContainer}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
-        <View style={styles.inputsContainer}>
-          <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />
-          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} {...userEmail} contextMenuHidden={true} />
-          <CustomTextInput
-            placeholder={inputsPlaceholdersName.PASSWORD}
-            {...userPassword}
-            contextMenuHidden={true}
-            iconPosition="right"
-            secureTextEntry={isSecureEntry}
-            icon={
-              <TouchableOpacity
-                onPress={() => {
-                  setIsSecureEntry(prev => !prev);
-                }}
-              >
-                <Text>
-                  {isSecureEntry ? (
-                    <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
-                  ) : (
-                    <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
-                  )}
-                </Text>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.inputsContainer}>
+            <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />
+            <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} {...userEmail} contextMenuHidden={true} />
+            <CustomTextInput
+              placeholder={inputsPlaceholdersName.PASSWORD}
+              {...userPassword}
+              contextMenuHidden={true}
+              iconPosition="right"
+              secureTextEntry={isSecureEntry}
+              icon={
+                <TouchableOpacity
+                  onPress={() => {
+                    setIsSecureEntry(prev => !prev);
+                  }}
+                >
+                  <Text>
+                    {isSecureEntry ? (
+                      <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
+                    ) : (
+                      <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
+                    )}
+                  </Text>
+                </TouchableOpacity>
+              }
+            />
+            <View style={styles.buttonsContainer}>
+              <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />
+              <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
+                <TextItemThin>Try sign in</TextItemThin>
               </TouchableOpacity>
-            }
-          />
-          <View style={styles.buttonsContainer}>
-            <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />
-            <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
-              <TextItemThin>Try sign in</TextItemThin>
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       )}
-    </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
