@@ -1,7 +1,9 @@
-export const enum TabBottomNavigationName {
+export const enum ServicesNavigationName {
+  ROOT = 'Services',
   SHOPS = 'Shops',
   CLINICS = 'Clinics',
-  MASTERS = 'Master',
+  MASTERS = 'Masters',
+  ADD = 'Add',
 }
 
 export const enum MessagesNavigationName {
@@ -18,7 +20,7 @@ export const enum AdoptionNavigationName {
 export const enum DrawerNavigationName {
   PROFILE = 'My pets',
   MESSAGE_STACK = 'Chat',
-  USEFUL_STACK = 'Services',
+  USEFUL_STACK = 'Service',
   CALENDAR = 'Calendar',
   MAP = 'Map',
 }

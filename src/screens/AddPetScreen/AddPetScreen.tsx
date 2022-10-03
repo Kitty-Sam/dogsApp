@@ -15,6 +15,7 @@ import { maleName } from '../../enum/maleName';
 import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { toast } from '../../utils/toast';
+import TextInputMask from 'react-native-text-input-mask';
 
 const animals = [animalsName.DOG, animalsName.CAT];
 const males = [maleName.GIRL, maleName.BOY, maleName.UNKNOWN];
@@ -64,6 +65,9 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
 
   const [isDone, setIsDone] = useState<string>('idle');
   const [storeImages, setStoreImages] = useState<string[]>([]);
+  const [phone, setPhone] = useState<string>('');
+
+  console.log('PHONE', phone);
 
   useEffect(() => {
     if (isDone === 'isLoading') {
@@ -129,21 +133,33 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         maxLength={700}
         editable
       />
-      <TextInput
-        {...ownerInfo}
+      <TextInputMask
+        onChangeText={(formatted, extracted) => {
+          setPhone(formatted);
+          // console.log(formatted); // +1 (123) 456-78-90
+          // console.log(extracted); // 1234567890
+        }}
+        value={phone}
+        mask={'+375 ([00]) [000] [00] [00]'}
+        style={styles.input}
         placeholder={inputsPlaceholdersName.PET_OWNER_INFO}
         placeholderTextColor={COLORS.text.grey}
-        style={[
-          styles.input,
-          {
-            borderBottomColor: ownerInfo.value.length === 13 ? COLORS.text.grey : COLORS.buttons.brown,
-          },
-        ]}
-        editable
-        keyboardType={'phone-pad'}
-        onFocus={() => ownerInfo.onChangeText('+375')}
-        onBlur={() => ownerInfo.onChangeText('')}
       />
+      {/*<TextInput*/}
+      {/*  {...ownerInfo}*/}
+      {/*  placeholder={inputsPlaceholdersName.PET_OWNER_INFO}*/}
+      {/*  placeholderTextColor={COLORS.text.grey}*/}
+      {/*  style={[*/}
+      {/*    styles.input,*/}
+      {/*    {*/}
+      {/*      borderBottomColor: ownerInfo.value.length === 13 ? COLORS.text.grey : COLORS.buttons.brown,*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*  editable*/}
+      {/*  keyboardType={'phone-pad'}*/}
+      {/*  onFocus={() => ownerInfo.onChangeText('+375')}*/}
+      {/*  onBlur={() => ownerInfo.onChangeText('')}*/}
+      {/*/>*/}
       <LoadImagePickerButton
         currentUserId={currentUserId}
         screen={'Animals'}

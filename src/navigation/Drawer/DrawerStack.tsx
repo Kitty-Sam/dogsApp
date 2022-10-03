@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { UsefulBottomStack } from '../UsefulStack/UsefulStack';
+import { UsefulStack } from '../UsefulStack/UsefulStack';
 import { MessagesStack } from '../MessageStack/MessagesStack';
 import { DrawerNavigationName } from '../../enum/navigation';
 import { DrawerStackParamList } from './type';
@@ -20,6 +20,7 @@ export const DrawerStack = () => {
       drawerContent={props => <CustomDrawer {...props} />}
       useLegacyImplementation
       screenOptions={{
+        headerShown: false,
         // drawerActiveTintColor: COLORS.buttons.brown,
         // drawerInactiveTintColor: COLORS.text.dark_blue,
         // drawerType: 'front',
@@ -38,7 +39,7 @@ export const DrawerStack = () => {
     >
       <Drawer.Screen
         name={DrawerNavigationName.USEFUL_STACK}
-        component={UsefulBottomStack}
+        component={UsefulStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.ATTACH : iconsName.ATTACH_OUTLINE} color={color} size={size} />
