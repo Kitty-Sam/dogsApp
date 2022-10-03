@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -20,6 +19,7 @@ import { AuthNavigationName } from '../../enum/navigation';
 import { ForgotPasswordScreenProps } from './type';
 import { forgotPasswordAction } from '../../store/sagas/sagaActions/forgotPassword';
 import { useDispatch } from 'react-redux';
+import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 
 export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const { navigation } = props;
@@ -32,17 +32,11 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={styles.mainBlock}>
+        <View style={styles.mainBlock}>
           <TextItemThin style={styles.noteText}>
             Enter your email and we will send you link for reset your old password
           </TextItemThin>
-          <TextInput
-            value={email.value}
-            onChangeText={email.onChangeText}
-            placeholderTextColor={COLORS.text.dark_blue}
-            placeholder={inputsPlaceholdersName.EMAIL}
-            style={styles.input}
-          />
+          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...email} />
           <View style={styles.buttonsContainer}>
             <AppButton
               onPress={() => forgotPassword(email.value)}
@@ -58,7 +52,7 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
               <TextItemThin>Try sign in</TextItemThin>
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+        </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

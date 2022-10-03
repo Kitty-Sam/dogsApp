@@ -25,6 +25,7 @@ export const CustomDrawer = (props: any) => {
   };
 
   const navigation = useNavigation<StackNavigationProp<DrawerStackParamList>>();
+
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
