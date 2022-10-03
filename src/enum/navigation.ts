@@ -16,14 +16,11 @@ export const enum AdoptionNavigationName {
 }
 
 export const enum DrawerNavigationName {
-  ADOPTION_STACK = 'Adoption',
-  DONATION = 'Donation',
-  ADD_PET = 'Add pet',
-  PROFILE = 'Profile',
-  MESSAGE_STACK = 'Messages',
-  FAVORITE = 'Favorite',
+  PROFILE = 'My pets',
+  MESSAGE_STACK = 'Chat',
   USEFUL_STACK = 'Services',
   CALENDAR = 'Calendar',
+  MAP = 'Map',
 }
 
 export const enum AuthNavigationName {

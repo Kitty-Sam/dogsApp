@@ -10,10 +10,7 @@ import { CustomDrawer } from './CustomDrawer';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
 import { CalendarScreen } from '../../screens/CalendarScreen/CalendarScreen';
 import { COLORS } from '../../colors/colors';
-import { DonationScreen } from '../../screens/DonationScreen/DonationScreen';
-import { AddPetScreen } from '../../screens/AddPetScreen/AddPetScreen';
-import { AdoptionStack } from '../AdoptionStack/AdoptionStack';
-import { FavoriteScreen } from '../../screens/FavoriteScreen/FavoriteScreen';
+import { MapScreen } from '../../screens/MapScreen/MapScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -23,34 +20,34 @@ export const DrawerStack = () => {
       drawerContent={props => <CustomDrawer {...props} />}
       useLegacyImplementation
       screenOptions={{
-        drawerActiveTintColor: COLORS.buttons.brown,
-        drawerInactiveTintColor: COLORS.text.dark_blue,
-        drawerType: 'front',
-        drawerContentStyle: { marginTop: 150, width: 250 },
+        // drawerActiveTintColor: COLORS.buttons.brown,
+        // drawerInactiveTintColor: COLORS.text.dark_blue,
+        // drawerType: 'front',
+        drawerContentStyle: { marginTop: 300, width: 250 },
         drawerStyle: {
           borderBottomEndRadius: 20,
           borderTopEndRadius: 20,
           // backgroundColor: COLORS.buttons.peach,
         },
-        headerTintColor: COLORS.text.dark_blue,
-        // headerStyle: { backgroundColor: COLORS.buttons.peach },
-        drawerContentContainerStyle: {
-          width: 350,
-        },
+        // headerTintColor: COLORS.text.dark_blue,
+        // // headerStyle: { backgroundColor: COLORS.buttons.peach },
+        // drawerContentContainerStyle: {
+        //   width: 350,
+        // },
       }}
     >
       <Drawer.Screen
-        name={DrawerNavigationName.ADOPTION_STACK}
-        component={AdoptionStack}
+        name={DrawerNavigationName.USEFUL_STACK}
+        component={UsefulBottomStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.PAW : iconsName.PAW_OUTLINE} color={color} size={size} />
+            <Icon name={focused ? iconsName.ATTACH : iconsName.ATTACH_OUTLINE} color={color} size={size} />
           ),
         }}
       />
       <Drawer.Screen
-        name={DrawerNavigationName.DONATION}
-        component={DonationScreen}
+        name={DrawerNavigationName.MAP}
+        component={MapScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.EARTH : iconsName.EARTH_OUTLINE} color={color} size={size} />
@@ -58,10 +55,12 @@ export const DrawerStack = () => {
         }}
       />
       <Drawer.Screen
-        name={DrawerNavigationName.ADD_PET}
-        component={AddPetScreen}
+        name={DrawerNavigationName.CALENDAR}
+        component={CalendarScreen}
         options={{
-          drawerIcon: ({ color, size, focused }) => <Icon name={iconsName.ADD} color={color} size={size} />,
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.CALENDAR : iconsName.CALENDAR_OUTLINE} color={color} size={size} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -74,38 +73,11 @@ export const DrawerStack = () => {
         }}
       />
       <Drawer.Screen
-        name={DrawerNavigationName.USEFUL_STACK}
-        component={UsefulBottomStack}
-        options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.ATTACH : iconsName.ATTACH_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={DrawerNavigationName.FAVORITE}
-        component={FavoriteScreen}
-        options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.HEART : iconsName.HEART_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
-      <Drawer.Screen
         name={DrawerNavigationName.MESSAGE_STACK}
         component={MessagesStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={DrawerNavigationName.CALENDAR}
-        component={CalendarScreen}
-        options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.CALENDAR : iconsName.CALENDAR_OUTLINE} color={color} size={size} />
           ),
         }}
       />
