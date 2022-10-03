@@ -1,7 +1,12 @@
-import { TabBottomNavigationName } from '../../enum/navigation';
+import { ServicesNavigationName } from '../../enum/navigation';
+import { StackScreenNavigationProps } from '../navPropsType';
 
 export type UsefulStackParamList = {
-  [TabBottomNavigationName.MASTERS]: undefined;
-  [TabBottomNavigationName.SHOPS]: undefined;
-  [TabBottomNavigationName.CLINICS]: undefined;
+  [ServicesNavigationName.MASTERS]: undefined;
+  [ServicesNavigationName.SHOPS]: undefined;
+  [ServicesNavigationName.CLINICS]: undefined;
+  [ServicesNavigationName.ROOT]: undefined;
+  [ServicesNavigationName.ADD]: undefined;
 };
+
+export type UsefulStackScreenProps = StackScreenNavigationProps<ServicesNavigationName.ROOT, UsefulStackParamList>;

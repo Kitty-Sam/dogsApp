@@ -1,5 +1,5 @@
-import { DrawerNavigationName } from '../../enum/navigation';
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
-import { DrawerStackParamList } from '../../navigation/Drawer/type';
+import { ServicesNavigationName } from '../../enum/navigation';
+import { UsefulStackParamList } from '../../navigation/UsefulStack/type';
 
-export type AddPetScreenProps = StackScreenNavigationProps<DrawerNavigationName.ADD_PET, DrawerStackParamList>;
+export type AddPetScreenProps = StackScreenNavigationProps<ServicesNavigationName.ADD, UsefulStackParamList>;

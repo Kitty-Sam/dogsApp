@@ -1,61 +1,27 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ShopsScreen } from '../../screens/ShopsScreen/ShopsScreen';
 import { ClinicsScreen } from '../../screens/ClinicsScreen/ClinicsScreen';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MastersScreen } from '../../screens/MastersScreen/MastersScreen';
-import { TabBottomNavigationName } from '../../enum/navigation';
+import { ServicesNavigationName } from '../../enum/navigation';
 import { UsefulStackParamList } from './type';
-import { iconsName } from '../../enum/iconsName';
-import { COLORS } from '../../colors/colors';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { UsefulServiceScreen } from '../../screens/UsefulServiceScreen/UsefulServiceScreen';
+import { AddPetScreen } from '../../screens/AddPetScreen/AddPetScreen';
 
-const Tab = createBottomTabNavigator<UsefulStackParamList>();
+const StackService = createNativeStackNavigator<UsefulStackParamList>();
 
-export const UsefulBottomStack = () => {
+export const UsefulStack = () => {
   return (
-    <Tab.Navigator
+    <StackService.Navigator
       screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: COLORS.text.dark_blue,
-        tabBarStyle: {
-          backgroundColor: COLORS.buttons.peach,
-        },
+        headerBackTitle: 'Back',
       }}
     >
-      <Tab.Screen
-        name={TabBottomNavigationName.SHOPS}
-        component={ShopsScreen}
-        options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.SHOPPING : iconsName.SHOPPING_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={TabBottomNavigationName.CLINICS}
-        component={ClinicsScreen}
-        options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.HOSPITAL_BOX : iconsName.HOSPITAL_BOX_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name={TabBottomNavigationName.MASTERS}
-        component={MastersScreen}
-        options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, size, focused }) => (
-            <Icon
-              name={focused ? iconsName.ACCOUNT_SUPERVISOR : iconsName.ACCOUNT_SUPERVISOR_OUTLINE}
-              color={color}
-              size={size}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+      <StackService.Screen name={ServicesNavigationName.ROOT} component={UsefulServiceScreen} />
+      <StackService.Screen name={ServicesNavigationName.SHOPS} component={ShopsScreen} />
+      <StackService.Screen name={ServicesNavigationName.CLINICS} component={ClinicsScreen} />
+      <StackService.Screen name={ServicesNavigationName.MASTERS} component={MastersScreen} />
+      <StackService.Screen name={ServicesNavigationName.ADD} component={AddPetScreen} />
+    </StackService.Navigator>
   );
 };
