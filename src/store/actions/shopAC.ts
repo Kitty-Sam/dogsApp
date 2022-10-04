@@ -5,9 +5,11 @@ export type PayloadType = {
   title: string;
   info: string;
   chapter: chaptersName;
+  address: string;
+  phone: string;
 };
 
-export type RemovePayloadType = Omit<PayloadType, 'title' | 'info' | 'chapter'>;
+export type RemovePayloadType = Omit<PayloadType, 'title' | 'info' | 'chapter' | 'address' | 'phone'>;
 
 export enum ShopActions {
   ADD_SHOP = 'add_shop',

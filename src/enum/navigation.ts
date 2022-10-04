@@ -2,8 +2,12 @@ export const enum ServicesNavigationName {
   ROOT = 'Services',
   SHOPS = 'Shops',
   CLINICS = 'Clinics',
-  MASTERS = 'Masters',
-  ADD = 'Add',
+  MASTERS = 'Dog walkers',
+  PET_SITTERS = 'Pet Sitters',
+  GROOMERS = 'Groomers',
+  TRAINERS = 'Trainers',
+  DOG_FRIENDLY = 'Dog friendly places',
+  ITEM_UNITE = 'Item Unite',
 }
 
 export const enum MessagesNavigationName {

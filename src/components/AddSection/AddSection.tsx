@@ -13,6 +13,8 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
   const [isOpen, setIsOpen] = useState(false);
   const addedTitle = useInput('');
   const addedInfo = useInput('');
+  const addedPhone = useInput('');
+  const addedAddress = useInput('');
 
   const addButtonPress = () => {
     setIsOpen(true);
@@ -24,13 +26,22 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
     id: addedTitle.value,
     title: addedTitle.value,
     info: addedInfo.value,
+    address: addedAddress.value,
+    phone: addedPhone.value,
   };
 
   const addItemPress = async () => {
-    if (addedInfo.value.trim() === '' || addedTitle.value.trim() === '') {
+    if (
+      addedInfo.value.trim() === '' ||
+      addedTitle.value.trim() === '' ||
+      addedPhone.value.trim() === '' ||
+      addedAddress.value.trim() === ''
+    ) {
       Alert.alert('Please, add the all necessary information');
       addedTitle.resetValue();
       addedInfo.resetValue();
+      addedPhone.resetValue();
+      addedAddress.resetValue();
       return;
     }
 
@@ -39,6 +50,8 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
     setIsOpen(false);
     addedTitle.resetValue();
     addedInfo.resetValue();
+    addedPhone.resetValue();
+    addedAddress.resetValue();
   };
 
   return (
@@ -51,6 +64,8 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
         setIsOpen={setIsOpen}
         addedTitle={addedTitle}
         addedInfo={addedInfo}
+        addedAddress={addedAddress}
+        addedPhone={addedPhone}
       />
     </>
   );

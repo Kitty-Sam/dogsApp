@@ -1,22 +1,24 @@
-import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, View } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMasters } from '../../store/selectors/masterSelector';
 import { ItemType } from '../../components/ItemContainer/type';
-import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
-import { styles, stylesCommon } from './style';
+
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
-import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { stylesCommon } from '../ShopsScreen/style';
+import { MastersScreenProps } from './type';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
 
-export const MastersScreen = memo(() => {
+export const MastersScreen: FC<MastersScreenProps> = props => {
+  const { moveToItemScreen, removeItem } = props.route.params;
   const masters = useSelector(getMasters);
   const statusApp = useSelector(getAppStatus);
 
@@ -27,31 +29,41 @@ export const MastersScreen = memo(() => {
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
-    const { id, info, title, chapter } = item;
-    return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;
+    const { id, info, title, chapter, address, phone } = item;
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity
+          onPress={() => moveToItemScreen(id, info, title, chapter, address, phone)}
+          style={stylesCommon.itemContainer}
+        >
+          <TextItemThin style={{ textAlign: 'center' }}>{title}</TextItemThin>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            removeItem(chapter, id);
+          }}
+        >
+          <TextItemThin style={{ marginTop: 20 }}>x</TextItemThin>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   if (!masters.length) {
     return (
       <ImageBackground source={img} style={stylesCommon.emptyContainer}>
-        <Text style={{ color: COLORS.text.dark_blue }}>Add master</Text>
+        <Text style={{ color: COLORS.text.dark_blue }}>Add dog walker</Text>
         <AddSection chapter={chaptersName.MASTER} />
       </ImageBackground>
     );
   }
   return (
-    <SafeAreaView style={stylesCommon.rootContainer}>
+    <SafeAreaView>
       {statusApp === requestStatus.LOADING ? (
         <ActivityIndicator />
       ) : (
-        <>
-          <HeaderTextItem>Masters</HeaderTextItem>
-          <View style={stylesCommon.addSectionContainer}>
-            <AddSection chapter={chaptersName.MASTER} />
-          </View>
-          <FlatList data={masters} renderItem={renderItem} horizontal contentContainerStyle={styles.chapterContainer} />
-        </>
+        <FlatList data={masters} renderItem={renderItem} />
       )}
     </SafeAreaView>
   );
-});
+};
