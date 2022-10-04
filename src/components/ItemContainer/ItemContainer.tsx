@@ -1,24 +1,29 @@
 import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { styles } from './style';
-import { useDispatch } from 'react-redux';
-import { chaptersName } from '../../enum/chapters';
+import { View } from 'react-native';
 import { ItemType } from './type';
-import { TextItemBold } from '../Text/TextItemBold/TextItemBold';
 import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
-import { removeServiceAction } from '../../store/sagas/sagaActions/removeService';
+import { HeaderTextItem } from '../Text/HeaderTextItem/HeaderTextItem';
+import { styles } from './style';
+import { Gap } from '../Gap/Gap';
+import { AddSection } from '../AddSection/AddSection';
 
-export const ItemContainer: FC<ItemType> = ({ title, info, id, chapter }) => {
-  const dispatch = useDispatch();
-
-  const removeItem = (text: chaptersName) => () => {
-    dispatch(removeServiceAction({ chapter: text, id }));
-  };
-
+export const ItemContainer: FC<ItemType> = ({ title, info, address, phone, chapter }) => {
   return (
-    <TouchableOpacity style={styles.itemContainer} onLongPress={removeItem(chapter)}>
-      <TextItemBold>{title}</TextItemBold>
-      <TextItemThin>{info}</TextItemThin>
-    </TouchableOpacity>
+    <>
+      <View style={styles.commonInfoContainer}>
+        <HeaderTextItem>{title}</HeaderTextItem>
+        <Gap size={2} />
+        <TextItemThin>Address: {address}</TextItemThin>
+        <Gap size={1} />
+        <TextItemThin>Phone: {phone}</TextItemThin>
+      </View>
+      <View style={styles.feedBackContainer}>
+        <TextItemThin>Feedback: </TextItemThin>
+        <TextItemThin>{info}</TextItemThin>
+      </View>
+      <View style={{ position: 'absolute', bottom: 120 }}>
+        <AddSection chapter={chapter} />
+      </View>
+    </>
   );
 };

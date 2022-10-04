@@ -1,23 +1,25 @@
-import React, { memo, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, View } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShops } from '../../store/selectors/shopSelector';
 import { ItemType } from '../../components/ItemContainer/type';
-import { ItemContainer } from '../../components/ItemContainer/ItemContainer';
-import { styles } from './style';
-import { stylesCommon } from '../MastersScreen/style';
+
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
-import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
+import { ShopsScreenProps } from './type';
+import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
+import { stylesCommon } from './style';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_cat_fat.jpeg');
 
-export const ShopsScreen = memo(() => {
+export const ShopsScreen: FC<ShopsScreenProps> = props => {
+  const { moveToItemScreen, removeItem } = props.route.params;
+
   const shops = useSelector(getShops);
   const statusApp = useSelector(getAppStatus);
 
@@ -28,8 +30,24 @@ export const ShopsScreen = memo(() => {
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
-    const { id, info, title, chapter } = item;
-    return <ItemContainer id={id} title={title} info={info} chapter={chapter} />;
+    const { id, info, title, chapter, address, phone } = item;
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <TouchableOpacity
+          onPress={() => moveToItemScreen(id, info, title, chapter, address, phone)}
+          style={stylesCommon.itemContainer}
+        >
+          <TextItemThin style={{ textAlign: 'center' }}>{title}</TextItemThin>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            removeItem(chapter, id);
+          }}
+        >
+          <TextItemThin style={{ marginTop: 20 }}>x</TextItemThin>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   if (!shops.length) {
@@ -41,18 +59,8 @@ export const ShopsScreen = memo(() => {
     );
   }
   return (
-    <SafeAreaView style={stylesCommon.rootContainer}>
-      {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
-      ) : (
-        <>
-          <HeaderTextItem>Shops</HeaderTextItem>
-          <View style={stylesCommon.addSectionContainer}>
-            <AddSection chapter={chaptersName.SHOP} />
-          </View>
-          <FlatList data={shops} renderItem={renderItem} horizontal contentContainerStyle={styles.chapterContainer} />
-        </>
-      )}
+    <SafeAreaView>
+      {statusApp === requestStatus.LOADING ? <ActivityIndicator /> : <FlatList data={shops} renderItem={renderItem} />}
     </SafeAreaView>
   );
-});
+};

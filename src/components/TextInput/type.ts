@@ -10,4 +10,6 @@ export type CustomInputType = {
   label?: string;
   contextMenuHidden?: boolean;
   placeholder: string;
+  multiline?: boolean;
+  numberOfLines?: number;
 };

@@ -4,6 +4,7 @@ import {
   KeyboardAvoidingView,
   Modal,
   Platform,
+  SafeAreaView,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -18,6 +19,8 @@ import { inputsPlaceholdersName } from '../../../enum/inputPlaceholdersName';
 import { COLORS } from '../../../colors/colors';
 import { HeaderTextItem } from '../../Text/HeaderTextItem/HeaderTextItem';
 import { ModalAddItemType } from './type';
+import TextInputMask from 'react-native-text-input-mask';
+import { CustomTextInput } from '../../TextInput/CustomTextInput';
 
 export const ModalAddItem: FC<ModalAddItemType> = ({
   isOpen,
@@ -26,35 +29,29 @@ export const ModalAddItem: FC<ModalAddItemType> = ({
   addItemPress,
   addedTitle,
   addedInfo,
+  addedPhone,
+  addedAddress,
 }) => {
   return (
     <Modal visible={isOpen}>
-      <View style={styles.modalCommonContainer}>
+      <SafeAreaView style={styles.modalCommonContainer}>
         <HeaderTextItem>{chapter}</HeaderTextItem>
-        <View style={styles.modalContainer}>
-          <TouchableOpacity style={styles.closeIcon} onPress={() => setIsOpen(false)}>
-            <Icon name={iconsName.CLOSE_OUTLINE} size={24} color={COLORS.text.dark_blue} />
-          </TouchableOpacity>
+        <>
           <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.modalInputBlock}>
-                <TextInput
-                  placeholderTextColor={COLORS.text.grey}
-                  placeholder={inputsPlaceholdersName.ADD_TITLE}
-                  multiline={true}
-                  numberOfLines={2}
-                  {...addedTitle}
+                <CustomTextInput placeholder={inputsPlaceholdersName.ADD_TITLE} {...addedTitle} />
+                <CustomTextInput placeholder={inputsPlaceholdersName.ADD_ADDRESS} {...addedAddress} />
+                <TextInputMask
+                  onChangeText={(formatted, extracted) => {
+                    addedPhone.onChangeText(formatted);
+                  }}
+                  value={addedPhone.value}
+                  mask={'+375 ([00]) [000] [00] [00]'}
                   style={styles.input}
-                  editable
+                  placeholder={inputsPlaceholdersName.PET_OWNER_INFO}
                 />
-                <TextInput
-                  placeholderTextColor={COLORS.text.grey}
-                  placeholder={inputsPlaceholdersName.ADD_INFO}
-                  multiline={true}
-                  editable
-                  {...addedInfo}
-                  style={[styles.input, { height: 100 }]}
-                />
+                <CustomTextInput placeholder={inputsPlaceholdersName.ADD_INFO} {...addedInfo} />
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
@@ -66,8 +63,8 @@ export const ModalAddItem: FC<ModalAddItemType> = ({
               backgroundColor={COLORS.buttons.brown}
             />
           </View>
-        </View>
-      </View>
+        </>
+      </SafeAreaView>
     </Modal>
   );
 };

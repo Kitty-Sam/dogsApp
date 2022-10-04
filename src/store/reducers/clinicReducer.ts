@@ -18,7 +18,7 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ClinicActions.ADD_CLINIC:
       {
-        const { id, title, info, chapter } = action.payload;
+        const { id, title, info, chapter, phone, address } = action.payload;
         const hasClinic = state.clinics.find(clinic => clinic.id === id);
 
         if (!hasClinic) {
@@ -27,6 +27,8 @@ export const clinicsReducer = (state = initialState, action: ActionsType) => {
             title,
             info,
             chapter,
+            phone,
+            address,
           };
           return {
             ...state,

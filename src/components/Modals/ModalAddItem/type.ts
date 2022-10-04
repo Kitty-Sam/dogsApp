@@ -7,5 +7,7 @@ export type ModalAddItemType = {
   setIsOpen: (isOpen: boolean) => void;
   addedTitle: UseInputResponseType;
   addedInfo: UseInputResponseType;
+  addedPhone: UseInputResponseType;
+  addedAddress: UseInputResponseType;
   addItemPress: () => void;
 };

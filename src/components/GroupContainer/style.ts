@@ -13,5 +13,7 @@ export const styles = StyleSheet.create<ItemContainerStyleType>({
     borderRadius: 10,
     width: screenWidth * 0.35,
     height: screenWidth * 0.35,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

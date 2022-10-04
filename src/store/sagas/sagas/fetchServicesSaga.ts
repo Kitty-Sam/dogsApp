@@ -9,6 +9,10 @@ import { chaptersName } from '../../../enum/chapters';
 import { fetchShopsAC } from '../../actions/shopAC';
 import { fetchMastersAC } from '../../actions/masterAC';
 import { fetchServicesActionType } from '../sagaActions/fetchServices';
+import { fetchPetSittersAC } from '../../actions/petSitterAC';
+import { fetchGroomersAC } from '../../actions/groomerAC';
+import { fetchTrainersAC } from '../../actions/trainerAC';
+import { fetchDogFriendliesAC } from '../../actions/dogFriendlyAC';
 
 export function* fetchServicesWorker({ payload }: fetchServicesActionType) {
   const { chapter } = payload;
@@ -25,7 +29,15 @@ export function* fetchServicesWorker({ payload }: fetchServicesActionType) {
           ? fetchClinicsAC(data)
           : chapter === chaptersName.SHOP
           ? fetchShopsAC(data)
-          : fetchMastersAC(data),
+          : chapter === chaptersName.MASTER
+          ? fetchMastersAC(data)
+          : chapter === chaptersName.PET_SITTER
+          ? fetchPetSittersAC(data)
+          : chapter === chaptersName.DOG_FRIENDLY
+          ? fetchDogFriendliesAC(data)
+          : chapter === chaptersName.TRAINER
+          ? fetchTrainersAC(data)
+          : fetchGroomersAC(data),
       );
       yield put(toggleAppStatus(requestStatus.SUCCEEDED));
     } else {
@@ -35,7 +47,15 @@ export function* fetchServicesWorker({ payload }: fetchServicesActionType) {
           ? fetchClinicsAC(emptyArray)
           : chapter === chaptersName.SHOP
           ? fetchShopsAC(emptyArray)
-          : fetchMastersAC(emptyArray),
+          : chapter === chaptersName.MASTER
+          ? fetchMastersAC(emptyArray)
+          : chapter === chaptersName.PET_SITTER
+          ? fetchPetSittersAC(emptyArray)
+          : chapter === chaptersName.DOG_FRIENDLY
+          ? fetchDogFriendliesAC(emptyArray)
+          : chapter === chaptersName.TRAINER
+          ? fetchTrainersAC(emptyArray)
+          : fetchGroomersAC(emptyArray),
       );
       yield put(toggleAppStatus(requestStatus.SUCCEEDED));
     }

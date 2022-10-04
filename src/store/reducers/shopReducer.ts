@@ -15,7 +15,7 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
     case ShopActions.ADD_SHOP:
       {
-        const { id, title, info, chapter } = action.payload;
+        const { id, title, info, chapter, address, phone } = action.payload;
         const hasShop = state.shops.find(shop => shop.id === id);
 
         if (!hasShop) {
@@ -24,6 +24,8 @@ export const shopsReducer = (state = initialState, action: ActionsType) => {
             title,
             info,
             chapter,
+            phone,
+            address,
           };
           return {
             ...state,
