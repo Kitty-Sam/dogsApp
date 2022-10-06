@@ -32,6 +32,7 @@ export const MapScreen = () => {
       showsUserLocation
       minZoomLevel={2}
       maxZoomLevel={15}
+      followsUserLocation
     >
       {markers &&
         markers.map(mark => (
