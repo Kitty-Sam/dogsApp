@@ -1,27 +1,37 @@
-import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { View } from 'react-native';
-import { Avatar } from '@rneui/themed';
-import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import React, { FC, useCallback, useLayoutEffect, useState } from 'react';
+import { addDoc, collection, onSnapshot, orderBy, query, doc } from 'firebase/firestore';
 import { Composer, ComposerProps, GiftedChat, IMessage, SendProps } from 'react-native-gifted-chat';
-import { useNavigation } from '@react-navigation/native';
-import { auth, db } from '../../../firebase';
+import { db } from '../../../firebase';
+import { ChatScreenProps } from './type';
 
-const imgAvatar = 'https://cdn-icons-png.flaticon.com/512/194/194938.png';
+export type ChatType = {
+  _id: string;
+  createdAt: any;
+  text: string;
+  user: any;
+};
 
-export const ChatScreen = () => {
-  const navigation = useNavigation();
-  const [messages, setMessages] = useState([]);
+export const ChatScreen: FC<ChatScreenProps> = props => {
+  const { navigation, route } = props;
+  const { id, name, avatar } = route.params;
+  const [messages, setMessages] = useState<ChatType[]>([]);
+
+  const chatsCollection = collection(db, 'chats');
+  const chat = doc(chatsCollection, `${id}`);
+  const messagesCollection = collection(chat, 'messages');
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerLeft: () => (
-        <View style={{ marginLeft: 16 }}>
-          <Avatar size={46} rounded source={{ uri: imgAvatar }} />
-        </View>
-      ),
+      headerTitle: `${name}`,
+      // headerLeft: () => (
+      //   <View style={{ marginLeft: 8, flexDirection: 'row' }}>
+      //     <Avatar size={44} rounded source={{ uri: avatar }} avatarStyle={{ marginLeft: 4 }} />
+      //   </View>
+      // ),
     });
 
-    const q = query(collection(db, 'chats'), orderBy('createdAt', 'desc'));
+    const q = query(messagesCollection, orderBy('createdAt', 'desc'));
+
     const unsubscribe = onSnapshot(q, snapshot =>
       setMessages(
         snapshot.docs.map(doc => ({
@@ -38,11 +48,11 @@ export const ChatScreen = () => {
     };
   }, [navigation]);
 
-  const onSend = useCallback((messages = []) => {
+  const onSend = useCallback((messages: ChatType[]) => {
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages));
     const { _id, createdAt, text, user } = messages[0];
 
-    addDoc(collection(db, 'chats'), { _id, createdAt, text, user });
+    addDoc(messagesCollection, { _id, createdAt, text, user });
   }, []);
 
   const ChatComposer = (
@@ -75,9 +85,9 @@ export const ChatScreen = () => {
       showAvatarForEveryMessage={true}
       onSend={messages => onSend(messages)}
       user={{
-        _id: auth?.currentUser?.email,
-        name: 'stranger',
-        avatar: imgAvatar,
+        _id: id,
+        name: name,
+        avatar: avatar,
       }}
       renderComposer={ChatComposer}
     />

@@ -11,7 +11,7 @@ export const enum ServicesNavigationName {
 }
 
 export const enum MessagesNavigationName {
-  MESSAGES = 'Message',
+  MESSAGES = 'Dialogs',
   CHAT = 'Chat',
 }
 
@@ -23,7 +23,7 @@ export const enum AdoptionNavigationName {
 
 export const enum DrawerNavigationName {
   PROFILE = 'My pets',
-  MESSAGE_STACK = 'Chat',
+  MESSAGE_STACK = 'Messages',
   USEFUL_STACK = 'Service',
   CALENDAR = 'Calendar',
   MAP = 'Map',
