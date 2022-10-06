@@ -1,9 +1,11 @@
 import { takeLatest } from '@redux-saga/core/effects';
 import {
+  ADD_NEW_MAP_MARK,
   ADD_NEW_PET,
   ADD_NEW_SERVICE,
   CALL_OWNER,
   FETCH_FAVORITE_PETS_IDS,
+  FETCH_MAP_MARKS,
   FETCH_PETS,
   FETCH_SERVICES,
   FORGOT_PASSWORD,
@@ -24,6 +26,8 @@ import { addNewServiceWorker } from './addNewServiceSaga';
 import { removeServiceWorker } from './removeServiceSaga';
 import { callOwnerWorker } from './callOwnerSaga';
 import { forgotPasswordWorker } from './forgotPasswordSaga';
+import { addNewMapMarkWorker } from './addNewMapMarkSaga';
+import { fetchMapMarksWorker } from './fetchMapMarksSaga';
 
 export function* watchClickSaga() {
   yield takeLatest(GOOGLE_SIGN_IN, googleSignInWorker);
@@ -37,6 +41,8 @@ export function* watchClickSaga() {
   yield takeLatest(GOOGLE_REGISTER, googleRegisterWorker);
   yield takeLatest(CALL_OWNER, callOwnerWorker);
   yield takeLatest(FORGOT_PASSWORD, forgotPasswordWorker);
+  yield takeLatest(ADD_NEW_MAP_MARK, addNewMapMarkWorker);
+  yield takeLatest(FETCH_MAP_MARKS, fetchMapMarksWorker);
 }
 
 export default function* rootSaga() {

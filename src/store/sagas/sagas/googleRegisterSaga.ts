@@ -6,7 +6,7 @@ import { UserCredential } from '@firebase/auth';
 import { auth } from '../../../../firebase';
 import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { GoogleRegisterType } from '../sagaActions/googleRegister';
 import { saveCurrentUserAC } from '../../actions/loginAC';
 import { images } from '../../../consts/consts';
@@ -24,7 +24,15 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
 
     const { user } = userCredential;
 
-    // yield user.sendEmailVerification();
+    yield sendEmailVerification(user, {
+      handleCodeInApp: true,
+      url: `https://dogs-8cdd1.firebaseapp.com`,
+    });
+
+    Alert.alert('send message');
+
+    // const res = yield applyActionCode(auth, actionCode);
+    // console.log('res', res);
 
     yield database.ref('/users/').child(`${user.uid}`).set({
       userName: userName.value,
@@ -48,6 +56,7 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
   } catch (error: any) {
     Alert.alert('Please, try again');
+    console.log(error.message);
     yield put(toggleAppStatus(requestStatus.FAILED));
   }
 }
