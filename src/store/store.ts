@@ -9,6 +9,7 @@ import { petSittersReducer } from './reducers/petSitterReducer';
 import { groomersReducer } from './reducers/groomerReducer';
 import { trainersReducer } from './reducers/trainerReducer';
 import { dogFriendliesReducer } from './reducers/dogFriendlyReducer';
+import { mapMarksReducer } from './reducers/mapMarksReducer';
 
 export const rootReducer = combineReducers({
   shops: shopsReducer,
@@ -19,6 +20,7 @@ export const rootReducer = combineReducers({
   trainers: trainersReducer,
   dog_friendlies: dogFriendliesReducer,
   login: loginReducer,
+  mapMarks: mapMarksReducer,
   app: appReducer,
   user: userReducer,
 });

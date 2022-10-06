@@ -9,10 +9,18 @@ import { fetchPublishAbleKey } from './helpers';
 import { Toast } from './src/components/Toast/Toast';
 import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
+import Geocoder from 'react-native-geocoding';
+import Config from 'react-native-config';
 
 export const App = () => {
   const isLogged = useSelector(getLoginStatus);
   const [publishableKey, setPublishableKey] = useState('');
+
+  const api = Config.API_KEY;
+
+  if (api) {
+    Geocoder.init(api);
+  }
 
   useEffect(() => {
     SplashScreen.hide();

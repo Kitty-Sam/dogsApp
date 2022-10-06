@@ -8,9 +8,13 @@ import { COLORS } from '../../colors/colors';
 import { useInput } from '../../hooks/useInput';
 import { addNewServiceAction } from '../../store/sagas/sagaActions/addNewService';
 import { AddSectionType } from './type';
+import { chaptersName } from '../../enum/chapters';
+import { getCoordinates } from '../../utils/getCoordinates';
+import { addNewMapMarkAction } from '../../store/sagas/sagaActions/addNewMapMark';
 
 export const AddSection: FC<AddSectionType> = ({ chapter }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const addedTitle = useInput('');
   const addedInfo = useInput('');
   const addedPhone = useInput('');
@@ -31,6 +35,20 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
   };
 
   const addItemPress = async () => {
+    const location = await getCoordinates(addedAddress.value);
+
+    if (location) {
+      const newMark = {
+        id: addedTitle.value,
+        chapter: chapter,
+        pinColor: chapter === chaptersName.CLINIC ? 'green' : 'purple',
+        title: addedTitle.value,
+        description: addedInfo.value,
+        coordinate: { latitude: location.lat, longitude: location.lng },
+      };
+      dispatch(addNewMapMarkAction({ newMapMark: newMark }));
+    }
+    console.log('location', location);
     if (
       addedInfo.value.trim() === '' ||
       addedTitle.value.trim() === '' ||
