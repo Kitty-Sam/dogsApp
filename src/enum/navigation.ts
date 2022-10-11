@@ -20,9 +20,13 @@ export const enum AdoptionNavigationName {
   PET_UNITE = 'Pet',
   FAVORITE = 'Favorite',
 }
+export const enum PetsNavigationName {
+  PROFILE = 'Profile',
+  PET_UNITE = 'Pet',
+}
 
 export const enum DrawerNavigationName {
-  PROFILE = 'My pets',
+  PROFILE_STACK = 'My pets',
   MESSAGE_STACK = 'Messages',
   USEFUL_STACK = 'Service',
   CALENDAR = 'Calendar',
@@ -34,4 +38,5 @@ export const enum AuthNavigationName {
   LOGIN = 'Login',
   REGISTER = 'Register',
   FORGOT_PASSWORD = 'Forgot password',
+  ADD_PET = 'Add pet',
 }

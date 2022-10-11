@@ -1,5 +1,5 @@
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
-import { ServicesNavigationName } from '../../enum/navigation';
-import { UsefulStackParamList } from '../../navigation/UsefulStack/type';
+import { AuthNavigationName } from '../../enum/navigation';
+import { AuthStackParamList } from '../../navigation/AuthStack/type';
 
-export type AddPetScreenProps = StackScreenNavigationProps<ServicesNavigationName.ADD, UsefulStackParamList>;
+export type AddPetScreenProps = StackScreenNavigationProps<AuthNavigationName.ADD_PET, AuthStackParamList>;

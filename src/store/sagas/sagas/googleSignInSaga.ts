@@ -1,4 +1,4 @@
-import { put } from '@redux-saga/core/effects';
+import { put, select } from '@redux-saga/core/effects';
 
 import { toggleAppStatus } from '../../actions/appAC';
 import { requestStatus } from '../../reducers/appReducer';
@@ -9,10 +9,13 @@ import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
 import { GoogleSignInType } from '../sagaActions/googleSignIn';
 
+import { getIsAddedAll } from '../../selectors/userSelector';
+
 export function* googleSignInWorker({ payload }: GoogleSignInType) {
   const { navigation, userEmail, userPassword } = payload;
   yield put(toggleAppStatus(requestStatus.LOADING));
   try {
+    const isAddedAll: boolean = yield select(getIsAddedAll);
     // @ts-ignore
     const userCredential: UserCredential = yield signInWithEmailAndPassword(auth, userEmail.value, userPassword.value);
 
@@ -20,7 +23,11 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
     userPassword.resetValue();
 
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
-    yield put(toggleIsLoggedAC({ isLogged: true }));
+    if (isAddedAll) {
+      yield put(toggleIsLoggedAC({ isLogged: true }));
+    } else {
+      yield navigation.navigate(AuthNavigationName.ADD_PET);
+    }
   } catch (error: any) {
     Alert.alert('register at first or check your credentials again');
     yield put(toggleAppStatus(requestStatus.FAILED));

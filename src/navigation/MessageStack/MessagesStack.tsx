@@ -13,7 +13,7 @@ export const MessagesStack = () => {
       <Messages.Screen
         name={MessagesNavigationName.MESSAGES}
         component={MessagesScreen}
-        options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       />
       <Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreen} />
     </Messages.Navigator>

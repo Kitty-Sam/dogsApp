@@ -3,10 +3,11 @@ import {
   ADD_NEW_MAP_MARK,
   ADD_NEW_PET,
   ADD_NEW_SERVICE,
+  ADD_PERSONAL_PET,
   CALL_OWNER,
   FETCH_FAVORITE_PETS_IDS,
   FETCH_MAP_MARKS,
-  FETCH_PETS,
+  FETCH_PERSONAL_PETS,
   FETCH_SERVICES,
   FORGOT_PASSWORD,
   GOOGLE_REGISTER,
@@ -16,7 +17,6 @@ import {
 } from '../sagasActionsTypes/sagasActionsType';
 
 import { addNewPetWorker } from './addNewPetSaga';
-import { fetchPetsWorker } from './fetchPetsSaga';
 import { fetchServicesWorker } from './fetchServicesSaga';
 import { googleSignInWorker } from './googleSignInSaga';
 import { googleSignOutWorker } from './googleSignOutSaga';
@@ -28,6 +28,8 @@ import { callOwnerWorker } from './callOwnerSaga';
 import { forgotPasswordWorker } from './forgotPasswordSaga';
 import { addNewMapMarkWorker } from './addNewMapMarkSaga';
 import { fetchMapMarksWorker } from './fetchMapMarksSaga';
+import { addPersonalPetWorker } from './addPersonalPetSaga';
+import { fetchPersonalPetsWorker } from './fetchPersonalPetsSaga';
 
 export function* watchClickSaga() {
   yield takeLatest(GOOGLE_SIGN_IN, googleSignInWorker);
@@ -35,7 +37,6 @@ export function* watchClickSaga() {
   yield takeLatest(ADD_NEW_PET, addNewPetWorker);
   yield takeLatest(ADD_NEW_SERVICE, addNewServiceWorker);
   yield takeLatest(REMOVE_SERVICE, removeServiceWorker);
-  yield takeLatest(FETCH_PETS, fetchPetsWorker);
   yield takeLatest(FETCH_FAVORITE_PETS_IDS, fetchFavoritePetsIdsWorker);
   yield takeLatest(FETCH_SERVICES, fetchServicesWorker);
   yield takeLatest(GOOGLE_REGISTER, googleRegisterWorker);
@@ -43,6 +44,8 @@ export function* watchClickSaga() {
   yield takeLatest(FORGOT_PASSWORD, forgotPasswordWorker);
   yield takeLatest(ADD_NEW_MAP_MARK, addNewMapMarkWorker);
   yield takeLatest(FETCH_MAP_MARKS, fetchMapMarksWorker);
+  yield takeLatest(ADD_PERSONAL_PET, addPersonalPetWorker);
+  yield takeLatest(FETCH_PERSONAL_PETS, fetchPersonalPetsWorker);
 }
 
 export default function* rootSaga() {

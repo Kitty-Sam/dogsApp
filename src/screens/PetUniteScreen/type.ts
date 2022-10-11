@@ -1,5 +1,5 @@
-import { AdoptionNavigationName } from '../../enum/navigation';
+import { PetsNavigationName } from '../../enum/navigation';
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
-import { AdoptionStackParamList } from '../../navigation/AdoptionStack/type';
+import { PetsStackParamList } from '../../navigation/PetsStack/type';
 
-export type PetUniteScreenProps = StackScreenNavigationProps<AdoptionNavigationName.PET_UNITE, AdoptionStackParamList>;
+export type PetUniteScreenProps = StackScreenNavigationProps<PetsNavigationName.PET_UNITE, PetsStackParamList>;

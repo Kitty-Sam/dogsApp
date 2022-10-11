@@ -1,5 +1,5 @@
-import { DrawerNavigationName } from '../../enum/navigation';
+import { PetsNavigationName } from '../../enum/navigation';
 import { StackScreenNavigationProps } from '../../navigation/navPropsType';
-import { DrawerStackParamList } from '../../navigation/Drawer/type';
+import { PetsStackParamList } from '../../navigation/PetsStack/type';
 
-export type ProfileScreenProps = StackScreenNavigationProps<DrawerNavigationName.PROFILE, DrawerStackParamList>;
+export type ProfileScreenProps = StackScreenNavigationProps<PetsNavigationName.PROFILE, PetsStackParamList>;

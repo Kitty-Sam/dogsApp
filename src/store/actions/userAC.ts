@@ -1,84 +1,42 @@
 import { PetType } from '../reducers/userReducer';
 
-export type FetchPersonalInfoPayloadType = {
-  petName: string;
-  petAge: string;
-  petBreed: string;
-};
-
 export enum UserActions {
-  FETCH_PERSONAL_INFO = 'fetch_personal_info',
-  FETCH_PETS = 'fetch_pets',
-  ADD_PET = 'add_pet',
-  ADD_FAVORITE = 'add_favorite_pet',
-  REMOVE_FAVORITE = 'remove_favorite_pet',
-  FAVORITES = 'favorite_pets',
+  ADD_PERSONAL_PET = 'add_personal_pet',
+  FETCH_PERSONAL_PETS = 'fetch_personal_pets',
+  IS_ADDED_ALL = 'is_added_all',
 }
 
-export type FavoriteSaveIdType = {
-  id: number;
+export type PayloadType = {
+  isAddedAll: boolean;
 };
+//personal pet
 
-export const fetchPersonalInfoAC: FetchPersonalInfoActionType = (payload: FetchPersonalInfoPayloadType) => ({
-  type: UserActions.FETCH_PERSONAL_INFO,
+export const addPersonalPetAC: AddPersonalPetActionType = (payload: PetType) => ({
+  type: UserActions.ADD_PERSONAL_PET,
   payload,
 });
 
-export type FetchPersonalInfoActionType = (payload: FetchPersonalInfoPayloadType) => {
-  payload: FetchPersonalInfoPayloadType;
-  type: UserActions.FETCH_PERSONAL_INFO;
-};
-
-//pets
-
-export const fetchPetsAC: FetchPetsActionType = (payload: PetType[]) => ({
-  type: UserActions.FETCH_PETS,
-  payload,
-});
-
-export type FetchPetsActionType = (payload: PetType[]) => {
-  payload: PetType[];
-  type: UserActions.FETCH_PETS;
-};
-
-export const addPetAC: AddPetActionType = (payload: PetType) => ({
-  type: UserActions.ADD_PET,
-  payload,
-});
-
-export type AddPetActionType = (payload: PetType) => {
+export type AddPersonalPetActionType = (payload: PetType) => {
   payload: PetType;
-  type: UserActions.ADD_PET;
+  type: UserActions.ADD_PERSONAL_PET;
 };
 
-// favorites pets
-
-export const fetchFavoritePetsAC: FetchFavoritePetsActionType = (payload: FavoriteSaveIdType[]) => ({
-  type: UserActions.FAVORITES,
+export const fetchPersonalPetsAC: FetchPersonalPetsActionType = (payload: PetType[]) => ({
+  type: UserActions.FETCH_PERSONAL_PETS,
   payload,
 });
 
-export type FetchFavoritePetsActionType = (payload: FavoriteSaveIdType[]) => {
-  payload: FavoriteSaveIdType[];
-  type: UserActions.FAVORITES;
+export type FetchPersonalPetsActionType = (payload: PetType[]) => {
+  payload: PetType[];
+  type: UserActions.FETCH_PERSONAL_PETS;
 };
 
-export const addFavoriteAC: addFavoriteType = (payload: FavoriteSaveIdType) => ({
-  type: UserActions.ADD_FAVORITE,
+export const toggleIsAddedPetsAC: ToggleIsAddedPetsActionType = (payload: PayloadType) => ({
+  type: UserActions.IS_ADDED_ALL,
   payload,
 });
 
-export type addFavoriteType = (payload: FavoriteSaveIdType) => {
-  payload: FavoriteSaveIdType;
-  type: UserActions.ADD_FAVORITE;
-};
-
-export const removeFavoriteAC: removeFavoriteType = (payload: FavoriteSaveIdType) => ({
-  type: UserActions.REMOVE_FAVORITE,
-  payload,
-});
-
-export type removeFavoriteType = (payload: FavoriteSaveIdType) => {
-  payload: FavoriteSaveIdType;
-  type: UserActions.REMOVE_FAVORITE;
+export type ToggleIsAddedPetsActionType = (payload: PayloadType) => {
+  payload: PayloadType;
+  type: UserActions.IS_ADDED_ALL;
 };

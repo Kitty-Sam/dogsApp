@@ -4,7 +4,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -22,10 +21,11 @@ import { LoginScreenProps } from './type';
 import { useInput } from '../../hooks/useInput';
 import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
-import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
 import { getLoginError } from '../../store/selectors/loginSelector';
+import { TextInput } from 'react-native-paper';
+import { Gap } from '../../components/Gap/Gap';
 
 export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
@@ -58,36 +58,39 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
             <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
               <TextItemThin>Forgot password?</TextItemThin>
             </TouchableOpacity>
-
-            <CustomTextInput
-              placeholder={inputsPlaceholdersName.EMAIL}
+            <Gap size={1} />
+            <TextInput
+              label={inputsPlaceholdersName.EMAIL}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
               contextMenuHidden={true}
               {...userEmail}
-              error={error}
             />
-
-            <CustomTextInput
-              error={error}
-              placeholder={inputsPlaceholdersName.PASSWORD}
+            <Gap size={1} />
+            <TextInput
+              label={inputsPlaceholdersName.PASSWORD}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
+              contextMenuHidden={true}
               {...userPassword}
-              iconPosition="right"
-              secureTextEntry={isSecureEntry}
-              icon={
-                <TouchableOpacity
+              right={
+                <TextInput.Icon
                   onPress={() => {
                     setIsSecureEntry(prev => !prev);
                   }}
-                >
-                  <Text>
-                    {isSecureEntry ? (
-                      <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
-                    ) : (
-                      <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
-                    )}
-                  </Text>
-                </TouchableOpacity>
+                  name={() => (
+                    <Icon
+                      type={'ionicon'}
+                      name={isSecureEntry ? iconsName.EYE_OFF : iconsName.EYE}
+                      size={16}
+                      color={COLORS.text.grey}
+                    />
+                  )}
+                />
               }
+              secureTextEntry={isSecureEntry}
             />
+            <Gap size={1} />
 
             <View style={styles.buttonsContainer}>
               <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />

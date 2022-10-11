@@ -13,8 +13,10 @@ export type AddPetScreenStyleType = {
 export const styles = StyleSheet.create<AddPetScreenStyleType>({
   rootContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    marginHorizontal: 24,
+    marginVertical: 24,
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
   },
   filterContainer: {
     flexDirection: 'row',
@@ -26,9 +28,10 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     margin: 4,
   },
   buttonsContainer: {
+    // marginTop: 100,
     flexDirection: 'row',
-    width: 300,
-    justifyContent: 'space-between',
+    // width: 300,
+    justifyContent: 'flex-end',
   },
   input: {
     borderBottomColor: COLORS.text.grey,
