@@ -23,6 +23,7 @@ export const ChatScreen: FC<ChatScreenProps> = props => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerTitle: `${name}`,
+      headerBackTitle: 'Back',
       // headerLeft: () => (
       //   <View style={{ marginLeft: 8, flexDirection: 'row' }}>
       //     <Avatar size={44} rounded source={{ uri: avatar }} avatarStyle={{ marginLeft: 4 }} />
@@ -83,6 +84,7 @@ export const ChatScreen: FC<ChatScreenProps> = props => {
       messages={messages}
       showUserAvatar={true}
       showAvatarForEveryMessage={true}
+      renderUsernameOnMessage={true}
       onSend={messages => onSend(messages)}
       user={{
         _id: id,

@@ -4,7 +4,6 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -19,7 +18,8 @@ import { AuthNavigationName } from '../../enum/navigation';
 import { ForgotPasswordScreenProps } from './type';
 import { forgotPasswordAction } from '../../store/sagas/sagaActions/forgotPassword';
 import { useDispatch } from 'react-redux';
-import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
+import { TextInput } from 'react-native-paper';
+import { Gap } from '../../components/Gap/Gap';
 
 export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const { navigation } = props;
@@ -36,7 +36,15 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
           <TextItemThin style={styles.noteText}>
             Enter your email and we will send you link for reset your old password
           </TextItemThin>
-          <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...email} />
+          {/*<CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...email} />*/}
+          <TextInput
+            label={inputsPlaceholdersName.EMAIL}
+            mode="outlined"
+            activeOutlineColor={COLORS.text.grey}
+            contextMenuHidden={true}
+            {...email}
+          />
+          <Gap size={1} />
           <View style={styles.buttonsContainer}>
             <AppButton
               onPress={() => forgotPassword(email.value)}

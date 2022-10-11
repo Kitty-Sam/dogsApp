@@ -2,6 +2,7 @@ export const COLORS = {
   buttons: {
     peach: '#fff1c1',
     brown: '#FE5F55',
+    violet: '#8000FF',
   },
   background: {
     dark_brown: '#a64942',

@@ -25,6 +25,8 @@ import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
 import { requestStatus } from '../../store/reducers/appReducer';
+import { TextInput } from 'react-native-paper';
+import { Gap } from '../../components/Gap/Gap';
 
 export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const { navigation } = props;
@@ -52,30 +54,48 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inputsContainer}>
-            <CustomTextInput placeholder={inputsPlaceholdersName.NICK_NAME} {...userName} contextMenuHidden={true} />
-            <CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} {...userEmail} contextMenuHidden={true} />
-            <CustomTextInput
-              placeholder={inputsPlaceholdersName.PASSWORD}
-              {...userPassword}
+            <TextInput
+              label={inputsPlaceholdersName.NICK_NAME}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
               contextMenuHidden={true}
-              iconPosition="right"
-              secureTextEntry={isSecureEntry}
-              icon={
-                <TouchableOpacity
+              {...userName}
+            />
+            <Gap size={1} />
+
+            <TextInput
+              label={inputsPlaceholdersName.EMAIL}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
+              contextMenuHidden={true}
+              {...userEmail}
+            />
+            <Gap size={1} />
+
+            <TextInput
+              label={inputsPlaceholdersName.PASSWORD}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
+              contextMenuHidden={true}
+              {...userPassword}
+              right={
+                <TextInput.Icon
                   onPress={() => {
                     setIsSecureEntry(prev => !prev);
                   }}
-                >
-                  <Text>
-                    {isSecureEntry ? (
-                      <Icon type={'ionicon'} name={iconsName.EYE_OFF} size={16} color={COLORS.text.grey} />
-                    ) : (
-                      <Icon type={'ionicon'} name={iconsName.EYE} size={16} color={COLORS.text.grey} />
-                    )}
-                  </Text>
-                </TouchableOpacity>
+                  name={() => (
+                    <Icon
+                      type={'ionicon'}
+                      name={isSecureEntry ? iconsName.EYE_OFF : iconsName.EYE}
+                      size={16}
+                      color={COLORS.text.grey}
+                    />
+                  )}
+                />
               }
+              secureTextEntry={isSecureEntry}
             />
+            <Gap size={1} />
             <View style={styles.buttonsContainer}>
               <AppButton onPress={registerPress} title={buttonsName.REGISTER} backgroundColor={COLORS.buttons.peach} />
               <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>

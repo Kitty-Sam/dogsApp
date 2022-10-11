@@ -1,12 +1,12 @@
 import { ADD_NEW_PET } from '../sagasActionsTypes/sagasActionsType';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DrawerStackParamList } from '../../../navigation/Drawer/type';
 import { UseInputResponseType } from '../../../hooks/useInput';
 import { maleName } from '../../../enum/maleName';
 import { animalsName } from '../../../enum/animalsName';
+import { AuthStackParamList } from '../../../navigation/AuthStack/type';
 
 export type AddNewPetPayloadType = {
-  navigation: StackNavigationProp<DrawerStackParamList>;
+  navigation: StackNavigationProp<AuthStackParamList>;
   description: UseInputResponseType;
   age: UseInputResponseType;
   nickName: UseInputResponseType;

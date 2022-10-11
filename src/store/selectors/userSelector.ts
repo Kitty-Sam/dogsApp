@@ -1,5 +1,4 @@
 import { AppStoreType } from '../store';
 
-export const getPets = (state: AppStoreType) => state.user!.pets;
-export const getFavoritesIds = (state: AppStoreType) => state.user!.favorites;
-export const getPersonalInfo = (state: AppStoreType) => state.user!.personalInfo;
+export const getPersonalPets = (state: AppStoreType) => state.user!.personalPets;
+export const getIsAddedAll = (state: AppStoreType) => state.user!.isAddedAll;
