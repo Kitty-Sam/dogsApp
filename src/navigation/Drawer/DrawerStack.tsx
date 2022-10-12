@@ -10,6 +10,8 @@ import { CustomDrawer } from './CustomDrawer';
 import { CalendarScreen } from '../../screens/CalendarScreen/CalendarScreen';
 import { MapScreen } from '../../screens/MapScreen/MapScreen';
 import { PetsStack } from '../PetsStack/PetsStack';
+import { SettingsScreen } from '../../screens/SettingsScreen/SettingsScreen';
+import { FriendsStack } from '../FriendsStack/FriendsStack';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -73,11 +75,29 @@ export const DrawerStack = () => {
         }}
       />
       <Drawer.Screen
+        name={DrawerNavigationName.FRIENDS_STACK}
+        component={FriendsStack}
+        options={{
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.PEOPLE : iconsName.PEOPLE_OUTLINE} color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name={DrawerNavigationName.MESSAGE_STACK}
         component={MessagesStack}
         options={{
           drawerIcon: ({ color, size, focused }) => (
             <Icon name={focused ? iconsName.CHATBOX : iconsName.CHATBOX_OUTLINE} color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name={DrawerNavigationName.SETTINGS}
+        component={SettingsScreen}
+        options={{
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.SETTINGS : iconsName.SETTINGS_OUTLINE} color={color} size={size} />
           ),
         }}
       />

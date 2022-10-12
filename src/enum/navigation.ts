@@ -15,11 +15,18 @@ export const enum MessagesNavigationName {
   CHAT = 'Chat',
 }
 
-export const enum AdoptionNavigationName {
-  ADOPTION = 'Adoption Pet',
-  PET_UNITE = 'Pet',
-  FAVORITE = 'Favorite',
+export const enum FriendsNavigationName {
+  USERS = 'Users',
+  FRIENDS = 'Friends List',
+  FRIEND_PROFILE = 'Friend profile',
 }
+
+//
+// export const enum AdoptionNavigationName {
+//   ADOPTION = 'Adoption Pet',
+//   PET_UNITE = 'Pet',
+//   FAVORITE = 'Favorite',
+// }
 export const enum PetsNavigationName {
   PROFILE = 'Profile',
   PET_UNITE = 'Pet',
@@ -31,6 +38,8 @@ export const enum DrawerNavigationName {
   USEFUL_STACK = 'Service',
   CALENDAR = 'Calendar',
   MAP = 'Map',
+  FRIENDS_STACK = 'Friends',
+  SETTINGS = 'Settings',
 }
 
 export const enum AuthNavigationName {
