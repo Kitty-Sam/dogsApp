@@ -40,8 +40,6 @@ export const PetSittersScreen: FC<PetSittersScreenProps> = props => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log('chapter', chapter);
-            console.log('id', id);
             removeItem(chapter, id);
           }}
         >

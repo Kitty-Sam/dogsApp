@@ -31,10 +31,7 @@ export const CustomDrawer = (props: any) => {
       <DrawerContentScrollView {...props}>
         <View style={{ flexDirection: 'row' }}>
           <Image source={{ uri: !photo ? images.avatar : photo }} style={styles.avatarContainer} />
-          <TouchableOpacity
-            style={styles.userNameTextContainer}
-            onPress={() => navigation.navigate(DrawerNavigationName.PROFILE)}
-          >
+          <TouchableOpacity style={styles.userNameTextContainer}>
             <Text style={{ color: COLORS.text.dark_blue }}>{currentUserName}</Text>
           </TouchableOpacity>
         </View>

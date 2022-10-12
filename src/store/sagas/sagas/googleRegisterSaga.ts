@@ -24,12 +24,12 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
 
     const { user } = userCredential;
 
-    yield sendEmailVerification(user, {
-      handleCodeInApp: true,
-      url: `https://dogs-8cdd1.firebaseapp.com`,
-    });
-
-    Alert.alert('send message');
+    // yield sendEmailVerification(user, {
+    //   handleCodeInApp: true,
+    //   url: `https://dogs-8cdd1.firebaseapp.com`,
+    // });
+    //
+    // Alert.alert('send message');
 
     // const res = yield applyActionCode(auth, actionCode);
     // console.log('res', res);
