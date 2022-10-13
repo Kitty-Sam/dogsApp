@@ -41,7 +41,7 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
       const newMark = {
         id: addedTitle.value,
         chapter: chapter,
-        pinColor: chapter === chaptersName.CLINIC ? 'green' : 'purple',
+        pinColor: chapter === chaptersName.CLINIC ? 'red' : 'purple',
         title: addedTitle.value,
         description: addedInfo.value,
         coordinate: { latitude: location.lat, longitude: location.lng },
@@ -49,6 +49,7 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
       dispatch(addNewMapMarkAction({ newMapMark: newMark }));
     }
     console.log('location', location);
+
     if (
       addedInfo.value.trim() === '' ||
       addedTitle.value.trim() === '' ||

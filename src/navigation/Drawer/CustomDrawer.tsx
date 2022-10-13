@@ -43,7 +43,7 @@ export const CustomDrawer = (props: any) => {
         }}
       >
         <DrawerItemList {...props} />
-        <View style={{ backgroundColor: COLORS.text.white, marginTop: 150 }}>
+        <View style={{ backgroundColor: COLORS.text.white, marginTop: 50 }}>
           <TouchableOpacity style={styles.logOutText} onPress={onLogOut}>
             <Icon name={iconsName.LOG_OUT_OUTLINE} size={24} color={COLORS.text.dark_blue} />
             <TextItemThin style={{ margin: 4 }}>Log out</TextItemThin>

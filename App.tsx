@@ -17,10 +17,11 @@ export const App = () => {
   const [publishableKey, setPublishableKey] = useState('');
 
   const api = Config.API_KEY;
+  console.log('api', api);
 
-  if (api) {
+  useEffect(() => {
     Geocoder.init(api);
-  }
+  }, []);
 
   useEffect(() => {
     SplashScreen.hide();
@@ -45,7 +46,7 @@ export const App = () => {
 
   return (
     <NativeBaseProvider>
-      <Toast />
+      {/*<Toast />*/}
       <StripeProvider publishableKey={publishableKey}>
         <NavigationContainer>{isLogged ? <DrawerStack /> : <AuthStack />}</NavigationContainer>
       </StripeProvider>
