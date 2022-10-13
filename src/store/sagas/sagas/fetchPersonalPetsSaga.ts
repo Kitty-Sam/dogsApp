@@ -10,11 +10,9 @@ export function* fetchPersonalPetsWorker() {
     const currentUserId: boolean = yield select(getCurrentUserId);
     const reference: FirebaseDatabaseTypes.Reference = yield database.ref(`/users/${currentUserId}/personalInfo`);
     const snapshot: FirebaseDatabaseTypes.DataSnapshot = yield reference.once('value');
-    console.log('snapshot', snapshot);
 
     if (snapshot.val()) {
       const petsFB: PetType[] = Object.values(snapshot.val());
-      console.log('petsFB', petsFB);
       yield put(fetchPersonalPetsAC(petsFB));
     }
   } catch (error: any) {

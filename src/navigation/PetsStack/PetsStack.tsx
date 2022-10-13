@@ -4,12 +4,21 @@ import { PetsNavigationName } from '../../enum/navigation';
 import { PetUniteScreen } from '../../screens/PetUniteScreen/PetUniteScreen';
 import { PetsStackParamList } from './type';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
+import { COLORS } from '../../colors/colors';
 
 const Pets = createNativeStackNavigator<PetsStackParamList>();
 
 export const PetsStack = () => {
   return (
-    <Pets.Navigator>
+    <Pets.Navigator
+      screenOptions={{
+        headerBackTitle: 'Back',
+        headerTintColor: COLORS.buttons.violet,
+        headerTitleStyle: {
+          color: COLORS.text.black,
+        },
+      }}
+    >
       <Pets.Screen name={PetsNavigationName.PROFILE} component={ProfileScreen} options={{ headerShown: false }} />
       <Pets.Screen name={PetsNavigationName.PET_UNITE} component={PetUniteScreen} />
     </Pets.Navigator>

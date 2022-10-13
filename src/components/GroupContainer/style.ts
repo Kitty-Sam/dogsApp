@@ -8,12 +8,11 @@ export type ItemContainerStyleType = {
 
 export const styles = StyleSheet.create<ItemContainerStyleType>({
   itemContainer: {
-    borderColor: COLORS.text.dark_blue,
-    borderWidth: 2,
     borderRadius: 10,
-    width: screenWidth * 0.35,
-    height: screenWidth * 0.35,
+    width: 150,
+    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: COLORS.buttons.violet,
   },
 });

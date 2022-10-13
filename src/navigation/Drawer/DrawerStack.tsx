@@ -12,6 +12,7 @@ import { MapScreen } from '../../screens/MapScreen/MapScreen';
 import { PetsStack } from '../PetsStack/PetsStack';
 import { SettingsScreen } from '../../screens/SettingsScreen/SettingsScreen';
 import { FriendsStack } from '../FriendsStack/FriendsStack';
+import { COLORS } from '../../colors/colors';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -22,20 +23,9 @@ export const DrawerStack = () => {
       useLegacyImplementation
       screenOptions={{
         headerShown: false,
-        // drawerActiveTintColor: COLORS.buttons.brown,
-        // drawerInactiveTintColor: COLORS.text.dark_blue,
-        // drawerType: 'front',
-        drawerContentStyle: { marginTop: 300, width: 250 },
-        drawerStyle: {
-          borderBottomEndRadius: 20,
-          borderTopEndRadius: 20,
-          // backgroundColor: COLORS.buttons.peach,
-        },
-        // headerTintColor: COLORS.text.dark_blue,
-        // // headerStyle: { backgroundColor: COLORS.buttons.peach },
-        // drawerContentContainerStyle: {
-        //   width: 350,
-        // },
+        drawerActiveTintColor: COLORS.buttons.violet,
+        drawerInactiveTintColor: COLORS.text.dark_blue,
+        drawerType: 'front',
       }}
     >
       <Drawer.Screen

@@ -12,7 +12,7 @@ export const enum ServicesNavigationName {
 
 export const enum MessagesNavigationName {
   MESSAGES = 'Dialogs',
-  CHAT = 'Chat',
+  CHAT = 'Chat one',
 }
 
 export const enum FriendsNavigationName {
@@ -34,7 +34,7 @@ export const enum PetsNavigationName {
 
 export const enum DrawerNavigationName {
   PROFILE_STACK = 'My pets',
-  MESSAGE_STACK = 'Messages',
+  MESSAGE_STACK = 'Chat',
   USEFUL_STACK = 'Service',
   CALENDAR = 'Calendar',
   MAP = 'Map',

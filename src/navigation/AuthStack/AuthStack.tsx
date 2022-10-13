@@ -2,11 +2,11 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuthNavigationName } from '../../enum/navigation';
 import { AuthStackParamList } from './type';
-import { LoginScreen } from '../../screens/LoginScreen/LoginScreen';
 import { RegisterScreen } from '../../screens/RegisterScreen/RegisterScreen';
 import { WelcomeScreen } from '../../screens/WelcomeScreen/WelcomeScreen';
 import { ForgotPasswordScreen } from '../../screens/ForgotPasswordScreen/ForgotPasswordScreen';
 import { AddPetScreen } from '../../screens/AddPetScreen/AddPetScreen';
+import { LoginScreen } from '../../screens/LoginScreen/LoginScreen';
 
 const Auth = createNativeStackNavigator<AuthStackParamList>();
 

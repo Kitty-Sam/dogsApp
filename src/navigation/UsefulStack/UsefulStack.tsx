@@ -11,6 +11,7 @@ import { GroomersScreen } from '../../screens/GroomersScreen/GroomersScreen';
 import { TrainersScreen } from '../../screens/TrainersScreen/TrainersScreen';
 import { DogFriendliesScreen } from '../../screens/DogFriendliesScreen/DogFriendliesScreen';
 import { ItemUniteScreen } from '../../screens/ItemUniteScreen/ItemUniteScreen';
+import { COLORS } from '../../colors/colors';
 
 const StackService = createNativeStackNavigator<UsefulStackParamList>();
 
@@ -19,6 +20,10 @@ export const UsefulStack = () => {
     <StackService.Navigator
       screenOptions={{
         headerBackTitle: 'Back',
+        headerTintColor: COLORS.buttons.violet,
+        headerTitleStyle: {
+          color: COLORS.text.black,
+        },
       }}
     >
       <StackService.Screen name={ServicesNavigationName.ROOT} component={UsefulServiceScreen} />

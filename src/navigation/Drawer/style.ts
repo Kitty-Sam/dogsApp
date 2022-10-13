@@ -11,14 +11,13 @@ export const styles = StyleSheet.create<CustomDrawerStyleType>({
   avatarContainer: {
     height: 70,
     width: 70,
-    borderRadius: 20,
-    margin: 16,
+    borderRadius: 16,
+    marginHorizontal: 16,
     borderWidth: 1,
     borderColor: COLORS.text.dark_blue,
   },
   userNameTextContainer: {
-    marginVertical: 60,
-    marginTop: 50,
+    margin: 18,
   },
   logOutText: {
     flexDirection: 'row',
