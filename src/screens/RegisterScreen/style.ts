@@ -12,7 +12,7 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
     fontSize: 16,
     position: 'absolute',
     right: 24,
-    top: 24,
+    top: 16,
   },
   inputsContainer: {
     padding: 40,
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
     justifyContent: 'center',
   },
   buttonsContainer: {
-    marginTop: 100,
+    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },

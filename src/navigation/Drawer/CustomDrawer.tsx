@@ -29,8 +29,7 @@ export const CustomDrawer = (props: any) => {
       <>
         <Image source={{ uri: !photo ? images.avatar : photo }} style={styles.avatarContainer} />
         <TouchableOpacity style={styles.userNameTextContainer}>
-          {/*<Text style={{ color: COLORS.text.dark_blue }}>{currentUserName}</Text>*/}
-          <Text style={{ color: COLORS.text.dark_blue, fontSize: 18 }}>Name</Text>
+          <Text style={{ color: COLORS.text.dark_blue, fontSize: 18 }}>{currentUserName}</Text>
           <Text style={{ color: COLORS.text.dark_blue }}>friends and pets</Text>
         </TouchableOpacity>
       </>

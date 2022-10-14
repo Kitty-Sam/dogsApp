@@ -23,13 +23,13 @@ export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
     justifyContent: 'center',
   },
   buttonsContainer: {
-    marginTop: 100,
+    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
   textLogIn: {
     position: 'absolute',
-    top: 124,
+    top: 116,
     right: 24,
     zIndex: 10,
     // margin: 12,
