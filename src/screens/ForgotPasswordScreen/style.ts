@@ -18,16 +18,21 @@ export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
     color: COLORS.text.dark_blue,
   },
   mainBlock: {
-    padding: 24,
+    padding: 40,
     flex: 1,
     justifyContent: 'center',
   },
   buttonsContainer: {
+    marginTop: 100,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-end',
   },
   textLogIn: {
-    margin: 12,
+    position: 'absolute',
+    top: 124,
+    right: 24,
+    zIndex: 10,
+    // margin: 12,
   },
-  noteText: { margin: 16, textAlign: 'center' },
+  noteText: { margin: 16 },
 });

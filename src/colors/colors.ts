@@ -7,6 +7,7 @@ export const COLORS = {
   background: {
     dark_brown: '#a64942',
     light_violet: '#d0bcff',
+    light_pink: '#fffbfe',
   },
   text: {
     dark_blue: '#293462',

@@ -20,6 +20,8 @@ import { forgotPasswordAction } from '../../store/sagas/sagaActions/forgotPasswo
 import { useDispatch } from 'react-redux';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
+import { screenWidth } from '../../consts/consts';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   const { navigation } = props;
@@ -32,35 +34,48 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.mainBlock}>
-          <TextItemThin style={styles.noteText}>
-            Enter your email and we will send you link for reset your old password
-          </TextItemThin>
-          {/*<CustomTextInput placeholder={inputsPlaceholdersName.EMAIL} contextMenuHidden={true} {...email} />*/}
-          <TextInput
-            label={inputsPlaceholdersName.EMAIL}
-            mode="outlined"
-            activeOutlineColor={COLORS.text.grey}
-            contextMenuHidden={true}
-            {...email}
-          />
-          <Gap size={1} />
-          <View style={styles.buttonsContainer}>
-            <AppButton
-              onPress={() => forgotPassword(email.value)}
-              title={buttonsName.SEND}
-              backgroundColor={COLORS.buttons.peach}
-              disabled={email.value === ''}
-            />
-            <TouchableOpacity
-              onPress={() => navigation.navigate(AuthNavigationName.LOGIN)}
-              activeOpacity={0.4}
-              style={styles.textLogIn}
-            >
-              <TextItemThin>Try sign in</TextItemThin>
-            </TouchableOpacity>
+        <SafeAreaView style={{ flex: 1 }}>
+          <View
+            style={{
+              width: screenWidth,
+              height: 60,
+              backgroundColor: COLORS.background.light_pink,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <TextItemThin style={{ fontSize: 22 }}>Reset password</TextItemThin>
           </View>
-        </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate(AuthNavigationName.LOGIN)}
+            activeOpacity={0.4}
+            style={styles.textLogIn}
+          >
+            <TextItemThin>Try sign in</TextItemThin>
+          </TouchableOpacity>
+          <View style={styles.mainBlock}>
+            <TextInput
+              label={inputsPlaceholdersName.EMAIL}
+              mode="outlined"
+              activeOutlineColor={COLORS.text.grey}
+              contextMenuHidden={true}
+              {...email}
+              theme={{ roundness: 10 }}
+            />
+            <TextItemThin style={{ fontSize: 14, margin: 10 }}>
+              Please, enter the e-mail, that you used for logging in
+            </TextItemThin>
+            <Gap size={1} />
+            <View style={styles.buttonsContainer}>
+              <AppButton
+                onPress={() => forgotPassword(email.value)}
+                title={buttonsName.SEND}
+                backgroundColor={COLORS.buttons.violet}
+                disabled={email.value === ''}
+              />
+            </View>
+          </View>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

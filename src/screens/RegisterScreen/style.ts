@@ -10,15 +10,18 @@ export type RegisterScreenStyleType = {
 export const styles = StyleSheet.create<RegisterScreenStyleType>({
   loginTextContainer: {
     fontSize: 16,
-    margin: 16,
+    position: 'absolute',
+    right: 24,
+    top: 24,
   },
   inputsContainer: {
-    padding: 24,
+    padding: 40,
     flex: 1,
     justifyContent: 'center',
   },
   buttonsContainer: {
+    marginTop: 100,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
 });

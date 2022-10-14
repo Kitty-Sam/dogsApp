@@ -1,12 +1,12 @@
 export const enum buttonsName {
   ADD = 'add',
   CANCEL = 'cancel',
-  SIGN_IN = 'sign in',
-  REGISTER = 'register',
+  SIGN_IN = 'Log in',
+  REGISTER = 'Sign up',
   SAVE = 'save',
   GO_AHEAD = 'go ahead',
   CLEAR = 'clear',
-  SEND = 'send',
+  SEND = 'Reset password',
   RELOAD = 'reload',
   PAY = 'pay',
 }

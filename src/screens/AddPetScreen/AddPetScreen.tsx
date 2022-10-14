@@ -160,17 +160,17 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
       <View style={styles.buttonsContainer}>
         <AppButton
           disabled={nickName.value === '' || breed.value === '' || age.value === '' || description.value === ''}
-          onPress={onOpen}
+          onPress={addPet}
           title={'next'}
           backgroundColor={COLORS.buttons.violet}
         />
       </View>
-      <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content style={{ height: 200 }}>
-          <Actionsheet.Item onPress={addOneMorePet}>save and add another one</Actionsheet.Item>
-          <Actionsheet.Item onPress={addPet}>next</Actionsheet.Item>
-        </Actionsheet.Content>
-      </Actionsheet>
+      {/*<Actionsheet isOpen={isOpen} onClose={onClose}>*/}
+      {/*  <Actionsheet.Content style={{ height: 200 }}>*/}
+      {/*    <Actionsheet.Item onPress={addOneMorePet}>save and add another one</Actionsheet.Item>*/}
+      {/*    <Actionsheet.Item onPress={addPet}>next</Actionsheet.Item>*/}
+      {/*  </Actionsheet.Content>*/}
+      {/*</Actionsheet>*/}
     </SafeAreaView>
   );
 };

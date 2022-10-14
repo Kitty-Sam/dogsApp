@@ -11,10 +11,13 @@ import { NativeBaseProvider } from 'native-base';
 import SplashScreen from 'react-native-splash-screen';
 import Geocoder from 'react-native-geocoding';
 import Config from 'react-native-config';
+import { enableLatestRenderer } from 'react-native-maps';
 
 export const App = () => {
   const isLogged = useSelector(getLoginStatus);
   const [publishableKey, setPublishableKey] = useState('');
+
+  enableLatestRenderer();
 
   const api = Config.API_KEY;
   console.log('api', api);

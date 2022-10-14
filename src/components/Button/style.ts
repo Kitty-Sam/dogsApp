@@ -9,16 +9,16 @@ type AppButtonStyleType = {
 export const styles = StyleSheet.create<AppButtonStyleType>({
   appButtonContainer: {
     elevation: 6,
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 8,
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
     marginVertical: 6,
   },
   appButtonText: {
     fontSize: 16,
     fontWeight: 'normal',
     alignSelf: 'center',
-    textTransform: 'uppercase',
-    color: COLORS.text.dark_blue,
+    // textTransform: 'uppercase',
+    color: COLORS.text.white,
   },
 });

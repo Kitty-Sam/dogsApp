@@ -34,9 +34,9 @@ export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
 
     // const res = yield applyActionCode(auth, actionCode);
     // console.log('res', res);
-    yield sendEmail(`${userEmail.value}`, 'You join us!', 'Thank for being with us', {
-      cc: 'user@domain.com; user2@domain.com; userx@domain1.com',
-    });
+    // yield sendEmail(`${userEmail.value}`, 'You join us!', 'Thank for being with us', {
+    //   cc: 'user@domain.com; user2@domain.com; userx@domain1.com',
+    // });
     // Alert.alert()
 
     yield database.ref('/users/').child(`${user.uid}`).set({

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create<LoginScreenStyleType>({
     justifyContent: 'space-around',
   },
   inputsContainer: {
-    padding: 24,
+    padding: 40,
     flex: 1,
     justifyContent: 'center',
   },

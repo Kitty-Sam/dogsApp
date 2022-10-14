@@ -36,7 +36,7 @@ export const MapScreen = () => {
     >
       {markers &&
         markers.map(mark => (
-          <SafeAreaView key={mark.title}>
+          <View key={mark.title}>
             <Marker
               coordinate={mark.coordinate}
               pinColor={mark.pinColor}
@@ -58,7 +58,7 @@ export const MapScreen = () => {
             ) : (
               <></>
             )}
-          </SafeAreaView>
+          </View>
         ))}
     </MapView>
   );

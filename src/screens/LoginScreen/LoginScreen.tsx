@@ -26,6 +26,8 @@ import { iconsName } from '../../enum/iconsName';
 import { getLoginError } from '../../store/selectors/loginSelector';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
+import { screenWidth } from '../../consts/consts';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
@@ -54,53 +56,68 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
         <ActivityIndicator />
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={styles.inputsContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
-              <TextItemThin>Forgot password?</TextItemThin>
-            </TouchableOpacity>
-            <Gap size={1} />
-            <TextInput
-              label={inputsPlaceholdersName.EMAIL}
-              mode="outlined"
-              activeOutlineColor={COLORS.text.grey}
-              contextMenuHidden={true}
-              {...userEmail}
-            />
-            <Gap size={1} />
-            <TextInput
-              label={inputsPlaceholdersName.PASSWORD}
-              mode="outlined"
-              activeOutlineColor={COLORS.text.grey}
-              contextMenuHidden={true}
-              {...userPassword}
-              right={
-                <TextInput.Icon
-                  onPress={() => {
-                    setIsSecureEntry(prev => !prev);
-                  }}
-                  name={() => (
-                    <Icon
-                      type={'ionicon'}
-                      name={isSecureEntry ? iconsName.EYE_OFF : iconsName.EYE}
-                      size={16}
-                      color={COLORS.text.grey}
-                    />
-                  )}
-                />
-              }
-              secureTextEntry={isSecureEntry}
-            />
-            <Gap size={1} />
-
-            <View style={styles.buttonsContainer}>
-              <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.peach} />
-              <AppButton
-                onPress={openRegisterScreen}
-                title={buttonsName.REGISTER}
-                backgroundColor={COLORS.buttons.brown}
-              />
+          <SafeAreaView style={{ flex: 1 }}>
+            <View
+              style={{
+                width: screenWidth,
+                height: 60,
+                backgroundColor: COLORS.background.light_pink,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <TextItemThin style={{ fontSize: 22 }}>Log in</TextItemThin>
             </View>
-          </View>
+            <View style={styles.inputsContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
+                <TextItemThin>Forgot password?</TextItemThin>
+              </TouchableOpacity>
+              <Gap size={1} />
+              <TextInput
+                label={inputsPlaceholdersName.EMAIL}
+                mode="outlined"
+                activeOutlineColor={COLORS.text.grey}
+                contextMenuHidden={true}
+                {...userEmail}
+                theme={{ roundness: 10 }}
+              />
+              <Gap size={1} />
+              <TextInput
+                label={inputsPlaceholdersName.PASSWORD}
+                mode="outlined"
+                activeOutlineColor={COLORS.text.grey}
+                contextMenuHidden={true}
+                {...userPassword}
+                theme={{ roundness: 10 }}
+                right={
+                  <TextInput.Icon
+                    onPress={() => {
+                      setIsSecureEntry(prev => !prev);
+                    }}
+                    name={() => (
+                      <Icon
+                        type={'ionicon'}
+                        name={isSecureEntry ? iconsName.EYE_OFF : iconsName.EYE}
+                        size={16}
+                        color={COLORS.text.grey}
+                      />
+                    )}
+                  />
+                }
+                secureTextEntry={isSecureEntry}
+              />
+              <Gap size={1} />
+
+              <View style={styles.buttonsContainer}>
+                <AppButton
+                  onPress={openRegisterScreen}
+                  title={buttonsName.REGISTER}
+                  backgroundColor={COLORS.background.light_violet}
+                />
+                <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.violet} />
+              </View>
+            </View>
+          </SafeAreaView>
         </TouchableWithoutFeedback>
       )}
     </KeyboardAvoidingView>
