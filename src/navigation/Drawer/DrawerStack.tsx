@@ -22,7 +22,7 @@ export const DrawerStack = () => {
       drawerContent={props => <CustomDrawer {...props} />}
       useLegacyImplementation
       screenOptions={{
-        // headerShown: false,
+        headerShown: false,
         drawerActiveTintColor: COLORS.buttons.violet,
         drawerInactiveTintColor: COLORS.text.dark_blue,
         drawerType: 'front',

@@ -29,9 +29,12 @@ import { requestStatus } from '../../store/reducers/appReducer';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
 import { screenWidth } from '../../consts/consts';
+import * as yup from 'yup';
+import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 
 export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const { navigation } = props;
+  const [error, setError] = useState<boolean>(false);
 
   const userEmail = useInput('');
   const userPassword = useInput('');
@@ -40,14 +43,38 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const dispatch = useDispatch();
   const statusApp = useSelector(getAppStatus);
 
-  const registerPress = () => {
-    dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
+  const registerPress = async () => {
+    setError(false);
+    try {
+      const isValid = await formSchema.isValid(
+        { name: userName.value, email: userEmail.value, password: userPassword.value },
+        {
+          abortEarly: false,
+        },
+      );
+
+      if (isValid) {
+        dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
+        console.log('ok');
+      } else {
+        setError(true);
+        console.log('не ok validation');
+      }
+    } catch (e) {
+      console.log('не ok validation catch');
+    }
   };
 
   const openLoginScreen = () => {
     navigation.navigate(AuthNavigationName.LOGIN);
   };
   const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
+
+  const formSchema = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required(),
+  });
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>

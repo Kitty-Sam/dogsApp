@@ -23,15 +23,20 @@ import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
-import { getLoginError } from '../../store/selectors/loginSelector';
+
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
 import { screenWidth } from '../../consts/consts';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as yup from 'yup';
+import { getLoginError } from '../../store/selectors/loginSelector';
 
 export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
   const [isSecureEntry, setIsSecureEntry] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+
+  const errorServer = useSelector(getLoginError);
 
   const userEmail = useInput('');
   const userPassword = useInput('');
@@ -40,15 +45,32 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
 
   const statusApp = useSelector(getAppStatus);
 
-  const signIn = () => {
-    dispatch(googleSignInAction({ navigation, userPassword, userEmail }));
+  const formSchema = yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required(),
+  });
+
+  const signIn = async () => {
+    setError(false);
+    try {
+      const isValid = await formSchema.isValid(
+        { email: userEmail.value, password: userPassword.value },
+        {
+          abortEarly: false,
+        },
+      );
+
+      if (isValid) {
+        dispatch(googleSignInAction({ navigation, userPassword, userEmail }));
+      } else {
+        setError(true);
+      }
+    } catch (e) {}
   };
 
   const openRegisterScreen = () => {
     navigation.navigate(AuthNavigationName.REGISTER);
   };
-
-  const error = useSelector(getLoginError);
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
@@ -66,7 +88,9 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
                 alignItems: 'center',
               }}
             >
-              <TextItemThin style={{ fontSize: 22 }}>Log in</TextItemThin>
+              <TextItemThin style={{ fontSize: 22 }}>
+                {error || errorServer ? 'Incorrect credentials' : 'Log in'}
+              </TextItemThin>
             </View>
             <View style={styles.inputsContainer}>
               <TouchableOpacity onPress={() => navigation.navigate(AuthNavigationName.FORGOT_PASSWORD)}>
@@ -76,7 +100,8 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.EMAIL}
                 mode="outlined"
-                activeOutlineColor={COLORS.text.grey}
+                activeOutlineColor={error || errorServer ? 'red' : COLORS.text.grey}
+                outlineColor={error || errorServer ? 'red' : COLORS.text.grey}
                 contextMenuHidden={true}
                 {...userEmail}
                 theme={{ roundness: 10 }}
@@ -85,10 +110,12 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.PASSWORD}
                 mode="outlined"
-                activeOutlineColor={COLORS.text.grey}
+                activeOutlineColor={error || errorServer ? 'red' : COLORS.text.grey}
+                outlineColor={error || errorServer ? 'red' : COLORS.text.grey}
                 contextMenuHidden={true}
                 {...userPassword}
                 theme={{ roundness: 10 }}
+                style={{ color: error || errorServer ? 'red' : 'grey' }}
                 right={
                   <TextInput.Icon
                     onPress={() => {
@@ -114,7 +141,11 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
                   title={buttonsName.REGISTER}
                   backgroundColor={COLORS.background.light_violet}
                 />
-                <AppButton onPress={signIn} title={buttonsName.SIGN_IN} backgroundColor={COLORS.buttons.violet} />
+                <AppButton
+                  onPress={signIn}
+                  title={error ? 'Try again' : buttonsName.SIGN_IN}
+                  backgroundColor={COLORS.buttons.violet}
+                />
               </View>
             </View>
           </SafeAreaView>
