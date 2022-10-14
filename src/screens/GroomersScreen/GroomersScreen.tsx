@@ -1,10 +1,9 @@
 import React, { FC, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
 import { ItemType } from '../../components/ItemContainer/type';
-
 import { requestStatus } from '../../store/reducers/appReducer';
 import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
@@ -13,6 +12,7 @@ import { getGroomers } from '../../store/selectors/groomerSelector';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { stylesCommon } from '../ShopsScreen/style';
 import { GroomersScreenProps } from './type';
+import { Loader } from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -55,11 +55,7 @@ export const GroomersScreen: FC<GroomersScreenProps> = props => {
   }
   return (
     <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList data={groomers} renderItem={renderItem} />
-      )}
+      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={groomers} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };

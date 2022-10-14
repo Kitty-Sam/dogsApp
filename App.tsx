@@ -20,7 +20,6 @@ export const App = () => {
   enableLatestRenderer();
 
   const api = Config.API_KEY;
-  console.log('api', api);
 
   useEffect(() => {
     Geocoder.init(api);

@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { TrainersScreenProps } from './type';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { stylesCommon } from '../ShopsScreen/style';
 import { ItemType } from '../../components/ItemContainer/type';
+import { Loader } from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -56,11 +57,7 @@ export const TrainersScreen: FC<TrainersScreenProps> = props => {
   }
   return (
     <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList data={trainers} renderItem={renderItem} />
-      )}
+      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={trainers} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };

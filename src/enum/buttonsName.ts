@@ -9,4 +9,5 @@ export const enum buttonsName {
   SEND = 'Reset password',
   RELOAD = 'reload',
   PAY = 'pay',
+  TRY_AGAIN = 'Try again',
 }

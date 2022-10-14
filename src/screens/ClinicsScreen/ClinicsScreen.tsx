@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,7 @@ import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 import { ClinicsScreenProps } from './type';
 import { stylesCommon } from '../ShopsScreen/style';
+import { Loader } from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -52,11 +53,7 @@ export const ClinicsScreen: FC<ClinicsScreenProps> = props => {
   }
   return (
     <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
-      ) : (
-        <FlatList data={clinics} renderItem={renderItem} />
-      )}
+      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={clinics} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };

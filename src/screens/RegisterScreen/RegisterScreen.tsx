@@ -1,11 +1,9 @@
 import React, { FC, useState } from 'react';
 import {
-  ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -22,15 +20,13 @@ import { RegisterScreenProps } from './type';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { useInput } from '../../hooks/useInput';
 import { googleRegisterAction } from '../../store/sagas/sagaActions/googleRegister';
-import { CustomTextInput } from '../../components/TextInput/CustomTextInput';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
-import { screenWidth } from '../../consts/consts';
 import * as yup from 'yup';
-import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
+import { Loader } from '../../components/Loader/Loader';
 
 export const RegisterScreen: FC<RegisterScreenProps> = props => {
   const { navigation } = props;
@@ -55,10 +51,8 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
 
       if (isValid) {
         dispatch(googleRegisterAction({ userEmail, userName, userPassword, navigation }));
-        console.log('ok');
       } else {
         setError(true);
-        console.log('не ok validation');
       }
     } catch (e) {
       console.log('не ok validation catch');
@@ -76,23 +70,17 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
     password: yup.string().min(8).required(),
   });
 
+  const borderColor = error ? 'red' : COLORS.text.grey;
+
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.root}>
       {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
+        <Loader />
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView style={{ flex: 1 }}>
-            <View
-              style={{
-                width: screenWidth,
-                height: 60,
-                backgroundColor: COLORS.background.light_pink,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <TextItemThin style={{ fontSize: 22 }}>Get started</TextItemThin>
+          <SafeAreaView style={styles.root}>
+            <View style={styles.headerContainer}>
+              <TextItemThin style={styles.headerText}>Get started</TextItemThin>
             </View>
             <View style={styles.inputsContainer}>
               <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
@@ -101,7 +89,8 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.NICK_NAME}
                 mode="outlined"
-                activeOutlineColor={COLORS.text.grey}
+                activeOutlineColor={borderColor}
+                outlineColor={borderColor}
                 contextMenuHidden={true}
                 {...userName}
                 theme={{ roundness: 10 }}
@@ -111,7 +100,8 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.EMAIL}
                 mode="outlined"
-                activeOutlineColor={COLORS.text.grey}
+                activeOutlineColor={borderColor}
+                outlineColor={borderColor}
                 contextMenuHidden={true}
                 {...userEmail}
                 theme={{ roundness: 10 }}
@@ -121,7 +111,8 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.PASSWORD}
                 mode="outlined"
-                activeOutlineColor={COLORS.text.grey}
+                activeOutlineColor={borderColor}
+                outlineColor={borderColor}
                 contextMenuHidden={true}
                 {...userPassword}
                 theme={{ roundness: 10 }}
@@ -144,8 +135,8 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               />
               <Gap size={1} />
 
-              <TextItemThin style={{ fontSize: 12 }}>By signing up you are agreeing to our</TextItemThin>
-              <TextItemThin style={{ fontSize: 12 }}>Terms and Conditions</TextItemThin>
+              <TextItemThin style={styles.noteText}>By signing up you are agreeing to our</TextItemThin>
+              <TextItemThin style={styles.noteText}>Terms and Conditions</TextItemThin>
               <View style={styles.buttonsContainer}>
                 <AppButton
                   onPress={registerPress}

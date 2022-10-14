@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { ActivityIndicator, FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices
 import { ShopsScreenProps } from './type';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { stylesCommon } from './style';
+import { Loader } from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_cat_fat.jpeg');
@@ -60,7 +61,7 @@ export const ShopsScreen: FC<ShopsScreenProps> = props => {
   }
   return (
     <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? <ActivityIndicator /> : <FlatList data={shops} renderItem={renderItem} />}
+      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={shops} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };

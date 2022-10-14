@@ -1,5 +1,6 @@
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
+import { screenWidth } from '../../consts/consts';
 
 export type ForgotPasswordScreenStyleType = {
   input: TextStyle;
@@ -7,6 +8,9 @@ export type ForgotPasswordScreenStyleType = {
   noteText: TextStyle;
   mainBlock: ViewStyle;
   buttonsContainer: ViewStyle;
+  root: ViewStyle;
+  headerText: TextStyle;
+  headerContainer: ViewStyle;
 };
 export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
   input: {
@@ -32,7 +36,19 @@ export const styles = StyleSheet.create<ForgotPasswordScreenStyleType>({
     top: 116,
     right: 24,
     zIndex: 10,
-    // margin: 12,
   },
-  noteText: { margin: 16 },
+  noteText: { fontSize: 14, margin: 10 },
+  root: {
+    flex: 1,
+  },
+  headerText: {
+    fontSize: 22,
+  },
+  headerContainer: {
+    width: screenWidth,
+    height: 60,
+    backgroundColor: COLORS.background.light_pink,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import {
-  ActivityIndicator,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -23,13 +22,12 @@ import { googleSignInAction } from '../../store/sagas/sagaActions/googleSignIn';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { Icon } from '../../components/Icon/Icon';
 import { iconsName } from '../../enum/iconsName';
-
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
-import { screenWidth } from '../../consts/consts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as yup from 'yup';
 import { getLoginError } from '../../store/selectors/loginSelector';
+import { Loader } from '../../components/Loader/Loader';
 
 export const LoginScreen: FC<LoginScreenProps> = props => {
   const { navigation } = props;
@@ -72,23 +70,17 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
     navigation.navigate(AuthNavigationName.REGISTER);
   };
 
+  const borderColor = error || errorServer ? 'red' : COLORS.text.grey;
+
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.root}>
       {statusApp === requestStatus.LOADING ? (
-        <ActivityIndicator />
+        <Loader />
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <SafeAreaView style={{ flex: 1 }}>
-            <View
-              style={{
-                width: screenWidth,
-                height: 60,
-                backgroundColor: COLORS.background.light_pink,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <TextItemThin style={{ fontSize: 22 }}>
+          <SafeAreaView style={styles.root}>
+            <View style={styles.headerContainer}>
+              <TextItemThin style={styles.headerText}>
                 {error || errorServer ? 'Incorrect credentials' : 'Log in'}
               </TextItemThin>
             </View>
@@ -100,8 +92,8 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.EMAIL}
                 mode="outlined"
-                activeOutlineColor={error || errorServer ? 'red' : COLORS.text.grey}
-                outlineColor={error || errorServer ? 'red' : COLORS.text.grey}
+                activeOutlineColor={borderColor}
+                outlineColor={borderColor}
                 contextMenuHidden={true}
                 {...userEmail}
                 theme={{ roundness: 10 }}
@@ -110,12 +102,12 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
               <TextInput
                 label={inputsPlaceholdersName.PASSWORD}
                 mode="outlined"
-                activeOutlineColor={error || errorServer ? 'red' : COLORS.text.grey}
-                outlineColor={error || errorServer ? 'red' : COLORS.text.grey}
+                activeOutlineColor={borderColor}
+                outlineColor={borderColor}
                 contextMenuHidden={true}
                 {...userPassword}
                 theme={{ roundness: 10 }}
-                style={{ color: error || errorServer ? 'red' : 'grey' }}
+                style={{ color: borderColor }}
                 right={
                   <TextInput.Icon
                     onPress={() => {
@@ -143,7 +135,7 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
                 />
                 <AppButton
                   onPress={signIn}
-                  title={error ? 'Try again' : buttonsName.SIGN_IN}
+                  title={error ? buttonsName.TRY_AGAIN : buttonsName.SIGN_IN}
                   backgroundColor={COLORS.buttons.violet}
                 />
               </View>

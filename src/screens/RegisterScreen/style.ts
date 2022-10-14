@@ -6,8 +6,14 @@ export type RegisterScreenStyleType = {
   loginTextContainer: TextStyle;
   inputsContainer: ViewStyle;
   buttonsContainer: ViewStyle;
+  headerContainer: ViewStyle;
+  noteText: TextStyle;
+  headerText: TextStyle;
+  root: ViewStyle;
 };
 export const styles = StyleSheet.create<RegisterScreenStyleType>({
+  root: { flex: 1 },
+
   loginTextContainer: {
     fontSize: 16,
     position: 'absolute',
@@ -23,5 +29,18 @@ export const styles = StyleSheet.create<RegisterScreenStyleType>({
     marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'flex-end',
+  },
+  headerContainer: {
+    width: screenWidth,
+    height: 60,
+    backgroundColor: COLORS.background.light_pink,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noteText: {
+    fontSize: 12,
+  },
+  headerText: {
+    fontSize: 22,
   },
 });

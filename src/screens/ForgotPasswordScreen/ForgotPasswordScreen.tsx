@@ -20,7 +20,6 @@ import { forgotPasswordAction } from '../../store/sagas/sagaActions/forgotPasswo
 import { useDispatch } from 'react-redux';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
-import { screenWidth } from '../../consts/consts';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
@@ -32,19 +31,11 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
     dispatch(forgotPasswordAction({ email, text, navigation }));
   };
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.root}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <View
-            style={{
-              width: screenWidth,
-              height: 60,
-              backgroundColor: COLORS.background.light_pink,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <TextItemThin style={{ fontSize: 22 }}>Reset password</TextItemThin>
+        <SafeAreaView style={styles.root}>
+          <View style={styles.headerContainer}>
+            <TextItemThin style={styles.headerText}>Reset password</TextItemThin>
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate(AuthNavigationName.LOGIN)}
@@ -62,9 +53,7 @@ export const ForgotPasswordScreen: FC<ForgotPasswordScreenProps> = props => {
               {...email}
               theme={{ roundness: 10 }}
             />
-            <TextItemThin style={{ fontSize: 14, margin: 10 }}>
-              Please, enter the e-mail, that you used for logging in
-            </TextItemThin>
+            <TextItemThin style={styles.noteText}>Please, enter the e-mail, that you used for logging in</TextItemThin>
             <Gap size={1} />
             <View style={styles.buttonsContainer}>
               <AppButton
