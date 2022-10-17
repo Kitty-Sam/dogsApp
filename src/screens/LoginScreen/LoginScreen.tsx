@@ -75,7 +75,7 @@ export const LoginScreen: FC<LoginScreenProps> = props => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.root}>
       {statusApp === requestStatus.LOADING ? (
-        <Loader />
+        <Loader text={'Waiting for a few minutes...'} />
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={styles.root}>

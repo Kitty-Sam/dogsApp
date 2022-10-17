@@ -64,7 +64,8 @@ export const UsefulServiceScreen: FC<UsefulStackScreenProps> = props => {
         onPress={() => navigation.navigate(ServicesNavigationName.TRAINERS, { moveToItemScreen, removeItem })}
       />
       <GroupContainer
-        title={'Dog friendly'}
+        size={1.5}
+        title={'Dog friendly places'}
         onPress={() => navigation.navigate(ServicesNavigationName.DOG_FRIENDLY, { moveToItemScreen, removeItem })}
       />
     </SafeAreaView>

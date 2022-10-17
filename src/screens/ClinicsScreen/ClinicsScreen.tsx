@@ -52,8 +52,12 @@ export const ClinicsScreen: FC<ClinicsScreenProps> = props => {
     );
   }
   return (
-    <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={clinics} renderItem={renderItem} />}
+    <SafeAreaView style={{ flex: 1 }}>
+      {statusApp === requestStatus.LOADING ? (
+        <Loader text={'Data is uploading...'} />
+      ) : (
+        <FlatList data={clinics} renderItem={renderItem} />
+      )}
     </SafeAreaView>
   );
 };

@@ -3,11 +3,11 @@ import { COLORS } from '../../colors/colors';
 
 export type AddPetScreenStyleType = {
   rootContainer: ViewStyle;
-  filterContainer: ViewStyle;
-  filterItemContainer: ViewStyle;
-  input: TextStyle;
-  textLocation: TextStyle;
   buttonsContainer: ViewStyle;
+  headerText: TextStyle;
+  mainContainer: ViewStyle;
+  imageContainer: ViewStyle;
+  shortInputContainer: ViewStyle;
 };
 
 export const styles = StyleSheet.create<AddPetScreenStyleType>({
@@ -15,33 +15,27 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     flex: 1,
     marginHorizontal: 24,
     marginVertical: 24,
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
-  },
-  filterContainer: {
-    flexDirection: 'row',
-  },
-  filterItemContainer: {
-    width: 100,
-    borderWidth: 1,
-    borderRadius: 10,
-    margin: 4,
   },
   buttonsContainer: {
-    // marginTop: 100,
     flexDirection: 'row',
-    // width: 300,
     justifyContent: 'flex-end',
   },
-  input: {
-    borderBottomColor: COLORS.text.grey,
-    borderBottomWidth: 2,
-    width: 300,
-    padding: 10,
-    color: COLORS.text.dark_blue,
-  },
-  textLocation: {
+  headerText: {
     textAlign: 'center',
-    paddingVertical: 8,
+  },
+  mainContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  imageContainer: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderColor: COLORS.text.grey,
+    borderWidth: 1,
+    marginTop: 20,
+  },
+  shortInputContainer: {
+    width: '65%',
   },
 });

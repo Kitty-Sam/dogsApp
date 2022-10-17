@@ -75,7 +75,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.root}>
       {statusApp === requestStatus.LOADING ? (
-        <Loader />
+        <Loader text={'Registration is starting...'} />
       ) : (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={styles.root}>
