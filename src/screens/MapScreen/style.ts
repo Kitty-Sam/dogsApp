@@ -14,7 +14,7 @@ export const styles = StyleSheet.create<MapScreenStyleType>({
   iconDrawer: {
     position: 'absolute',
     zIndex: 10,
-    top: 48,
+    top: 24,
     left: 24,
   },
   mapMarkContent: {

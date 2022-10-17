@@ -12,10 +12,13 @@ import { TrainersScreen } from '../../screens/TrainersScreen/TrainersScreen';
 import { DogFriendliesScreen } from '../../screens/DogFriendliesScreen/DogFriendliesScreen';
 import { ItemUniteScreen } from '../../screens/ItemUniteScreen/ItemUniteScreen';
 import { COLORS } from '../../colors/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const StackService = createNativeStackNavigator<UsefulStackParamList>();
 
 export const UsefulStack = () => {
+  const navigation = useNavigation<any>();
   return (
     <StackService.Navigator
       screenOptions={{
@@ -24,6 +27,8 @@ export const UsefulStack = () => {
         headerTitleStyle: {
           color: COLORS.text.black,
         },
+        headerTitleAlign: 'center',
+        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
       <StackService.Screen name={ServicesNavigationName.ROOT} component={UsefulServiceScreen} />

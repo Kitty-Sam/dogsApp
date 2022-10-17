@@ -5,10 +5,13 @@ import { PetUniteScreen } from '../../screens/PetUniteScreen/PetUniteScreen';
 import { PetsStackParamList } from './type';
 import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
 import { COLORS } from '../../colors/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const Pets = createNativeStackNavigator<PetsStackParamList>();
 
 export const PetsStack = () => {
+  const navigation = useNavigation<any>();
   return (
     <Pets.Navigator
       screenOptions={{
@@ -17,9 +20,11 @@ export const PetsStack = () => {
         headerTitleStyle: {
           color: COLORS.text.black,
         },
+        headerTitleAlign: 'center',
+        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
-      <Pets.Screen name={PetsNavigationName.PROFILE} component={ProfileScreen} options={{ headerShown: false }} />
+      <Pets.Screen name={PetsNavigationName.PROFILE} component={ProfileScreen} />
       <Pets.Screen name={PetsNavigationName.PET_UNITE} component={PetUniteScreen} />
     </Pets.Navigator>
   );

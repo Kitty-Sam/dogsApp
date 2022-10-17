@@ -14,10 +14,13 @@ import { cutDate } from '../../utils/cutDate';
 import { COLORS } from '../../colors/colors';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { DayItemType } from './type';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const date = new Date().toISOString().split('T')[0];
 
 export const CalendarScreen = () => {
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const taskId = Date.now();
   const currentUserId = useSelector(getCurrentUserId);
@@ -107,6 +110,12 @@ export const CalendarScreen = () => {
 
   return (
     <SafeAreaView style={styles.rootContainer}>
+      <Icon
+        name={'menu-sharp'}
+        size={24}
+        style={{ position: 'absolute', top: 12, left: 24, zIndex: 10 }}
+        onPress={() => navigation.openDrawer()}
+      />
       <Calendar
         onDayPress={e => {
           setPinnedDay(e.dateString);
@@ -114,6 +123,7 @@ export const CalendarScreen = () => {
         }}
         showSixWeeks={true}
         markedDates={markedDays}
+        style={{ marginTop: 40 }}
       />
 
       <View style={styles.headerContainer}>

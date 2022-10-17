@@ -106,9 +106,9 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         outlineColor={COLORS.text.grey}
       />
       <DatePicker
+        textColor="#000000"
         modal
         mode="date"
-        androidVariant="iosClone"
         open={open}
         date={date}
         onConfirm={date => {
