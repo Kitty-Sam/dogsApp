@@ -8,12 +8,16 @@ export type ChatType = {
   _id: string;
   createdAt: any;
   text: string;
-  user: any;
+  user: {
+    _id: string;
+    avatar: string;
+    name: string;
+  };
 };
-
 export const ChatScreen: FC<ChatScreenProps> = props => {
   const { navigation, route } = props;
   const { id, name, avatar } = route.params;
+
   const [messages, setMessages] = useState<ChatType[]>([]);
 
   const chatsCollection = collection(db, 'chats');
@@ -24,11 +28,6 @@ export const ChatScreen: FC<ChatScreenProps> = props => {
     navigation.setOptions({
       headerTitle: `${name}`,
       headerBackTitle: 'Back',
-      // headerLeft: () => (
-      //   <View style={{ marginLeft: 8, flexDirection: 'row' }}>
-      //     <Avatar size={44} rounded source={{ uri: avatar }} avatarStyle={{ marginLeft: 4 }} />
-      //   </View>
-      // ),
     });
 
     const q = query(messagesCollection, orderBy('createdAt', 'desc'));

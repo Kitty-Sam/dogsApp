@@ -31,43 +31,48 @@ export const MapScreen: FC<MapScreenProps> = props => {
   };
 
   return (
-    <>
-      <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} style={styles.iconDrawer} />
-      <MapView
-        style={styles.root}
-        region={{ latitude: 53.893009, longitude: 27.567444, latitudeDelta: 0.1, longitudeDelta: 0.05 }}
-        showsUserLocation
-        minZoomLevel={2}
-        maxZoomLevel={20}
-        followsUserLocation
-      >
-        {markers &&
-          markers.map(mark => (
-            <View key={mark.title}>
-              <Marker
-                coordinate={mark.coordinate}
-                pinColor={mark.pinColor}
-                title={mark.title}
-                description={mark.description}
-                // onPress={() => onOpenMapMark(mark.title)}
-              />
-              {mark.title === title ? (
-                <Actionsheet isOpen={isOpen} onClose={onClose}>
-                  <Actionsheet.Content style={{ height: 200 }}>
-                    <Actionsheet.Item>
-                      {mark.title} {mark.description}
-                    </Actionsheet.Item>
-                    <View style={{ position: 'absolute', right: 24, bottom: 120 }}>
-                      <Image source={{ uri: images.avatar }} style={{ width: 50, height: 50 }} />
-                    </View>
-                  </Actionsheet.Content>
-                </Actionsheet>
-              ) : (
-                <></>
-              )}
-            </View>
-          ))}
-      </MapView>
-    </>
+    <MapView
+      style={styles.root}
+      region={{ latitude: 53.893009, longitude: 27.567444, latitudeDelta: 0.1, longitudeDelta: 0.05 }}
+      showsUserLocation
+      minZoomLevel={2}
+      maxZoomLevel={20}
+      followsUserLocation
+    >
+      <Icon
+        name={'menu-sharp'}
+        size={24}
+        onPress={() => {
+          navigation.openDrawer();
+        }}
+        style={styles.iconDrawer}
+      />
+      {markers &&
+        markers.map(mark => (
+          <View key={mark.title}>
+            <Marker
+              coordinate={mark.coordinate}
+              pinColor={mark.pinColor}
+              title={mark.title}
+              description={mark.description}
+              // onPress={() => onOpenMapMark(mark.title)}
+            />
+            {mark.title === title ? (
+              <Actionsheet isOpen={isOpen} onClose={onClose}>
+                <Actionsheet.Content style={{ height: 200 }}>
+                  <Actionsheet.Item>
+                    {mark.title} {mark.description}
+                  </Actionsheet.Item>
+                  <View style={{ position: 'absolute', right: 24, bottom: 120 }}>
+                    <Image source={{ uri: images.avatar }} style={{ width: 50, height: 50 }} />
+                  </View>
+                </Actionsheet.Content>
+              </Actionsheet>
+            ) : (
+              <></>
+            )}
+          </View>
+        ))}
+    </MapView>
   );
 };

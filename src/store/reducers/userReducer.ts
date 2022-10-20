@@ -1,4 +1,11 @@
-import { addPersonalPetAC, fetchPersonalPetsAC, toggleIsAddedPetsAC, UserActions } from '../actions/userAC';
+import {
+  addPersonalPetAC,
+  fetchAllUsersAC,
+  fetchPersonalPetsAC,
+  toggleIsAddedPetsAC,
+  UserActions,
+  UserType,
+} from '../actions/userAC';
 
 export type PetType = {
   nickName: string;
@@ -11,17 +18,20 @@ export type PetType = {
 const initialState: initialStateType = {
   personalPets: [],
   isAddedAll: false,
+  users: [],
 };
 
 type initialStateType = {
   personalPets: PetType[];
   isAddedAll: boolean;
+  users: UserType[];
 };
 
 type ActionsType =
   | ReturnType<typeof addPersonalPetAC>
   | ReturnType<typeof fetchPersonalPetsAC>
-  | ReturnType<typeof toggleIsAddedPetsAC>;
+  | ReturnType<typeof toggleIsAddedPetsAC>
+  | ReturnType<typeof fetchAllUsersAC>;
 
 export const userReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -59,6 +69,13 @@ export const userReducer = (state = initialState, action: ActionsType) => {
         }
       }
       break;
+
+    case UserActions.FETCH_ALL_USERS: {
+      return {
+        ...state,
+        users: action.payload,
+      };
+    }
 
     // case UserActions.FETCH_PERSONAL_INFO: {
     //   return {

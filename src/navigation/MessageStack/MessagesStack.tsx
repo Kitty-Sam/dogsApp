@@ -21,11 +21,17 @@ export const MessagesStack = () => {
           color: COLORS.text.black,
         },
         headerTitleAlign: 'center',
-        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
-      <Messages.Screen name={MessagesNavigationName.MESSAGES} component={MessagesScreen} />
+      <Messages.Screen
+        name={MessagesNavigationName.MESSAGES}
+        component={MessagesScreen}
+        options={{
+          headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
+        }}
+      />
       <Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreen} />
+      {/*<Messages.Screen name={MessagesNavigationName.CHAT} component={ChatScreenNew} />*/}
     </Messages.Navigator>
   );
 };

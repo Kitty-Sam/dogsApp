@@ -113,7 +113,7 @@ export const CalendarScreen = () => {
       <Icon
         name={'menu-sharp'}
         size={24}
-        style={{ position: 'absolute', top: 12, left: 24, zIndex: 10 }}
+        style={{ position: 'absolute', top: 40, left: 24, zIndex: 10 }}
         onPress={() => navigation.openDrawer()}
       />
       <Calendar

@@ -80,7 +80,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <SafeAreaView style={styles.root}>
             <View style={styles.headerContainer}>
-              <TextItemThin style={styles.headerText}>Get started</TextItemThin>
+              <TextItemThin style={styles.headerText}>{error ? 'Incorrect credentials' : 'Get started'}</TextItemThin>
             </View>
             <View style={styles.inputsContainer}>
               <TouchableOpacity onPress={openLoginScreen} activeOpacity={0.4} style={styles.loginTextContainer}>
@@ -140,7 +140,7 @@ export const RegisterScreen: FC<RegisterScreenProps> = props => {
               <View style={styles.buttonsContainer}>
                 <AppButton
                   onPress={registerPress}
-                  title={buttonsName.REGISTER}
+                  title={error ? buttonsName.TRY_AGAIN : buttonsName.REGISTER}
                   backgroundColor={COLORS.buttons.violet}
                 />
               </View>

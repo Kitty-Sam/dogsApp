@@ -5,6 +5,7 @@ import {
   ADD_NEW_SERVICE,
   ADD_PERSONAL_PET,
   CALL_OWNER,
+  FETCH_ALL_USERS,
   FETCH_FAVORITE_PETS_IDS,
   FETCH_MAP_MARKS,
   FETCH_PERSONAL_PETS,
@@ -30,6 +31,7 @@ import { addNewMapMarkWorker } from './addNewMapMarkSaga';
 import { fetchMapMarksWorker } from './fetchMapMarksSaga';
 import { addPersonalPetWorker } from './addPersonalPetSaga';
 import { fetchPersonalPetsWorker } from './fetchPersonalPetsSaga';
+import { fetchAllUsersWorker } from './fetchAllUsers';
 
 export function* watchClickSaga() {
   yield takeLatest(GOOGLE_SIGN_IN, googleSignInWorker);
@@ -46,6 +48,7 @@ export function* watchClickSaga() {
   yield takeLatest(FETCH_MAP_MARKS, fetchMapMarksWorker);
   yield takeLatest(ADD_PERSONAL_PET, addPersonalPetWorker);
   yield takeLatest(FETCH_PERSONAL_PETS, fetchPersonalPetsWorker);
+  yield takeLatest(FETCH_ALL_USERS, fetchAllUsersWorker);
 }
 
 export default function* rootSaga() {

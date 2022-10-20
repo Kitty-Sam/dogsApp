@@ -21,12 +21,6 @@ export const enum FriendsNavigationName {
   FRIEND_PROFILE = 'Friend profile',
 }
 
-//
-// export const enum AdoptionNavigationName {
-//   ADOPTION = 'Adoption Pet',
-//   PET_UNITE = 'Pet',
-//   FAVORITE = 'Favorite',
-// }
 export const enum PetsNavigationName {
   PROFILE = 'Profile',
   PET_UNITE = 'Pet',

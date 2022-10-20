@@ -2,8 +2,6 @@ import React, { FC, useState } from 'react';
 import { Alert } from 'react-native';
 import { ModalAddItem } from '../Modals/ModalAddItem/ModalAddItem';
 import { useDispatch } from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { iconsName } from '../../enum/iconsName';
 import { COLORS } from '../../colors/colors';
 import { useInput } from '../../hooks/useInput';
 import { addNewServiceAction } from '../../store/sagas/sagaActions/addNewService';
@@ -11,6 +9,7 @@ import { AddSectionType } from './type';
 import { chaptersName } from '../../enum/chapters';
 import { getCoordinates } from '../../utils/getCoordinates';
 import { addNewMapMarkAction } from '../../store/sagas/sagaActions/addNewMapMark';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export const AddSection: FC<AddSectionType> = ({ chapter }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,7 +74,12 @@ export const AddSection: FC<AddSectionType> = ({ chapter }) => {
 
   return (
     <>
-      <Icon name={iconsName.ADD_OUTLINE} size={36} onPress={addButtonPress} color={COLORS.text.dark_blue} />
+      <MaterialCommunityIcon
+        name={'note-plus-outline'}
+        size={36}
+        onPress={addButtonPress}
+        color={COLORS.text.dark_blue}
+      />
       <ModalAddItem
         addItemPress={addItemPress}
         chapter={chapter}

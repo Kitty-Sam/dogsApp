@@ -12,6 +12,7 @@ import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices
 import { ClinicsScreenProps } from './type';
 import { stylesCommon } from '../ShopsScreen/style';
 import { Loader } from '../../components/Loader/Loader';
+import { ListItemContainer } from '../../components/ListItemContainer/ListItemContainer';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_buldog.jpeg');
@@ -26,21 +27,9 @@ export const ClinicsScreen: FC<ClinicsScreenProps> = props => {
   useEffect(() => {
     dispatch(fetchServicesAction({ chapter: chaptersName.CLINIC }));
   }, []);
+
   const renderItem = ({ item }: { item: ItemType }) => {
-    const { id, info, title, chapter, address, phone } = item;
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity
-          onPress={() => moveToItemScreen(id, info, title, chapter, address, phone)}
-          style={stylesCommon.itemContainer}
-        >
-          <TextItemThin style={{ textAlign: 'center' }}>{title}</TextItemThin>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => removeItem(chapter, id)}>
-          <TextItemThin style={{ marginTop: 20 }}>x</TextItemThin>
-        </TouchableOpacity>
-      </View>
-    );
+    return <ListItemContainer moveToItemScreen={moveToItemScreen} removeItem={removeItem} item={item} />;
   };
 
   if (!clinics.length) {
@@ -52,11 +41,16 @@ export const ClinicsScreen: FC<ClinicsScreenProps> = props => {
     );
   }
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, margin: 12 }}>
       {statusApp === requestStatus.LOADING ? (
         <Loader text={'Data is uploading...'} />
       ) : (
-        <FlatList data={clinics} renderItem={renderItem} />
+        <>
+          <FlatList data={clinics} renderItem={renderItem} />
+          <View style={{ position: 'absolute', bottom: 80, right: 24 }}>
+            <AddSection chapter={chaptersName.CLINIC} />
+          </View>
+        </>
       )}
     </SafeAreaView>
   );

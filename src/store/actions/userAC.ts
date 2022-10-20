@@ -4,6 +4,7 @@ export enum UserActions {
   ADD_PERSONAL_PET = 'add_personal_pet',
   FETCH_PERSONAL_PETS = 'fetch_personal_pets',
   IS_ADDED_ALL = 'is_added_all',
+  FETCH_ALL_USERS = 'fetch_all_users',
 }
 
 export type PayloadType = {
@@ -39,4 +40,24 @@ export const toggleIsAddedPetsAC: ToggleIsAddedPetsActionType = (payload: Payloa
 export type ToggleIsAddedPetsActionType = (payload: PayloadType) => {
   payload: PayloadType;
   type: UserActions.IS_ADDED_ALL;
+};
+
+//all users
+
+export type UserType = {
+  userId: '';
+  userName: '';
+  userEmail: '';
+  photo: '';
+  personalInfo: any;
+};
+
+export const fetchAllUsersAC: FetchAllUsersActionType = (payload: UserType[]) => ({
+  type: UserActions.FETCH_ALL_USERS,
+  payload,
+});
+
+export type FetchAllUsersActionType = (payload: UserType[]) => {
+  payload: UserType[];
+  type: UserActions.FETCH_ALL_USERS;
 };

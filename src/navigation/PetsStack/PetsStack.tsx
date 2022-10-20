@@ -21,10 +21,13 @@ export const PetsStack = () => {
           color: COLORS.text.black,
         },
         headerTitleAlign: 'center',
-        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
-      <Pets.Screen name={PetsNavigationName.PROFILE} component={ProfileScreen} />
+      <Pets.Screen
+        name={PetsNavigationName.PROFILE}
+        component={ProfileScreen}
+        options={{ headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} /> }}
+      />
       <Pets.Screen name={PetsNavigationName.PET_UNITE} component={PetUniteScreen} />
     </Pets.Navigator>
   );

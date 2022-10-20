@@ -28,10 +28,15 @@ export const UsefulStack = () => {
           color: COLORS.text.black,
         },
         headerTitleAlign: 'center',
-        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
-      <StackService.Screen name={ServicesNavigationName.ROOT} component={UsefulServiceScreen} />
+      <StackService.Screen
+        name={ServicesNavigationName.ROOT}
+        component={UsefulServiceScreen}
+        options={{
+          headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
+        }}
+      />
       <StackService.Screen name={ServicesNavigationName.SHOPS} component={ShopsScreen} />
       <StackService.Screen name={ServicesNavigationName.CLINICS} component={ClinicsScreen} />
       <StackService.Screen name={ServicesNavigationName.MASTERS} component={MastersScreen} />

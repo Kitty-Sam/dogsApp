@@ -10,11 +10,12 @@ export type MapScreenStyleType = {
 export const styles = StyleSheet.create<MapScreenStyleType>({
   root: {
     flex: 1,
+    position: 'relative',
   },
   iconDrawer: {
     position: 'absolute',
-    zIndex: 10,
-    top: 24,
+    zIndex: 110,
+    top: 40,
     left: 24,
   },
   mapMarkContent: {

@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { FlatList, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ImageBackground, SafeAreaView, Text, View } from 'react-native';
 import { AddSection } from '../../components/AddSection/AddSection';
 import { chaptersName } from '../../enum/chapters';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,10 +9,10 @@ import { getAppStatus } from '../../store/selectors/appSelector';
 import { COLORS } from '../../colors/colors';
 import { fetchServicesAction } from '../../store/sagas/sagaActions/fetchServices';
 import { getGroomers } from '../../store/selectors/groomerSelector';
-import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { stylesCommon } from '../ShopsScreen/style';
 import { GroomersScreenProps } from './type';
 import { Loader } from '../../components/Loader/Loader';
+import { ListItemContainer } from '../../components/ListItemContainer/ListItemContainer';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const img = require('../../assets/white_dog_thin.jpeg');
@@ -29,20 +29,7 @@ export const GroomersScreen: FC<GroomersScreenProps> = props => {
   }, []);
 
   const renderItem = ({ item }: { item: ItemType }) => {
-    const { id, info, title, chapter, address, phone } = item;
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity
-          onPress={() => moveToItemScreen(id, info, title, chapter, address, phone)}
-          style={stylesCommon.itemContainer}
-        >
-          <TextItemThin style={{ textAlign: 'center' }}>{title}</TextItemThin>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => removeItem(chapter, id)}>
-          <TextItemThin style={{ marginTop: 20 }}>x</TextItemThin>
-        </TouchableOpacity>
-      </View>
-    );
+    return <ListItemContainer moveToItemScreen={moveToItemScreen} removeItem={removeItem} item={item} />;
   };
 
   if (!groomers.length) {
@@ -54,8 +41,17 @@ export const GroomersScreen: FC<GroomersScreenProps> = props => {
     );
   }
   return (
-    <SafeAreaView>
-      {statusApp === requestStatus.LOADING ? <Loader /> : <FlatList data={groomers} renderItem={renderItem} />}
+    <SafeAreaView style={{ flex: 1, margin: 12 }}>
+      {statusApp === requestStatus.LOADING ? (
+        <Loader />
+      ) : (
+        <>
+          <FlatList data={groomers} renderItem={renderItem} />
+          <View style={{ position: 'absolute', bottom: 80, right: 24 }}>
+            <AddSection chapter={chaptersName.GROOMER} />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

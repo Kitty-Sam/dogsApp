@@ -5,7 +5,6 @@ import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
 import { HeaderTextItem } from '../Text/HeaderTextItem/HeaderTextItem';
 import { styles } from './style';
 import { Gap } from '../Gap/Gap';
-import { AddSection } from '../AddSection/AddSection';
 
 export const ItemContainer: FC<ItemType> = ({ title, info, address, phone, chapter }) => {
   return (
@@ -20,9 +19,6 @@ export const ItemContainer: FC<ItemType> = ({ title, info, address, phone, chapt
       <View style={styles.feedBackContainer}>
         <TextItemThin>Feedback: </TextItemThin>
         <TextItemThin>{info}</TextItemThin>
-      </View>
-      <View style={{ position: 'absolute', bottom: 120 }}>
-        <AddSection chapter={chapter} />
       </View>
     </>
   );
