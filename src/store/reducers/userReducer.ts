@@ -1,7 +1,10 @@
 import {
+  addFriendAC,
   addPersonalPetAC,
   fetchAllUsersAC,
+  fetchFriendsIdsAC,
   fetchPersonalPetsAC,
+  removeFriendAC,
   toggleIsAddedPetsAC,
   UserActions,
   UserType,
@@ -19,19 +22,24 @@ const initialState: initialStateType = {
   personalPets: [],
   isAddedAll: false,
   users: [],
+  friendsIds: [],
 };
 
 type initialStateType = {
   personalPets: PetType[];
   isAddedAll: boolean;
   users: UserType[];
+  friendsIds: string[];
 };
 
 type ActionsType =
   | ReturnType<typeof addPersonalPetAC>
   | ReturnType<typeof fetchPersonalPetsAC>
   | ReturnType<typeof toggleIsAddedPetsAC>
-  | ReturnType<typeof fetchAllUsersAC>;
+  | ReturnType<typeof fetchAllUsersAC>
+  | ReturnType<typeof fetchFriendsIdsAC>
+  | ReturnType<typeof addFriendAC>
+  | ReturnType<typeof removeFriendAC>;
 
 export const userReducer = (state = initialState, action: ActionsType) => {
   switch (action.type) {
@@ -77,70 +85,32 @@ export const userReducer = (state = initialState, action: ActionsType) => {
       };
     }
 
-    // case UserActions.FETCH_PERSONAL_INFO: {
-    //   return {
-    //     ...state,
-    //     personalInfo: action.payload,
-    //   };
-    // }
-    //
-    // case UserActions.FETCH_PETS: {
-    //   return {
-    //     ...state,
-    //     pets: action.payload,
-    //   };
-    // }
-    //
-    // case UserActions.FAVORITES: {
-    //   return {
-    //     ...state,
-    //     favorites: action.payload,
-    //   };
-    // }
-    //
-    // case UserActions.ADD_FAVORITE:
-    //   {
-    //     const hasFavoritePet = state.favorites.find(el => el.id === action.payload.id);
-    //     if (!hasFavoritePet) {
-    //       return {
-    //         ...state,
-    //         favorites: [action.payload, ...state.favorites],
-    //       };
-    //     }
-    //     return { ...state };
-    //   }
-    //   break;
-    //
-    // case UserActions.REMOVE_FAVORITE: {
-    //   return {
-    //     ...state,
-    //     favorites: state.favorites.filter(el => el.id !== action.payload.id),
-    //   };
-    // }
-    //
-    // case UserActions.ADD_PET:
-    //   {
-    //     const { nickName, description, id, male, animal, age, photo, ownerInfo } = action.payload;
-    //     const hasPet = state.pets.find(pet => pet.id === id);
-    //
-    //     if (!hasPet) {
-    //       const newPet: PetType = {
-    //         id,
-    //         nickName,
-    //         animal,
-    //         description,
-    //         male,
-    //         age,
-    //         photo,
-    //         ownerInfo,
-    //       };
-    //       return {
-    //         ...state,
-    //         pets: [newPet, ...state.pets],
-    //       };
-    //     }
-    //   }
-    //   break;
+    case UserActions.FETCH_FRIENDS_IDS: {
+      return {
+        ...state,
+        friendsIds: action.payload.ids,
+      };
+    }
+
+    case UserActions.ADD_FRIEND:
+      {
+        const hasFriend = state.friendsIds.find(friend_id => friend_id === action.payload.id);
+        if (!hasFriend) {
+          return {
+            ...state,
+            friendsIds: [action.payload, ...state.friendsIds],
+          };
+        }
+        return { ...state };
+      }
+      break;
+
+    case UserActions.REMOVE_FRIEND: {
+      return {
+        ...state,
+        friendsIds: state.friendsIds.filter(friend_id => friend_id !== action.payload.id),
+      };
+    }
 
     default:
       return state;

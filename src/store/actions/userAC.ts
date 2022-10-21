@@ -2,9 +2,12 @@ import { PetType } from '../reducers/userReducer';
 
 export enum UserActions {
   ADD_PERSONAL_PET = 'add_personal_pet',
+  ADD_FRIEND = 'add_friend',
+  REMOVE_FRIEND = 'remove_friend',
   FETCH_PERSONAL_PETS = 'fetch_personal_pets',
   IS_ADDED_ALL = 'is_added_all',
   FETCH_ALL_USERS = 'fetch_all_users',
+  FETCH_FRIENDS_IDS = 'fetch_friends_ids',
 }
 
 export type PayloadType = {
@@ -52,6 +55,14 @@ export type UserType = {
   personalInfo: any;
 };
 
+export type FetchFriendsIdsType = {
+  ids: string[];
+};
+
+export type addRemoveFriendType = {
+  id: string;
+};
+
 export const fetchAllUsersAC: FetchAllUsersActionType = (payload: UserType[]) => ({
   type: UserActions.FETCH_ALL_USERS,
   payload,
@@ -60,4 +71,34 @@ export const fetchAllUsersAC: FetchAllUsersActionType = (payload: UserType[]) =>
 export type FetchAllUsersActionType = (payload: UserType[]) => {
   payload: UserType[];
   type: UserActions.FETCH_ALL_USERS;
+};
+
+export const fetchFriendsIdsAC: FetchAllFriendsIdsActionType = (payload: FetchFriendsIdsType) => ({
+  type: UserActions.FETCH_FRIENDS_IDS,
+  payload,
+});
+
+export type FetchAllFriendsIdsActionType = (payload: FetchFriendsIdsType) => {
+  payload: FetchFriendsIdsType;
+  type: UserActions.FETCH_FRIENDS_IDS;
+};
+
+export const addFriendAC: addFriendActionType = (payload: addRemoveFriendType) => ({
+  type: UserActions.ADD_FRIEND,
+  payload,
+});
+
+export type addFriendActionType = (payload: addRemoveFriendType) => {
+  payload: addRemoveFriendType;
+  type: UserActions.ADD_FRIEND;
+};
+
+export const removeFriendAC: removeFriendActionType = (payload: addRemoveFriendType) => ({
+  type: UserActions.REMOVE_FRIEND,
+  payload,
+});
+
+export type removeFriendActionType = (payload: addRemoveFriendType) => {
+  payload: addRemoveFriendType;
+  type: UserActions.REMOVE_FRIEND;
 };

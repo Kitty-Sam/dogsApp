@@ -22,10 +22,13 @@ export const FriendsStack = () => {
           color: COLORS.text.black,
         },
         headerTitleAlign: 'center',
-        headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} />,
       }}
     >
-      <Friends.Screen name={FriendsNavigationName.USERS} component={UsersScreen} />
+      <Friends.Screen
+        name={FriendsNavigationName.USERS}
+        component={UsersScreen}
+        options={{ headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} /> }}
+      />
       <Friends.Screen name={FriendsNavigationName.FRIENDS} component={FriendsScreen} />
       <Friends.Screen name={FriendsNavigationName.FRIEND_PROFILE} component={FriendUniteScreen} />
     </Friends.Navigator>
