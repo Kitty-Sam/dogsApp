@@ -4,12 +4,15 @@ import { toggleAppStatus } from '../../actions/appAC';
 import { requestStatus } from '../../reducers/appReducer';
 import { signInWithEmailAndPassword, UserCredential } from '@firebase/auth';
 import { auth } from '../../../../firebase';
-import { saveLoginErrorAC, toggleIsLoggedAC } from '../../actions/loginAC';
+import { saveCurrentUserAC, saveLoginErrorAC, toggleIsLoggedAC } from '../../actions/loginAC';
 import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
 import { GoogleSignInType } from '../sagaActions/googleSignIn';
-
 import { getIsAddedAll } from '../../selectors/userSelector';
+import { FirebaseDatabaseTypes } from '@react-native-firebase/database';
+import { database } from '../../../utils/getDataBaseURL';
+import { UserType } from '../../actions/userAC';
+import { images } from '../../../consts/consts';
 
 export function* googleSignInWorker({ payload }: GoogleSignInType) {
   const { navigation, userEmail, userPassword } = payload;
@@ -19,6 +22,32 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
     const isAddedAll: boolean = yield select(getIsAddedAll);
     // @ts-ignore
     const userCredential: UserCredential = yield signInWithEmailAndPassword(auth, userEmail.value, userPassword.value);
+
+    console.log('userCredential', userCredential.user.uid);
+
+    const reference: FirebaseDatabaseTypes.Reference = yield database.ref(`/users/`);
+    const snapshot: FirebaseDatabaseTypes.DataSnapshot = yield reference.once('value');
+
+    if (snapshot.val()) {
+      const usersFB: UserType[] = Object.values(snapshot.val());
+      const currentUser = usersFB.find(person => person.userId === userCredential.user.uid);
+
+      console.log('currentUser', currentUser);
+
+      if (currentUser) {
+        yield put(
+          saveCurrentUserAC({
+            user: {
+              currentUserId: currentUser?.userId,
+              currentUserName: currentUser?.userName,
+              currentUserPhoto: images.avatar,
+              currentUserEmail: currentUser?.userEmail,
+            },
+          }),
+        );
+      }
+      yield put(toggleIsLoggedAC({ isLogged: true }));
+    }
 
     userEmail.resetValue();
     userPassword.resetValue();

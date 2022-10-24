@@ -11,7 +11,6 @@ import { GoogleRegisterType } from '../sagaActions/googleRegister';
 import { saveCurrentUserAC } from '../../actions/loginAC';
 import { images } from '../../../consts/consts';
 import { database } from '../../../utils/getDataBaseURL';
-import { sendEmail } from '../../../utils/sendMail';
 
 export function* googleRegisterWorker({ payload }: GoogleRegisterType) {
   const { userName, userPassword, userEmail, navigation } = payload;
