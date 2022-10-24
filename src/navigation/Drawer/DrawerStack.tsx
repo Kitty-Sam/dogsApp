@@ -13,6 +13,7 @@ import { PetsStack } from '../PetsStack/PetsStack';
 import { SettingsScreen } from '../../screens/SettingsScreen/SettingsScreen';
 import { FriendsStack } from '../FriendsStack/FriendsStack';
 import { COLORS } from '../../colors/colors';
+import { HelpScreen } from '../../screens/HelpScreen/HelpScreen';
 
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
@@ -38,11 +39,20 @@ export const DrawerStack = () => {
         }}
       />
       <Drawer.Screen
+        name={DrawerNavigationName.PROFILE_STACK}
+        component={PetsStack}
+        options={{
+          drawerIcon: ({ color, size, focused }) => (
+            <Icon name={focused ? iconsName.PAW : iconsName.PAW_OUTLINE} color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name={DrawerNavigationName.MAP}
         component={MapScreen}
         options={{
           drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.EARTH : iconsName.EARTH_OUTLINE} color={color} size={size} />
+            <Icon name={focused ? iconsName.MAP : iconsName.MAP_OUTLINE} color={color} size={size} />
           ),
         }}
       />
@@ -55,15 +65,7 @@ export const DrawerStack = () => {
           ),
         }}
       />
-      <Drawer.Screen
-        name={DrawerNavigationName.PROFILE_STACK}
-        component={PetsStack}
-        options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.PERSON : iconsName.PERSON_OUTLINE} color={color} size={size} />
-          ),
-        }}
-      />
+
       <Drawer.Screen
         name={DrawerNavigationName.FRIENDS_STACK}
         component={FriendsStack}
@@ -86,11 +88,12 @@ export const DrawerStack = () => {
         name={DrawerNavigationName.SETTINGS}
         component={SettingsScreen}
         options={{
-          drawerIcon: ({ color, size, focused }) => (
-            <Icon name={focused ? iconsName.SETTINGS : iconsName.SETTINGS_OUTLINE} color={color} size={size} />
-          ),
+          drawerItemStyle: {
+            marginTop: 80,
+          },
         }}
       />
+      <Drawer.Screen name={DrawerNavigationName.HELP} component={HelpScreen} />
     </Drawer.Navigator>
   );
 };

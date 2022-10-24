@@ -1,5 +1,4 @@
 import { put, select } from '@redux-saga/core/effects';
-
 import { toggleAppStatus } from '../../actions/appAC';
 import { requestStatus } from '../../reducers/appReducer';
 import { signInWithEmailAndPassword, UserCredential } from '@firebase/auth';
@@ -23,16 +22,12 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
     // @ts-ignore
     const userCredential: UserCredential = yield signInWithEmailAndPassword(auth, userEmail.value, userPassword.value);
 
-    console.log('userCredential', userCredential.user.uid);
-
     const reference: FirebaseDatabaseTypes.Reference = yield database.ref(`/users/`);
     const snapshot: FirebaseDatabaseTypes.DataSnapshot = yield reference.once('value');
 
     if (snapshot.val()) {
       const usersFB: UserType[] = Object.values(snapshot.val());
       const currentUser = usersFB.find(person => person.userId === userCredential.user.uid);
-
-      console.log('currentUser', currentUser);
 
       if (currentUser) {
         yield put(

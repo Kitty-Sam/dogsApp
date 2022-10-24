@@ -5,9 +5,7 @@ import { styles } from './style';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUserName, getCurrentUserPhoto } from '../../store/selectors/loginSelector';
 import { COLORS } from '../../colors/colors';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { googleSignOutAction } from '../../store/sagas/sagaActions/googleSignOut';
-import { iconsName } from '../../enum/iconsName';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { images } from '../../consts/consts';
 
@@ -19,7 +17,6 @@ export const CustomDrawer = (props: any) => {
   const onLogOut = () => {
     dispatch(googleSignOutAction());
   };
-
   return (
     <DrawerContentScrollView
       {...props}
@@ -42,10 +39,9 @@ export const CustomDrawer = (props: any) => {
         }}
       >
         <DrawerItemList {...props} />
-        <View style={{ backgroundColor: COLORS.text.white, marginTop: 50 }}>
+        <View style={{ backgroundColor: COLORS.text.white }}>
           <TouchableOpacity style={styles.logOutText} onPress={onLogOut}>
-            <Icon name={iconsName.LOG_OUT_OUTLINE} size={24} color={COLORS.text.dark_blue} />
-            <TextItemThin style={{ margin: 4 }}>Log out</TextItemThin>
+            <TextItemThin style={{ letterSpacing: -0.5 }}>Log out</TextItemThin>
           </TouchableOpacity>
         </View>
       </View>

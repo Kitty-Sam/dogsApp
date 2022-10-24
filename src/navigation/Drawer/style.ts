@@ -21,6 +21,6 @@ export const styles = StyleSheet.create<CustomDrawerStyleType>({
   },
   logOutText: {
     flexDirection: 'row',
-    margin: 24,
+    margin: 16,
   },
 });

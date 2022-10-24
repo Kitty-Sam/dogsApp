@@ -6,7 +6,7 @@ import { UserCredential } from '@firebase/auth';
 import { auth } from '../../../../firebase';
 import { Alert } from 'react-native';
 import { AuthNavigationName } from '../../../enum/navigation';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { GoogleRegisterType } from '../sagaActions/googleRegister';
 import { saveCurrentUserAC } from '../../actions/loginAC';
 import { images } from '../../../consts/consts';

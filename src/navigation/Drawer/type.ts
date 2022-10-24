@@ -8,4 +8,5 @@ export type DrawerStackParamList = {
   [DrawerNavigationName.MAP]: undefined;
   [DrawerNavigationName.FRIENDS_STACK]: undefined;
   [DrawerNavigationName.SETTINGS]: undefined;
+  [DrawerNavigationName.HELP]: undefined;
 };

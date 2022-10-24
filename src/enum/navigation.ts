@@ -34,6 +34,7 @@ export const enum DrawerNavigationName {
   MAP = 'Map',
   FRIENDS_STACK = 'Friends',
   SETTINGS = 'Settings',
+  HELP = 'Help',
 }
 
 export const enum AuthNavigationName {
