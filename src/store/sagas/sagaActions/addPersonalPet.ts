@@ -6,6 +6,7 @@ export type AddPersonalPetPayloadType = {
   age: string;
   description: string;
   chip_id: string;
+  photo: string;
 };
 
 export const addPersonalPetAction = (payload: AddPersonalPetPayloadType): AddPersonalPetActionType => ({

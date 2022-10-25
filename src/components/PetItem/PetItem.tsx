@@ -1,76 +1,60 @@
 import React, { FC, useState } from 'react';
-import { AdoptionNavigationName } from '../../enum/navigation';
-import { ActivityIndicator, Image, TouchableOpacity, View } from 'react-native';
-import { styles } from './style';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { COLORS } from '../../colors/colors';
-import { iconsName } from '../../enum/iconsName';
-import { TextItemBold } from '../Text/TextItemBold/TextItemBold';
-import { TextItemThin } from '../Text/TextItemThin/TextItemThin';
-import { maleName } from '../../enum/maleName';
+import { PetsNavigationName } from '../../enum/navigation';
+import { ActivityIndicator, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import { PetItemType } from './type';
-
-export const PetItem: FC<PetItemType> = ({ pet, navigation }) => {
-  const petUnitNavigate = () => {
-    navigation!.navigate(AdoptionNavigationName.PET_UNITE, {
-      nickName: pet.nickName,
-      description: pet.description,
-      photo: pet.photo,
-      age: pet.age,
-      male: pet.male,
-      animal: pet.animal,
-      id: pet.id,
-      ownerInfo: pet.ownerInfo,
-    });
-  };
+import { Gap } from '../Gap/Gap';
+import { getData } from '../../utils/getData';
+import { styles } from './style';
+export const PetItem: FC<PetItemType> = props => {
+  const { navigation, pet } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
+
   const onLoading = (value: boolean) => {
     setLoading(value);
   };
+
+  const dateNow = getData(new Date());
+
+  const a = dateNow.split('.');
+  const b = pet.age.split('.');
+
+  const c = a.map((el, index) => +el - +b[index]);
   return (
-    <TouchableOpacity style={styles.itemPetContainer} onPress={petUnitNavigate}>
-      <View style={styles.imageContainer}>
+    <View key={pet.chip_id} style={styles.itemPetContainer}>
+      <TouchableOpacity
+        style={styles.insideItemContainer}
+        onPress={() =>
+          navigation.navigate(PetsNavigationName.PET_UNITE, {
+            nickName: pet.nickName,
+            breed: pet.breed,
+            age: pet.age,
+            description: pet.description,
+            chip_id: pet.chip_id,
+            photo: pet.photo,
+          })
+        }
+      >
         {loading && (
-          <View
-            style={{
-              justifyContent: 'center',
-              alignSelf: 'center',
-              alignContent: 'center',
-              width: '100%',
-              position: 'absolute',
-              zIndex: 0,
-              height: 350,
-            }}
-          >
-            <ActivityIndicator color={COLORS.text.dark_blue} />
+          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, width: 150, height: 150 }}>
+            <ActivityIndicator />
           </View>
         )}
         {
-          <Image
+          <ImageBackground
             source={{ uri: pet.photo }}
-            style={styles.image}
-            onLoadEnd={() => onLoading(false)}
+            resizeMode="cover"
+            style={styles.imageBackGround}
+            imageStyle={styles.imageBackGroundImage}
             onLoadStart={() => onLoading(true)}
-          />
+            onLoad={() => onLoading(false)}
+          >
+            <Text style={styles.text}>{pet.nickName}</Text>
+            <Gap size={2} />
+            <Text style={styles.text}>{`${c[1]} month ${c[2]} years`}</Text>
+          </ImageBackground>
         }
-      </View>
-      <View style={styles.textContainer}>
-        <TextItemBold>{pet.nickName}</TextItemBold>
-        <TextItemThin>{pet.age}</TextItemThin>
-      </View>
-      <Icon
-        name={
-          [pet.male].includes(maleName.UNKNOWN)
-            ? iconsName.UNKNOWN
-            : [pet.male].includes(maleName.BOY)
-            ? iconsName.BOY
-            : iconsName.GIRL
-        }
-        size={26}
-        color={COLORS.text.dark_blue}
-        style={styles.icon}
-      />
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };

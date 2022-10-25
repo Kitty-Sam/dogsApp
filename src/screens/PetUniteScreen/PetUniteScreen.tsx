@@ -1,14 +1,17 @@
-import React, { FC, useLayoutEffect } from 'react';
-import { SafeAreaView, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import React, { FC, useLayoutEffect, useState } from 'react';
+import { ActivityIndicator, Image, ScrollView, Text, View } from 'react-native';
 import { PetUniteScreenProps } from './type';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
-import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 import { Gap } from '../../components/Gap/Gap';
-import { COLORS } from '../../colors/colors';
+import { RoundView } from '../../components/RoundView/RoundView';
+import { LibraryImagesBlock } from '../../components/LibraryImagesBlock/LibraryImagesBlock';
+import { FAB } from 'react-native-paper';
+import { PetsNavigationName } from '../../enum/navigation';
+import { styles } from './style';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
-  const { nickName, description, chip_id, breed, age } = props.route.params;
+  const { nickName, description, breed, age, photo } = props.route.params;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -16,48 +19,46 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
     });
   }, []);
 
-  const { width, height } = useWindowDimensions();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const onLoading = (value: boolean) => {
+    setLoading(value);
+  };
 
   return (
-    <SafeAreaView style={{ margin: 24 }}>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <View
-          style={{
-            width: 150,
-            height: 150,
-            borderRadius: 75,
-            borderColor: COLORS.text.grey,
-            borderWidth: 1,
-          }}
-        />
+    <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
+      <View style={styles.mainBlock}>
+        {loading && (
+          <View style={styles.activityBlock}>
+            <ActivityIndicator />
+          </View>
+        )}
+        {
+          <Image
+            source={{ uri: photo }}
+            style={styles.image}
+            onLoadStart={() => onLoading(true)}
+            onLoadEnd={() => onLoading(false)}
+          />
+        }
         <Gap size={1} />
-        <HeaderTextItem>{nickName}</HeaderTextItem>
+        <TextItemThin style={{ color: '#9e9e9e' }}>{nickName}</TextItemThin>
+        <Gap size={2} />
+        <View style={styles.noteBlock}>
+          <Text style={{ fontSize: 24 }}>{nickName}</Text>
+          <View style={styles.roundViewContainer}>
+            <RoundView note={age} size={'big'} />
+            <RoundView note={'male'} size={'small'} />
+            <RoundView note={breed} size={'big'} />
+            <RoundView note={description} size={'big'} />
+          </View>
+          <Gap size={2} />
+          <Text>Note</Text>
+        </View>
+        <Gap size={5} />
+        <LibraryImagesBlock photo={photo} />
+        <FAB icon="pencil" style={styles.fab} onPress={() => navigation.navigate(PetsNavigationName.EDIT_PET)} />
       </View>
-      <View>
-        <Gap size={1} />
-        <TextItemThin>Breed: {breed}</TextItemThin>
-        <Gap size={1} />
-        <TextItemThin>Date of birth: {age}</TextItemThin>
-        <Gap size={1} />
-        <TextItemThin>Color: {description}</TextItemThin>
-        <Gap size={1} />
-        <TextItemThin>Chip id: {chip_id}</TextItemThin>
-      </View>
-      <Gap size={3} />
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity
-          style={{
-            borderColor: COLORS.text.grey,
-            borderWidth: 1,
-            borderRadius: 20,
-            width: 300,
-            height: 200,
-            padding: 12,
-          }}
-        >
-          <TextItemThin> Note </TextItemThin>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };

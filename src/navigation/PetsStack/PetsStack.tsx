@@ -7,6 +7,8 @@ import { ProfileScreen } from '../../screens/ProfileScreen/ProfileScreen';
 import { COLORS } from '../../colors/colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { AddPetScreen } from '../../screens/AddPetScreen/AddPetScreen';
+import { EditPetProfileScreen } from '../../screens/EditPetProfileScreen/EditPetProfileScreen';
 
 const Pets = createNativeStackNavigator<PetsStackParamList>();
 
@@ -29,6 +31,8 @@ export const PetsStack = () => {
         options={{ headerLeft: () => <Icon name={'menu-sharp'} size={24} onPress={() => navigation.openDrawer()} /> }}
       />
       <Pets.Screen name={PetsNavigationName.PET_UNITE} component={PetUniteScreen} />
+      <Pets.Screen name={PetsNavigationName.ADD_PET} component={AddPetScreen} />
+      <Pets.Screen name={PetsNavigationName.EDIT_PET} component={EditPetProfileScreen} />
     </Pets.Navigator>
   );
 };

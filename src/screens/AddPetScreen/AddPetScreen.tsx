@@ -1,46 +1,72 @@
 import React, { FC, useState } from 'react';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { AppButton } from '../../components/Button/AppButton';
 import { COLORS } from '../../colors/colors';
 import { inputsPlaceholdersName } from '../../enum/inputPlaceholdersName';
-import { AddPetScreenProps } from './type';
 import { styles } from './style';
 import { TextItemThin } from '../../components/Text/TextItemThin/TextItemThin';
 import { useInput } from '../../hooks/useInput';
-import { useDispatch } from 'react-redux';
-import { toggleIsLoggedAC } from '../../store/actions/loginAC';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
-import { HeaderTextItem } from '../../components/Text/HeaderTextItem/HeaderTextItem';
 import { addPersonalPetAction } from '../../store/sagas/sagaActions/addPersonalPet';
-import { toggleIsAddedPetsAC } from '../../store/actions/userAC';
 import DatePicker from 'react-native-date-picker';
 import { getData } from '../../utils/getData';
+import { PetsNavigationName } from '../../enum/navigation';
+import { toggleIsLoggedAC } from '../../store/actions/loginAC';
+import { toggleIsAddedPetsAC } from '../../store/actions/userAC';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PetsStackParamList } from '../../navigation/PetsStack/type';
+import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
+import { images } from '../../consts/consts';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
+import { getGalleryImages } from '../../utils/getImagesFromStore';
 
-export const AddPetScreen: FC<AddPetScreenProps> = props => {
+export type AddPetPropsType = {
+  navigation: StackNavigationProp<PetsStackParamList>;
+  route: any;
+};
+
+export const AddPetScreen: FC<AddPetPropsType> = props => {
   const nickName = useInput('');
   const breed = useInput('');
   const description = useInput('');
   const chip_id = useInput('');
 
+  const currentUserId = useSelector(getCurrentUserId);
+
+  const { navigation, route } = props;
+  const { stack } = route.params;
+
   const [date, setDate] = useState<Date>(new Date());
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+  const addPet = async () => {
+    const photoUrls = await getGalleryImages('animals', nickName.value, currentUserId);
+    const selectedPhotoUrl = photoUrls?.[0];
 
-  const addPet = () => {
-    dispatch(
-      addPersonalPetAction({
-        nickName: nickName.value,
-        description: description.value,
-        breed: breed.value,
-        age: getData(date),
-        chip_id: chip_id.value,
-      }),
-    );
-    dispatch(toggleIsLoggedAC({ isLogged: true }));
-    dispatch(toggleIsAddedPetsAC({ isAddedAll: true }));
+    if (selectedPhotoUrl) {
+      dispatch(
+        addPersonalPetAction({
+          nickName: nickName.value,
+          description: description.value,
+          breed: breed.value,
+          age: getData(date),
+          chip_id: chip_id.value,
+          photo: selectedPhotoUrl,
+        }),
+      );
+    }
+
+    if (stack === 'Profile') {
+      navigation.navigate(PetsNavigationName.PROFILE);
+    } else {
+      dispatch(toggleIsLoggedAC({ isLogged: true }));
+      dispatch(toggleIsAddedPetsAC({ isAddedAll: true }));
+    }
   };
+
   const clearPet = () => {
     nickName.resetValue();
     breed.resetValue();
@@ -49,32 +75,22 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
     chip_id.resetValue();
   };
 
-  // const [isDone, setIsDone] = useState<string>('idle');
-
-  // useEffect(() => {
-  //   if (isDone === 'isLoading') {
-  //     toast.info({ message: 'wait a few minutes' });
-  //   }
-  //   if (isDone === 'succeed') {
-  //     toast.success({ message: 'photo is uploaded' });
-  //   }
-  // }, [isDone]);
+  const [image, setImage] = useState<string>(images.no_photo);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <HeaderTextItem style={styles.headerText}>Add your pet</HeaderTextItem>
-      <Gap size={3} />
       <View style={styles.mainContainer}>
-        <View style={styles.imageContainer}>
-          {/*<LoadImagePickerButton*/}
-          {/*  currentUserId={currentUserId}*/}
-          {/*  screen={'Animals'}*/}
-          {/*  isDone={isDone}*/}
-          {/*  id={id}*/}
-          {/*  setIsDone={setIsDone}*/}
-          {/*  setStoreImages={setStoreImages}*/}
-          {/*/>*/}
-        </View>
+        <TouchableOpacity style={{ zIndex: 100 }}>
+          <LoadImagePickerButton
+            screen={'Animals'}
+            setImage={setImage}
+            currentUserId={currentUserId}
+            id={nickName.value}
+          />
+        </TouchableOpacity>
+
+        <Image source={{ uri: image }} style={styles.imageContainer} />
+
         <View style={styles.shortInputContainer}>
           <TextInput
             {...nickName}
@@ -147,7 +163,7 @@ export const AddPetScreen: FC<AddPetScreenProps> = props => {
         <AppButton
           disabled={nickName.value === '' || breed.value === '' || description.value === ''}
           onPress={addPet}
-          title={'next'}
+          title={stack === 'Profile' ? 'add' : 'next'}
           backgroundColor={COLORS.buttons.violet}
         />
       </View>

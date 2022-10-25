@@ -24,6 +24,8 @@ export const enum FriendsNavigationName {
 export const enum PetsNavigationName {
   PROFILE = 'Profile',
   PET_UNITE = 'Pet',
+  ADD_PET = 'Add your pet',
+  EDIT_PET = 'Edit profile',
 }
 
 export const enum DrawerNavigationName {
@@ -42,5 +44,5 @@ export const enum AuthNavigationName {
   LOGIN = 'Login',
   REGISTER = 'Register',
   FORGOT_PASSWORD = 'Forgot password',
-  ADD_PET = 'Add pet',
+  ADD_PET = 'Add your pet',
 }

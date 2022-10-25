@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
+import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
 import { COLORS } from '../../colors/colors';
 
 export type AddPetScreenStyleType = {
@@ -6,7 +6,7 @@ export type AddPetScreenStyleType = {
   buttonsContainer: ViewStyle;
   headerText: TextStyle;
   mainContainer: ViewStyle;
-  imageContainer: ViewStyle;
+  imageContainer: ImageStyle;
   shortInputContainer: ViewStyle;
 };
 
@@ -28,12 +28,13 @@ export const styles = StyleSheet.create<AddPetScreenStyleType>({
     justifyContent: 'space-between',
   },
   imageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
     borderColor: COLORS.text.grey,
     borderWidth: 1,
     marginTop: 20,
+    zIndex: 1,
   },
   shortInputContainer: {
     width: '65%',

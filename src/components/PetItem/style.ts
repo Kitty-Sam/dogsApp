@@ -1,46 +1,32 @@
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { screenWidth } from '../../consts/consts';
-import { COLORS } from '../../colors/colors';
 
 export type PetItemStyleType = {
   itemPetContainer: ViewStyle;
-  itemPetText: TextStyle;
-  image: ImageStyle;
-  icon: TextStyle;
-  textContainer: TextStyle;
-  imageContainer: ViewStyle;
+  insideItemContainer: ViewStyle;
+  imageBackGround: ViewStyle;
+  imageBackGroundImage: ImageStyle;
+  text: TextStyle;
 };
 
 export const styles = StyleSheet.create<PetItemStyleType>({
   itemPetContainer: {
-    width: screenWidth * 0.45,
-    height: screenWidth * 0.6,
-    borderColor: COLORS.text.dark_blue,
-    borderWidth: 1,
+    marginVertical: 12,
+  },
+  insideItemContainer: {
     margin: 8,
-    borderRadius: 40,
   },
-  itemPetText: {
-    color: COLORS.text.dark_blue,
-  },
-  image: {
-    width: screenWidth * 0.4,
-    height: screenWidth * 0.35,
-    borderRadius: 30,
-  },
-  imageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-
-  icon: {
-    position: 'absolute',
-    right: 18,
-    bottom: 40,
-  },
-  textContainer: {
+  imageBackGround: {
+    padding: 12,
     justifyContent: 'flex-start',
-    marginHorizontal: 24,
+    width: 150,
+    height: 150,
+  },
+  imageBackGroundImage: {
+    borderRadius: 20,
+  },
+  text: {
+    textTransform: 'capitalize',
+    zIndex: 10,
+    color: 'white',
   },
 });

@@ -3,26 +3,25 @@ import { Actionsheet, useDisclose } from 'native-base';
 import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { getUniqueFileName } from '../../utils/getUniqName';
 import storage from '@react-native-firebase/storage';
-import { getAvatars, getGalleryImages } from '../../utils/getImagesFromStore';
-import { AppButton } from '../Button/AppButton';
+import { Image, TouchableOpacity } from 'react-native';
 
 const metadata = {
   contentType: 'image/jpeg',
 };
+const addPhoto = require('../../assets/icons_add_a_photo.png');
 
 export type LoadImagePickerButtonType = {
-  setImage?: (image: string) => void;
+  setImage: (image: string) => void;
   setStoreImages?: (images: string[]) => void;
-  currentUserId?: string;
+  currentUserId: string;
   screen: string;
   isDone?: string;
   setIsDone?: (isDone: string) => void;
-  id?: number;
+  id: string;
 };
 
 export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   setImage,
-  setStoreImages,
   currentUserId,
   screen,
   setIsDone,
@@ -37,8 +36,31 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
         includeBase64: true,
         mediaType: 'photo',
       });
-      if (setImage) {
-        setImage(image.path);
+      setImage(image.path);
+
+      const imageFileName = getUniqueFileName(image.path);
+
+      if (screen === 'Profile') {
+        const referenceAll = storage().ref().child(`${currentUserId}`).child('/avatars').child(`${imageFileName}`);
+        try {
+          await referenceAll.putFile(image.path, metadata);
+        } catch (e) {
+          console.log(e);
+        }
+      }
+
+      if (screen === 'Animals') {
+        const reference = storage()
+          .ref()
+          .child(`${currentUserId}`)
+          .child('/animals')
+          .child(`${id}`)
+          .child(`${imageFileName}`);
+        try {
+          await reference.putFile(image.path, metadata);
+        } catch (error) {
+          console.log(error);
+        }
       }
     } catch (error) {
       console.warn(error);
@@ -53,53 +75,28 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
         includeBase64: true,
         mediaType: 'photo',
       });
-      if (setImage) {
-        setImage(image.path);
-      }
+      setImage(image.path);
 
       const imageFileName = getUniqueFileName(image.path);
+
       if (screen === 'Profile') {
         const referenceAll = storage().ref().child(`${currentUserId}`).child('/avatars').child(`${imageFileName}`);
         try {
-          const task = referenceAll.putFile(image.path, metadata);
-          // task.on('state_changed', taskSnapshot => {
-          //   console.log(`${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`);
-          // });
-          task.then(async () => {
-            try {
-              if (currentUserId) {
-                const images = await getAvatars('/avatars', currentUserId);
-                if (setStoreImages) {
-                  setStoreImages(images);
-                }
-              }
-            } catch (error) {
-              console.log(error);
-            }
-          });
-        } catch (error) {
-          console.log(error);
+          await referenceAll.putFile(image.path, metadata);
+        } catch (e) {
+          console.log(e);
         }
       }
+
       if (screen === 'Animals') {
-        setIsDone && setIsDone('isLoading');
-        const reference = storage().ref().child('/animals').child(`${id}`).child(`${imageFileName}`);
+        const reference = storage()
+          .ref()
+          .child(`${currentUserId}`)
+          .child('/animals')
+          .child(`${id}`)
+          .child(`${imageFileName}`);
         try {
-          const task = reference.putFile(image.path, metadata);
-          task.then(async () => {
-            try {
-              if (id) {
-                const images = await getGalleryImages('/animals', id);
-                if (setStoreImages && setIsDone) {
-                  setStoreImages(images);
-                  setIsDone('succeed');
-                }
-              }
-              setIsDone && setIsDone('succeed');
-            } catch (error) {
-              console.log(error);
-            }
-          });
+          await reference.putFile(image.path, metadata);
         } catch (error) {
           console.log(error);
         }
@@ -110,7 +107,9 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   };
   return (
     <>
-      <AppButton onPress={onOpen} title={'Add photo'} />
+      <TouchableOpacity onPress={onOpen}>
+        <Image source={addPhoto} style={{ width: 30, height: 30, position: 'absolute', left: 70, top: 10 }} />
+      </TouchableOpacity>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
           <Actionsheet.Item onPress={makeImage}>Take photo</Actionsheet.Item>
