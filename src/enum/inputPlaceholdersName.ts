@@ -7,6 +7,7 @@ export const enum inputsPlaceholdersName {
   ADD_ADDRESS = 'Add address',
   PET_NICK_NAME = 'Name',
   PET_DESCRIPTION = 'Color',
+  PET_ABOUT = 'About',
   PET_OWNER_INFO = 'Telephone',
   PET_AGE = 'Date of birth',
   PET_BREED = 'Breed',

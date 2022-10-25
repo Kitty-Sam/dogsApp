@@ -13,6 +13,7 @@ import { PetItem } from '../../components/PetItem/PetItem';
 export const ProfileScreen: FC<ProfileScreenProps> = props => {
   const { navigation } = props;
   const personalPets = useSelector(getPersonalPets);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

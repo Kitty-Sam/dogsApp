@@ -42,7 +42,9 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
   const [open, setOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
+
   const addPet = async () => {
+    console.log('add pet');
     const photoUrls = await getGalleryImages('animals', nickName.value, currentUserId);
     const selectedPhotoUrl = photoUrls?.[0];
 

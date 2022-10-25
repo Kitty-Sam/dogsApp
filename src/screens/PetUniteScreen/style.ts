@@ -13,10 +13,11 @@ export type PetUniteScreenStyleType = {
 export const styles = StyleSheet.create<PetUniteScreenStyleType>({
   root: {
     margin: 24,
+    flex: 1,
   },
   mainBlock: {
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   fab: {
     position: 'absolute',
@@ -45,7 +46,6 @@ export const styles = StyleSheet.create<PetUniteScreenStyleType>({
   activityBlock: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
     width: 200,
     height: 200,
   },

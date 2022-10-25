@@ -3,7 +3,7 @@ import { Actionsheet, useDisclose } from 'native-base';
 import { openCamera, openPicker } from 'react-native-image-crop-picker';
 import { getUniqueFileName } from '../../utils/getUniqName';
 import storage from '@react-native-firebase/storage';
-import { Image, TouchableOpacity } from 'react-native';
+import { Alert, Image, TouchableOpacity } from 'react-native';
 
 const metadata = {
   contentType: 'image/jpeg',
@@ -107,7 +107,15 @@ export const LoadImagePickerButton: FC<LoadImagePickerButtonType> = ({
   };
   return (
     <>
-      <TouchableOpacity onPress={onOpen}>
+      <TouchableOpacity
+        onPress={() => {
+          if (!id) {
+            Alert.alert('Enter name at first');
+            return;
+          }
+          onOpen();
+        }}
+      >
         <Image source={addPhoto} style={{ width: 30, height: 30, position: 'absolute', left: 70, top: 10 }} />
       </TouchableOpacity>
       <Actionsheet isOpen={isOpen} onClose={onClose}>

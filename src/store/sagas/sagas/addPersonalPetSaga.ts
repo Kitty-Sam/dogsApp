@@ -6,7 +6,7 @@ import { getCurrentUserId } from '../../selectors/loginSelector';
 import { addPersonalPetAC } from '../../actions/userAC';
 
 export function* addPersonalPetWorker({ payload }: AddPersonalPetActionType) {
-  const { nickName, age, description, breed, chip_id, photo } = payload;
+  const { nickName, age, description, breed, chip_id, photo, about } = payload;
   try {
     const currentUserId: string = yield select(getCurrentUserId);
     yield database.ref(`/users/${currentUserId}/personalInfo/${nickName}`).set({
@@ -16,6 +16,7 @@ export function* addPersonalPetWorker({ payload }: AddPersonalPetActionType) {
       breed: breed,
       chip_id: chip_id,
       photo: photo,
+      about: about,
     });
     yield put(
       addPersonalPetAC({
@@ -25,6 +26,7 @@ export function* addPersonalPetWorker({ payload }: AddPersonalPetActionType) {
         breed: breed,
         chip_id: chip_id,
         photo,
+        about,
       }),
     );
   } catch (error: any) {

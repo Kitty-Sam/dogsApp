@@ -17,6 +17,7 @@ export type PetType = {
   breed: string;
   chip_id: string;
   photo: string;
+  about?: string;
 };
 
 const initialState: initialStateType = {
@@ -60,7 +61,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
     }
     case UserActions.ADD_PERSONAL_PET:
       {
-        const { nickName, description, age, chip_id, breed, photo } = action.payload;
+        const { nickName, description, age, chip_id, breed, photo, about } = action.payload;
         const hasPet = state.personalPets.find(pet => pet.nickName === nickName);
 
         if (!hasPet) {
@@ -71,6 +72,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
             chip_id,
             breed,
             photo,
+            about,
           };
           return {
             ...state,

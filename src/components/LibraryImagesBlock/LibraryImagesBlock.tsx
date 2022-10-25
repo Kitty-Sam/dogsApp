@@ -17,11 +17,7 @@ export const LibraryImagesBlock: FC<LibraryImagesBlockPropsType> = props => {
   };
   return (
     <>
-      {loading && (
-        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, width: 300, height: 300 }}>
-          <ActivityIndicator />
-        </View>
-      )}
+      {loading && <ActivityIndicator />}
       {
         <Image
           source={{ uri: photo }}

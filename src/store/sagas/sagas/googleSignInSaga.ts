@@ -41,17 +41,17 @@ export function* googleSignInWorker({ payload }: GoogleSignInType) {
           }),
         );
       }
-      yield put(toggleIsLoggedAC({ isLogged: true }));
     }
 
     userEmail.resetValue();
     userPassword.resetValue();
 
     yield put(toggleAppStatus(requestStatus.SUCCEEDED));
+
     if (isAddedAll) {
       yield put(toggleIsLoggedAC({ isLogged: true }));
     } else {
-      yield navigation.navigate(AuthNavigationName.ADD_PET);
+      yield navigation.navigate(AuthNavigationName.ADD_PET, { stack: 'Auth' });
     }
   } catch (error: any) {
     Alert.alert('register at first or check your credentials again');

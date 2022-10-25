@@ -16,7 +16,7 @@ export const AuthStack = () => {
       <Auth.Screen name={AuthNavigationName.WELCOME} component={WelcomeScreen} options={{ headerShown: false }} />
       <Auth.Screen name={AuthNavigationName.LOGIN} component={LoginScreen} options={{ headerShown: false }} />
       <Auth.Screen name={AuthNavigationName.REGISTER} component={RegisterScreen} options={{ headerShown: false }} />
-      <Auth.Screen name={AuthNavigationName.ADD_PET} component={AddPetScreen} options={{ headerShown: false }} />
+      <Auth.Screen name={AuthNavigationName.ADD_PET} component={AddPetScreen} />
 
       <Auth.Screen
         name={AuthNavigationName.FORGOT_PASSWORD}

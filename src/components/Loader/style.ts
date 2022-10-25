@@ -7,7 +7,7 @@ export type LoaderStyleType = {
 };
 
 export const styles = StyleSheet.create<LoaderStyleType>({
-  root: { flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: COLORS.background.light_pink },
+  root: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   loaderContainer: {
     width: 70,
     height: 70,

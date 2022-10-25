@@ -11,7 +11,7 @@ import { styles } from './style';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
-  const { nickName, description, breed, age, photo } = props.route.params;
+  const { nickName, description, breed, age, photo, chip_id, about } = props.route.params;
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -28,11 +28,7 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   return (
     <ScrollView style={styles.root} showsVerticalScrollIndicator={false}>
       <View style={styles.mainBlock}>
-        {loading && (
-          <View style={styles.activityBlock}>
-            <ActivityIndicator />
-          </View>
-        )}
+        {loading && <ActivityIndicator />}
         {
           <Image
             source={{ uri: photo }}
@@ -53,11 +49,25 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
             <RoundView note={description} size={'big'} />
           </View>
           <Gap size={2} />
-          <Text>Note</Text>
+          <Text>{about ? about : 'Note'}</Text>
         </View>
         <Gap size={5} />
         <LibraryImagesBlock photo={photo} />
-        <FAB icon="pencil" style={styles.fab} onPress={() => navigation.navigate(PetsNavigationName.EDIT_PET)} />
+        <FAB
+          icon="pencil"
+          style={styles.fab}
+          onPress={() =>
+            navigation.navigate(PetsNavigationName.EDIT_PET, {
+              photo,
+              nickName,
+              description,
+              breed,
+              age,
+              chip_id,
+              about,
+            })
+          }
+        />
       </View>
     </ScrollView>
   );

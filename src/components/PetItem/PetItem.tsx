@@ -32,14 +32,11 @@ export const PetItem: FC<PetItemType> = props => {
             description: pet.description,
             chip_id: pet.chip_id,
             photo: pet.photo,
+            about: pet.about,
           })
         }
       >
-        {loading && (
-          <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1, width: 150, height: 150 }}>
-            <ActivityIndicator />
-          </View>
-        )}
+        {loading && <ActivityIndicator />}
         {
           <ImageBackground
             source={{ uri: pet.photo }}
