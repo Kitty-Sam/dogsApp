@@ -21,6 +21,11 @@ import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/Lo
 import { images } from '../../consts/consts';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
 import { getGalleryImages } from '../../utils/getImagesFromStore';
+import { toggleAppStatus } from '../../store/actions/appAC';
+import { requestStatus } from '../../store/reducers/appReducer';
+import { fetchPersonalPetsAction } from '../../store/sagas/sagaActions/fetchPersonalPets';
+import { Loader } from '../../components/Loader/Loader';
+import { getAppStatus } from '../../store/selectors/appSelector';
 
 export type AddPetPropsType = {
   navigation: StackNavigationProp<PetsStackParamList>;
@@ -44,6 +49,7 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
   const dispatch = useDispatch();
 
   const addPet = async () => {
+    dispatch(toggleAppStatus(requestStatus.LOADING));
     console.log('add pet');
     const photoUrls = await getGalleryImages('animals', nickName.value, currentUserId);
     const selectedPhotoUrl = photoUrls?.[0];
@@ -59,11 +65,14 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
           photo: selectedPhotoUrl,
         }),
       );
+      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
     }
 
     if (stack === 'Profile') {
       navigation.navigate(PetsNavigationName.PROFILE);
     } else {
+      dispatch(fetchPersonalPetsAction());
+      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
       dispatch(toggleIsLoggedAC({ isLogged: true }));
       dispatch(toggleIsAddedPetsAC({ isAddedAll: true }));
     }
@@ -78,97 +87,105 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
   };
 
   const [image, setImage] = useState<string>(images.no_photo);
+  const statusApp = useSelector(getAppStatus);
+  console.log('statusApp addscreen', statusApp);
 
   return (
     <SafeAreaView style={styles.rootContainer}>
-      <View style={styles.mainContainer}>
-        <TouchableOpacity style={{ zIndex: 100 }}>
-          <LoadImagePickerButton
-            screen={'Animals'}
-            setImage={setImage}
-            currentUserId={currentUserId}
-            id={nickName.value}
-          />
-        </TouchableOpacity>
+      {statusApp === requestStatus.LOADING ? (
+        <Loader text={'Waiting for a few minutes...'} />
+      ) : (
+        <>
+          <View style={styles.mainContainer}>
+            <TouchableOpacity style={{ zIndex: 100 }}>
+              <LoadImagePickerButton
+                screen={'Animals'}
+                setImage={setImage}
+                currentUserId={currentUserId}
+                id={nickName.value}
+              />
+            </TouchableOpacity>
 
-        <Image source={{ uri: image }} style={styles.imageContainer} />
+            <Image source={{ uri: image }} style={styles.imageContainer} />
 
-        <View style={styles.shortInputContainer}>
+            <View style={styles.shortInputContainer}>
+              <TextInput
+                {...nickName}
+                mode="outlined"
+                label={inputsPlaceholdersName.PET_NICK_NAME}
+                placeholderTextColor={COLORS.text.grey}
+                activeOutlineColor={COLORS.text.grey}
+                outlineColor={COLORS.text.grey}
+              />
+              <Gap size={0.5} />
+              <TextInput
+                {...breed}
+                mode="outlined"
+                label={inputsPlaceholdersName.PET_BREED}
+                placeholderTextColor={COLORS.text.grey}
+                activeOutlineColor={COLORS.text.grey}
+                outlineColor={COLORS.text.grey}
+              />
+              <Gap size={0.5} />
+            </View>
+          </View>
           <TextInput
-            {...nickName}
             mode="outlined"
-            label={inputsPlaceholdersName.PET_NICK_NAME}
+            value={getData(date)}
+            label={inputsPlaceholdersName.PET_AGE}
+            placeholderTextColor={COLORS.text.grey}
+            onFocus={() => setOpen(true)}
+            activeOutlineColor={COLORS.text.grey}
+            outlineColor={COLORS.text.grey}
+          />
+          <DatePicker
+            textColor="#000000"
+            modal
+            mode="date"
+            open={open}
+            date={date}
+            onConfirm={date => {
+              setOpen(false);
+              setDate(date);
+            }}
+            onCancel={() => {
+              setOpen(false);
+            }}
+          />
+
+          <Gap size={0.5} />
+          <TextInput
+            {...description}
+            mode="outlined"
+            label={inputsPlaceholdersName.PET_DESCRIPTION}
             placeholderTextColor={COLORS.text.grey}
             activeOutlineColor={COLORS.text.grey}
             outlineColor={COLORS.text.grey}
           />
           <Gap size={0.5} />
           <TextInput
-            {...breed}
+            {...chip_id}
             mode="outlined"
-            label={inputsPlaceholdersName.PET_BREED}
+            label={inputsPlaceholdersName.PET_CHIP_ID}
             placeholderTextColor={COLORS.text.grey}
             activeOutlineColor={COLORS.text.grey}
             outlineColor={COLORS.text.grey}
           />
-          <Gap size={0.5} />
-        </View>
-      </View>
-      <TextInput
-        mode="outlined"
-        value={getData(date)}
-        label={inputsPlaceholdersName.PET_AGE}
-        placeholderTextColor={COLORS.text.grey}
-        onFocus={() => setOpen(true)}
-        activeOutlineColor={COLORS.text.grey}
-        outlineColor={COLORS.text.grey}
-      />
-      <DatePicker
-        textColor="#000000"
-        modal
-        mode="date"
-        open={open}
-        date={date}
-        onConfirm={date => {
-          setOpen(false);
-          setDate(date);
-        }}
-        onCancel={() => {
-          setOpen(false);
-        }}
-      />
+          <Gap size={3} />
+          <TouchableOpacity onPress={clearPet}>
+            <TextItemThin>Clear form</TextItemThin>
+          </TouchableOpacity>
 
-      <Gap size={0.5} />
-      <TextInput
-        {...description}
-        mode="outlined"
-        label={inputsPlaceholdersName.PET_DESCRIPTION}
-        placeholderTextColor={COLORS.text.grey}
-        activeOutlineColor={COLORS.text.grey}
-        outlineColor={COLORS.text.grey}
-      />
-      <Gap size={0.5} />
-      <TextInput
-        {...chip_id}
-        mode="outlined"
-        label={inputsPlaceholdersName.PET_CHIP_ID}
-        placeholderTextColor={COLORS.text.grey}
-        activeOutlineColor={COLORS.text.grey}
-        outlineColor={COLORS.text.grey}
-      />
-      <Gap size={3} />
-      <TouchableOpacity onPress={clearPet}>
-        <TextItemThin>Clear form</TextItemThin>
-      </TouchableOpacity>
-
-      <View style={styles.buttonsContainer}>
-        <AppButton
-          disabled={nickName.value === '' || breed.value === '' || description.value === ''}
-          onPress={addPet}
-          title={stack === 'Profile' ? 'add' : 'next'}
-          backgroundColor={COLORS.buttons.violet}
-        />
-      </View>
+          <View style={styles.buttonsContainer}>
+            <AppButton
+              disabled={nickName.value === '' || breed.value === '' || description.value === ''}
+              onPress={addPet}
+              title={stack === 'Profile' ? 'add' : 'next'}
+              backgroundColor={COLORS.buttons.violet}
+            />
+          </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

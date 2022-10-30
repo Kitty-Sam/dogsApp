@@ -10,7 +10,7 @@ import { TextInput } from 'react-native-paper';
 import { useInput } from '../../hooks/useInput';
 import { Gap } from '../../components/Gap/Gap';
 import DatePicker from 'react-native-date-picker';
-import { getData } from '../../utils/getData';
+import { getData, getDataInDateFormat } from '../../utils/getData';
 import { COLORS } from '../../colors/colors';
 import { AppButton } from '../../components/Button/AppButton';
 import { buttonsName } from '../../enum/buttonsName';
@@ -27,9 +27,10 @@ import { getAppStatus } from '../../store/selectors/appSelector';
 
 export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
   const { navigation, route } = props;
-  const { nickName, description, breed, photo, chip_id, about } = route.params;
+  const { nickName, description, breed, photo, chip_id, about, age } = route.params;
 
   const statusApp = useSelector(getAppStatus);
+  console.log('statusApp', statusApp);
 
   const petName = useInput(nickName);
   const petColor = useInput(description);
@@ -40,7 +41,7 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
   const [image, setImage] = useState<string>(photo);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(new Date(getDataInDateFormat(age)));
   const [open, setOpen] = useState<boolean>(false);
 
   const onLoading = (value: boolean) => {
@@ -63,7 +64,7 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
           description: petColor.value,
           breed: petBreed.value,
           chip_id: petChipId.value,
-          photo: image,
+          photo: selectedPhotoUrl,
           about: petAbout.value,
         });
         await put(
@@ -73,7 +74,7 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
             description: petColor.value,
             breed: petBreed.value,
             chip_id: petChipId.value,
-            photo: image,
+            photo: selectedPhotoUrl,
             about: petAbout.value,
           }),
         );
@@ -114,7 +115,7 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
               <LoadImagePickerButton
                 setImage={setImage}
                 currentUserId={currentUserId}
-                screen={'Profile'}
+                screen={'Animals'}
                 id={nickName}
               />
             </View>

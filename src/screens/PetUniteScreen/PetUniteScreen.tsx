@@ -8,10 +8,14 @@ import { LibraryImagesBlock } from '../../components/LibraryImagesBlock/LibraryI
 import { FAB } from 'react-native-paper';
 import { PetsNavigationName } from '../../enum/navigation';
 import { styles } from './style';
+import { useSelector } from 'react-redux';
+import { getCurrentUserId } from '../../store/selectors/loginSelector';
 
 export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
   const { navigation } = props;
   const { nickName, description, breed, age, photo, chip_id, about } = props.route.params;
+
+  const currentUserId = useSelector(getCurrentUserId);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -52,7 +56,7 @@ export const PetUniteScreen: FC<PetUniteScreenProps> = props => {
           <Text>{about ? about : 'Note'}</Text>
         </View>
         <Gap size={5} />
-        <LibraryImagesBlock photo={photo} />
+        <LibraryImagesBlock photo={photo} nickName={nickName} currentUserId={currentUserId} />
         <FAB
           icon="pencil"
           style={styles.fab}
