@@ -79,6 +79,7 @@ export const userReducer = (state = initialState, action: ActionsType) => {
             personalPets: [newPet, ...state.personalPets],
           };
         }
+        return state;
       }
       break;
 

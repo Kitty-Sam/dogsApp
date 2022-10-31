@@ -16,9 +16,10 @@ export const enum iconsName {
   UNKNOWN = 'male-female-outline',
   BOY = 'male-outline',
   GIRL = 'female-outline',
-  LOG_OUT_OUTLINE = 'log-out-outline',
   EYE = 'eye',
   EYE_OFF = 'eye-off',
   PEOPLE = 'people',
   PEOPLE_OUTLINE = 'people-outline',
+  ARROW_RIGHT = 'md-caret-forward',
+  ARROW_LEFT = 'md-caret-back',
 }

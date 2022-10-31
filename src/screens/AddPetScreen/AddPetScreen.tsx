@@ -9,23 +9,17 @@ import { useInput } from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { TextInput } from 'react-native-paper';
 import { Gap } from '../../components/Gap/Gap';
-import { addPersonalPetAction } from '../../store/sagas/sagaActions/addPersonalPet';
 import DatePicker from 'react-native-date-picker';
 import { getData } from '../../utils/getData';
-import { PetsNavigationName } from '../../enum/navigation';
-import { toggleIsLoggedAC } from '../../store/actions/loginAC';
-import { toggleIsAddedPetsAC } from '../../store/actions/userAC';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { PetsStackParamList } from '../../navigation/PetsStack/type';
 import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { images } from '../../consts/consts';
 import { getCurrentUserId } from '../../store/selectors/loginSelector';
-import { getGalleryImages } from '../../utils/getImagesFromStore';
-import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
-import { fetchPersonalPetsAction } from '../../store/sagas/sagaActions/fetchPersonalPets';
 import { Loader } from '../../components/Loader/Loader';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { addPersonalPetWithPhotoAction } from '../../store/sagas/sagaActions/addPersonalPetWithPhotoInStorage';
 
 export type AddPetPropsType = {
   navigation: StackNavigationProp<PetsStackParamList>;
@@ -49,33 +43,45 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
   const dispatch = useDispatch();
 
   const addPet = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    console.log('add pet');
-    const photoUrls = await getGalleryImages('animals', nickName.value, currentUserId);
-    const selectedPhotoUrl = photoUrls?.[0];
-
-    if (selectedPhotoUrl) {
-      dispatch(
-        addPersonalPetAction({
-          nickName: nickName.value,
-          description: description.value,
-          breed: breed.value,
-          age: getData(date),
-          chip_id: chip_id.value,
-          photo: selectedPhotoUrl,
-        }),
-      );
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-    }
-
-    if (stack === 'Profile') {
-      navigation.navigate(PetsNavigationName.PROFILE);
-    } else {
-      dispatch(fetchPersonalPetsAction());
-      dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-      dispatch(toggleIsLoggedAC({ isLogged: true }));
-      dispatch(toggleIsAddedPetsAC({ isAddedAll: true }));
-    }
+    dispatch(
+      addPersonalPetWithPhotoAction({
+        navigation,
+        nickName: nickName.value,
+        date,
+        description: description.value,
+        breed: breed.value,
+        chip_id: chip_id.value,
+        currentUserId,
+        stack,
+      }),
+    );
+    // dispatch(toggleAppStatus(requestStatus.LOADING));
+    // console.log('add pet');
+    // const photoUrls = await getGalleryImages('animals', nickName.value, currentUserId);
+    // const selectedPhotoUrl = photoUrls?.[0];
+    //
+    // if (selectedPhotoUrl) {
+    //   dispatch(
+    //     addPersonalPetAction({
+    //       nickName: nickName.value,
+    //       description: description.value,
+    //       breed: breed.value,
+    //       age: getData(date),
+    //       chip_id: chip_id.value,
+    //       photo: selectedPhotoUrl,
+    //     }),
+    //   );
+    //   dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
+    // }
+    //
+    // if (stack === 'Profile') {
+    //   navigation.navigate(PetsNavigationName.PROFILE);
+    // } else {
+    //   dispatch(fetchPersonalPetsAction());
+    //   dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
+    //   dispatch(toggleIsLoggedAC({ isLogged: true }));
+    //   dispatch(toggleIsAddedPetsAC({ isAddedAll: true }));
+    // }
   };
 
   const clearPet = () => {
@@ -88,7 +94,6 @@ export const AddPetScreen: FC<AddPetPropsType> = props => {
 
   const [image, setImage] = useState<string>(images.no_photo);
   const statusApp = useSelector(getAppStatus);
-  console.log('statusApp addscreen', statusApp);
 
   return (
     <SafeAreaView style={styles.rootContainer}>

@@ -23,7 +23,7 @@ export const styles = StyleSheet.create<ProfileScreenStyleType>({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 16,
+    bottom: 24,
     borderRadius: 10,
     backgroundColor: COLORS.background.light_violet,
   },

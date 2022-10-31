@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
 import { ActivityIndicator, Image, ScrollView, View } from 'react-native';
-import { styles } from '../PetUniteScreen/style';
 import { EditProfileScreenProps } from './type';
 import { LoadImagePickerButton } from '../../components/LoadImagePickerButton/LoadImagePickerButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,13 +23,14 @@ import { toggleAppStatus } from '../../store/actions/appAC';
 import { requestStatus } from '../../store/reducers/appReducer';
 import { Loader } from '../../components/Loader/Loader';
 import { getAppStatus } from '../../store/selectors/appSelector';
+import { styles } from './style';
+import { updatePetUniteDataAction } from '../../store/sagas/sagaActions/updatePetUniteData';
 
 export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
   const { navigation, route } = props;
   const { nickName, description, breed, photo, chip_id, about, age } = route.params;
 
   const statusApp = useSelector(getAppStatus);
-  console.log('statusApp', statusApp);
 
   const petName = useInput(nickName);
   const petColor = useInput(description);
@@ -53,46 +53,20 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
   const currentUserId = useSelector(getCurrentUserId);
 
   const savePress = async () => {
-    dispatch(toggleAppStatus(requestStatus.LOADING));
-    const photoUrls = await getGalleryImages('animals', nickName, currentUserId);
-    const selectedPhotoUrl = photoUrls?.[0];
-    if (selectedPhotoUrl) {
-      try {
-        await database.ref(`/users/${currentUserId}/personalInfo/${petName.value}`).update({
-          nickName: petName.value,
-          age: getData(date),
-          description: petColor.value,
-          breed: petBreed.value,
-          chip_id: petChipId.value,
-          photo: selectedPhotoUrl,
-          about: petAbout.value,
-        });
-        await put(
-          addPersonalPetAC({
-            nickName: petName.value,
-            age: getData(date),
-            description: petColor.value,
-            breed: petBreed.value,
-            chip_id: petChipId.value,
-            photo: selectedPhotoUrl,
-            about: petAbout.value,
-          }),
-        );
-        navigation.navigate(PetsNavigationName.PET_UNITE, {
-          nickName: petName.value,
-          age: getData(date),
-          description: petColor.value,
-          breed: petBreed.value,
-          chip_id: petChipId.value,
-          photo: image,
-          about: petAbout.value,
-        });
-        dispatch(fetchPersonalPetsAction());
-        dispatch(toggleAppStatus(requestStatus.SUCCEEDED));
-      } catch (error: any) {
-        console.warn(error);
-      }
-    }
+    dispatch(
+      updatePetUniteDataAction({
+        nickName,
+        currentUserId,
+        petName: petName.value,
+        petAbout: petAbout.value,
+        petBreed: petBreed.value,
+        petChipId: petChipId.value,
+        petColor: petColor.value,
+        date,
+        image,
+        navigation,
+      }),
+    );
   };
 
   return (
@@ -199,7 +173,7 @@ export const EditPetProfileScreen: FC<EditProfileScreenProps> = props => {
             />
           </View>
           <Gap size={2} />
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <View style={styles.buttonsContainer}>
             <AppButton onPress={savePress} title={buttonsName.SAVE} backgroundColor={COLORS.buttons.violet} />
           </View>
         </>

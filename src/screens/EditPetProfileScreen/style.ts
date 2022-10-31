@@ -1,30 +1,28 @@
-import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
-import { COLORS } from '../../colors/colors';
+import { ImageStyle, StyleSheet, ViewStyle } from 'react-native';
 
-export type ProfileScreenStyleType = {
-  root: TextStyle;
-  listItemsContainer: TextStyle;
-  fab: ViewStyle;
+export type EditPetProfileStyleType = {
+  root: ViewStyle;
+  mainBlock: ViewStyle;
+  image: ImageStyle;
+  buttonsContainer: ViewStyle;
 };
 
-export const styles = StyleSheet.create<ProfileScreenStyleType>({
+export const styles = StyleSheet.create<EditPetProfileStyleType>({
   root: {
-    marginHorizontal: 12,
+    margin: 24,
     flex: 1,
   },
-  listItemsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    flexGrow: 1,
+  mainBlock: {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 16,
-    borderRadius: 10,
-    backgroundColor: COLORS.background.light_violet,
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
 });
